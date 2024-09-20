@@ -1,0 +1,43 @@
+<server description="Service Engineer Liberty server">
+
+    <featureManager>
+        <feature>webProfile-8.0</feature>
+        <feature>localConnector-1.0</feature>
+        <feature>jaxrs-2.1</feature>
+        <feature>jdbc-4.2</feature>
+        <feature>jndi-1.0</feature>
+        <feature>springBoot-2.0</feature>
+        <feature>servlet-4.0</feature>
+    </featureManager>
+
+    <variable name="http.port" defaultValue="9080"/>
+    <variable name="https.port" defaultValue="9443"/>
+
+    <!-- tag::server[] -->
+    <httpEndpoint host="*"
+                  httpPort="${http.port}"
+                  httpsPort="${https.port}"
+                  id="defaultHttpEndpoint"/>
+
+
+    <!-- Application Configuration -->
+    <!--    <webApplication id="apg" location="apg.war" contextRoot="/" />-->
+
+
+    <cors allowCredentials="true" allowedHeaders="*" allowedMethods="GET,POST"
+          allowedOrigins="*" domain="/" maxAge="3600" />
+
+
+<!--    <enterpriseApplication id="apg-case-live"-->
+<!--                           location="apg-case-live.war"-->
+<!--                           name="apg-case-live"-->
+<!--                           type="war"-->
+<!--                           context-root="/apg"/>-->
+
+    <!-- Application configuration: WAR file for your Spring Boot REST API -->
+    <webApplication id="service-engineer"
+                    location="service-engineer-1.0.0.war"
+                    contextRoot="/" />
+
+
+</server>
