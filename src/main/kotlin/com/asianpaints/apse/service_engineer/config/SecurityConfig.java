@@ -74,9 +74,9 @@ public class SecurityConfig {
             "/auth/requestOtp/**",
             "/auth/signIn",
             "/api/v1/auth/**",
-            "/api/v1/user/signup",
-            "/api/v1/user/designation",
-            "/api/v1/user/type",
+            "/api/v1/users/signup",
+            "/api/v1/users/designation",
+            "/api/v1/users/type",
             "/api/v1/file/upload"
         };
 }

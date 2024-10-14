@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddUserRequest {
+public class ApUserDto {
     @NotBlank(message = "name field can't be blank")
     private String name;
     @NotNull(message = "zoneId field can't be blank")

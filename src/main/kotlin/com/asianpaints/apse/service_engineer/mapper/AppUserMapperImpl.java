@@ -4,7 +4,7 @@ import com.asianpaints.apse.service_engineer.domain.entity.ApUser;
 import com.asianpaints.apse.service_engineer.domain.entity.UserDesignation;
 import com.asianpaints.apse.service_engineer.domain.entity.UserType;
 import com.asianpaints.apse.service_engineer.domain.entity.Zone;
-import com.asianpaints.apse.service_engineer.dto.AddUserRequest;
+import com.asianpaints.apse.service_engineer.dto.ApUserDto;
 import com.asianpaints.apse.service_engineer.dto.SignUpRequest;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public class AppUserMapperImpl implements ApUserMapper {
     }
 
     @Override
-    public ApUser toEntity(AddUserRequest addUserRequest, UserType userType, UserDesignation userDesignation, Zone zone) {
+    public ApUser toEntity(ApUserDto addUserRequest, UserType userType, UserDesignation userDesignation, Zone zone) {
         if(addUserRequest == null){
             return null;
         }

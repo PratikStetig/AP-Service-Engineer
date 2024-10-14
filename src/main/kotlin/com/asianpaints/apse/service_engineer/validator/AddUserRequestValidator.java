@@ -4,8 +4,7 @@ import com.asianpaints.apse.service_engineer.domain.entity.ApUser;
 import com.asianpaints.apse.service_engineer.domain.entity.UserDesignation;
 import com.asianpaints.apse.service_engineer.domain.entity.UserType;
 import com.asianpaints.apse.service_engineer.domain.entity.Zone;
-import com.asianpaints.apse.service_engineer.dto.AddUserRequest;
-import com.asianpaints.apse.service_engineer.dto.SignUpRequest;
+import com.asianpaints.apse.service_engineer.dto.ApUserDto;
 import com.asianpaints.apse.service_engineer.repository.UserDesignationRepository;
 import com.asianpaints.apse.service_engineer.repository.UserTypeRepository;
 import com.asianpaints.apse.service_engineer.repository.ZoneRepository;
@@ -40,8 +39,8 @@ public class AddUserRequestValidator {
         this.userTypeRepository = userTypeRepository;
     }
 
-    public List<String> validate(AddUserRequest addUserRequest) {
-        Set<ConstraintViolation<AddUserRequest>> violations = validator.validate(addUserRequest);
+    public List<String> validate(ApUserDto addUserRequest) {
+        Set<ConstraintViolation<ApUserDto>> violations = validator.validate(addUserRequest);
         if(!violations.isEmpty()){
             return Collections.singletonList(getError(violations));
         }
@@ -71,7 +70,7 @@ public class AddUserRequestValidator {
 
     }
 
-    private String getError(Set<ConstraintViolation<AddUserRequest>> violations){
+    private String getError(Set<ConstraintViolation<ApUserDto>> violations){
         return violations.stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(","));

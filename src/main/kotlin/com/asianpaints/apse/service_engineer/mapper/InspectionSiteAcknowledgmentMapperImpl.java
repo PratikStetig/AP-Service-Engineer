@@ -2,7 +2,9 @@ package com.asianpaints.apse.service_engineer.mapper;
 
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteAcknowledgement;
 import com.asianpaints.apse.service_engineer.dto.InspectionSiteAckDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InspectionSiteAcknowledgmentMapperImpl implements InspectionSiteAcknowledgementMapper {
 
     @Override

@@ -1,4 +1,6 @@
 package com.asianpaints.apse.service_engineer.domain.entity;
 
-public class SiteCorresivityEnvironment {
+public enum CorrosionType {
+    Scattered,
+    Linear
 }

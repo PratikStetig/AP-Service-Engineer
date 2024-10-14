@@ -1,8 +1,8 @@
 package com.asianpaints.apse.service_engineer.service;
 
 import com.asianpaints.apse.service_engineer.domain.entity.*;
-import com.asianpaints.apse.service_engineer.dto.AddUserRequest;
-import com.asianpaints.apse.service_engineer.dto.EditUserRequest;
+import com.asianpaints.apse.service_engineer.dto.ApUserDto;
+import com.asianpaints.apse.service_engineer.dto.ApiResponse;
 import com.asianpaints.apse.service_engineer.dto.SignUpRequest;
 import com.asianpaints.apse.service_engineer.exception.UserNotFoundException;
 import com.asianpaints.apse.service_engineer.mapper.ApUserMapper;
@@ -38,15 +38,19 @@ public class ApUserService {
         this.tokenRepository = tokenRepository;
     }
 
-    public ApUser signUp(SignUpRequest signUpRequest){
+    public ApiResponse signUp(SignUpRequest signUpRequest){
         UserType userType = userTypeRepository.findByUserType("Service Engineer").orElse(null);
         UserDesignation userDesignation = userDesignationRepository.findById(signUpRequest.getDesignationId()).orElse(null);
         Zone zone = zoneRepository.findById(signUpRequest.getZoneId()).orElse(null);
         ApUser signupUser = apUserMapper.toEntity(signUpRequest, userType,userDesignation,zone);
-        return apUserRepository.save(signupUser);
+        apUserRepository.save(signupUser);
+        return ApiResponse.builder()
+                .message("User signUp successfully")
+                .status("Success")
+                .build();
     }
 
-    public ApUser addUser(AddUserRequest addUserRequest){
+    public ApUser addUser(ApUserDto addUserRequest){
         UserType userType = userTypeRepository.findById(addUserRequest.getUserTypeId()).orElse(null);
         UserDesignation userDesignation = userDesignationRepository.findById(addUserRequest.getDesignationId()).orElse(null);
         Zone zone = zoneRepository.findById(addUserRequest.getZoneId()).orElse(null);
@@ -55,22 +59,21 @@ public class ApUserService {
         return savedUser;
     }
 
-    public ApUser editUser(EditUserRequest editUserRequest){
-        ApUser apUser= apUserRepository.findById(editUserRequest.getUserId()).orElse(null);
+    public ApUser editUser(Long userId, ApUserDto addUserRequest){
+        ApUser apUser= apUserRepository.findById(userId).orElse(null);
         if(apUser == null){
-            String errMsg = String.format("User with id %s does not exist in system", editUserRequest.getUserId());
+            String errMsg = String.format("User with id %s does not exist in system", userId);
             throw new UserNotFoundException(errMsg);
         }
-        UserType userType = userTypeRepository.findById(editUserRequest.getUserTypeId()).orElse(null);
-        UserDesignation userDesignation = userDesignationRepository.findById(editUserRequest.getDesignationId()).orElse(null);
-        Zone zone = zoneRepository.findById(editUserRequest.getZoneId()).orElse(null);
-        apUser.setName(editUserRequest.getName());
+        UserType userType = userTypeRepository.findById(addUserRequest.getUserTypeId()).orElse(null);
+        UserDesignation userDesignation = userDesignationRepository.findById(addUserRequest.getDesignationId()).orElse(null);
+        Zone zone = zoneRepository.findById(addUserRequest.getZoneId()).orElse(null);
+        apUser.setName(addUserRequest.getName());
         apUser.setUserDesignation(userDesignation);
-        apUser.setEmail(editUserRequest.getEmail());
+        apUser.setEmail(addUserRequest.getEmail());
         apUser.setZone(zone);
         apUser.setUserType(userType);
-        ApUser savedUser = apUserRepository.save(apUser);
-        return savedUser;
+        return apUserRepository.save(apUser);
     }
 
     public void deleteUser(Long userId){

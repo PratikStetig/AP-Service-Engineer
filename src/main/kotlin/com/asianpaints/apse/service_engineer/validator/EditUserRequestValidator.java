@@ -4,8 +4,7 @@ import com.asianpaints.apse.service_engineer.domain.entity.ApUser;
 import com.asianpaints.apse.service_engineer.domain.entity.UserDesignation;
 import com.asianpaints.apse.service_engineer.domain.entity.UserType;
 import com.asianpaints.apse.service_engineer.domain.entity.Zone;
-import com.asianpaints.apse.service_engineer.dto.AddUserRequest;
-import com.asianpaints.apse.service_engineer.dto.EditUserRequest;
+import com.asianpaints.apse.service_engineer.dto.ApUserDto;
 import com.asianpaints.apse.service_engineer.repository.UserDesignationRepository;
 import com.asianpaints.apse.service_engineer.repository.UserTypeRepository;
 import com.asianpaints.apse.service_engineer.repository.ZoneRepository;
@@ -40,38 +39,38 @@ public class EditUserRequestValidator {
         this.userTypeRepository = userTypeRepository;
     }
 
-    public List<String> validate(EditUserRequest editUserRequest) {
-        Set<ConstraintViolation<EditUserRequest>> violations = validator.validate(editUserRequest);
+    public List<String> validate(Long userId, ApUserDto addUserRequest) {
+        Set<ConstraintViolation<ApUserDto>> violations = validator.validate(addUserRequest);
         if(!violations.isEmpty()){
             return Collections.singletonList(getError(violations));
         }
-        UserDesignation userDesignation = userDesignationRepository.findById(editUserRequest.getDesignationId()).orElse(null);
-        Zone zone = zoneRepository.findById(editUserRequest.getZoneId()).orElse(null);
-        ApUser apUser = apUserService.findUserByEmail(editUserRequest.getEmail());
-        UserType userType = userTypeRepository.findById(editUserRequest.getUserTypeId()).orElse(null);
+        UserDesignation userDesignation = userDesignationRepository.findById(addUserRequest.getDesignationId()).orElse(null);
+        Zone zone = zoneRepository.findById(addUserRequest.getZoneId()).orElse(null);
+        ApUser apUser = apUserService.findUserByEmail(addUserRequest.getEmail());
+        UserType userType = userTypeRepository.findById(addUserRequest.getUserTypeId()).orElse(null);
         List<String> errors = new ArrayList<>();
-        if(apUser != null && editUserRequest.getUserId().longValue() != editUserRequest.getUserId().longValue()){
-            String errorMsg = String.format("Email %s already associated with other user in the system",editUserRequest.getEmail());
+        if(apUser != null && apUser.getId().longValue() != userId.longValue()){
+            String errorMsg = String.format("Email %s already associated with other user in the system",addUserRequest.getEmail());
             errors.add(errorMsg);
         }
         if(userDesignation == null)
         {
-            String errorMsg = String.format("UserDesignation with given id:%s doesn't exist in the system",editUserRequest.getDesignationId());
+            String errorMsg = String.format("UserDesignation with given id:%s doesn't exist in the system",addUserRequest.getDesignationId());
             errors.add(errorMsg);
         }
         if(zone == null){
-            String errorMsg = String.format("Zone with given id:%s doesn't exist in the system",editUserRequest.getZoneId());
+            String errorMsg = String.format("Zone with given id:%s doesn't exist in the system",addUserRequest.getZoneId());
             errors.add(errorMsg);
         }
         if(userType == null){
-            String errorMsg = String.format("UserType with given id:%s doesn't exist in the system",editUserRequest.getUserTypeId());
+            String errorMsg = String.format("UserType with given id:%s doesn't exist in the system",addUserRequest.getUserTypeId());
             errors.add(errorMsg);
         }
         return errors;
 
     }
 
-    private String getError(Set<ConstraintViolation<EditUserRequest>> violations){
+    private String getError(Set<ConstraintViolation<ApUserDto>> violations){
         return violations.stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(","));
