@@ -20,9 +20,10 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper{
                 .city(inspectionSiteRequest.getCity())
                 .state(inspectionSiteRequest.getState())
                 .conductedAt(inspectionSiteRequest.getConductedAt())
-                .user(user)
+                .conductedBy(user)
                 .imageUrl(inspectionSiteRequest.getImageUrl())
                 .status(InspectionSiteStatus.Draft)
+                .inspectionDate(inspectionSiteRequest.getInspectionDate())
                 .build();
      }
 
@@ -35,8 +36,9 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper{
                 .city(inspectionSiteRequest.getCity())
                 .state(inspectionSiteRequest.getState())
                 .conductedAt(inspectionSiteRequest.getConductedAt())
-                .user(user)
+                .conductedBy(user)
                 .imageUrl(inspectionSiteRequest.getImageUrl())
+                .inspectionDate(inspectionSiteRequest.getInspectionDate())
                 .build();
 
     }
@@ -44,13 +46,17 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper{
     @Override
     public InspectionSiteResponse toDto(InspectionSite inspectionSite) {
         return InspectionSiteResponse.builder()
-                .createdOn(inspectionSite.getCreatedOn())
                 .id(inspectionSite.getId())
                 .siteId(inspectionSite.getSiteId())
-                .status(inspectionSite.getStatus())
-                .conductedAt(inspectionSite.getConductedAt())
-                .state(inspectionSite.getState())
+                .createdOn(inspectionSite.getCreatedOn())
                 .reportName(inspectionSite.getReportName())
+                .city(inspectionSite.getCity())
+                .state(inspectionSite.getState())
+                .conductedAt(inspectionSite.getConductedAt())
+                .conductedBy (inspectionSite.getConductedBy().getId())
+                .imageUrl(inspectionSite.getImageUrl())
+                .status(inspectionSite.getStatus())
+                .inspectionDate(inspectionSite.getInspectionDate())
                 .build();
     }
 

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,11 +17,13 @@ public class InspectionSiteResponse {
     private Long id;
     private String reportName;
     private String conductedAt;
-    private Long userId;
+    private Long conductedBy;
     private String siteId;
     private String state;
     private String city;
     private String imageUrl;
     private LocalDateTime createdOn;
+    private LocalDate inspectionDate;
     private InspectionSiteStatus status;
+
 }

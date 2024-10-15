@@ -8,38 +8,28 @@ import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound;
 import com.asianpaints.apse.service_engineer.exception.UserNotFoundException;
 import com.asianpaints.apse.service_engineer.mapper.InspectionSiteMapper;
 import com.asianpaints.apse.service_engineer.repository.InspectionSiteRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class InspectionSiteService {
 
     private final ApUserService apUserService;
     private final InspectionSiteMapper inspectionSiteMapper;
     private final InspectionSiteRepository inspectionSiteRepository;
 
-    public InspectionSiteService(ApUserService apUserService,
-                                 InspectionSiteMapper inspectionSiteMapper,
-                                 InspectionSiteRepository inspectionSiteRepository) {
-        this.apUserService = apUserService;
-        this.inspectionSiteMapper = inspectionSiteMapper;
-        this.inspectionSiteRepository = inspectionSiteRepository;
-    }
-
     public InspectionSiteResponse createInspectionSite(InspectionSiteRequest inspectionSiteRequest) {
-        ApUser apUser = apUserService.getUser(inspectionSiteRequest.getUserId());
-        if (apUser == null) {
-            String errMsg = String.format("User with id %s does not exist in system", inspectionSiteRequest.getUserId());
-            throw new UserNotFoundException(errMsg);
-        }
+        ApUser apUser = apUserService.getUser(inspectionSiteRequest.getConductedBy());
         InspectionSite inspectionSite = inspectionSiteMapper.toEntity(inspectionSiteRequest, apUser);
         InspectionSite savedInspectionSite = inspectionSiteRepository.save(inspectionSite);
         return inspectionSiteMapper.toDto(savedInspectionSite);
     }
 
     public InspectionSiteResponse editInspectionSite(Long id, InspectionSiteRequest inspectionSiteRequest) {
-        ApUser apUser = apUserService.getUser(inspectionSiteRequest.getUserId());
+        ApUser apUser = apUserService.getUser(inspectionSiteRequest.getConductedBy());
         if (apUser == null) {
-            String errMsg = String.format("User with id %s does not exist in system", inspectionSiteRequest.getUserId());
+            String errMsg = String.format("User with id %s does not exist in system", inspectionSiteRequest.getConductedBy());
             throw new UserNotFoundException(errMsg);
         }
         InspectionSite inspectionSite = inspectionSiteRepository.findById(id).orElse(null);
@@ -52,7 +42,7 @@ public class InspectionSiteService {
         return inspectionSiteMapper.toDto(editedInspectionSite);
     }
 
-    public InspectionSiteResponse getInspectionSite(Long id, InspectionSiteRequest inspectionSiteRequest) {
+    public InspectionSiteResponse getInspectionSite(Long id) {
         InspectionSite inspectionSite = inspectionSiteRepository.findById(id).orElse(null);
         if (inspectionSite == null) {
             String errMsg = String.format("InspectionSite with id %s does not exist in system", id);

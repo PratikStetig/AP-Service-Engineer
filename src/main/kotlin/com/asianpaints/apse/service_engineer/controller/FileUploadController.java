@@ -1,6 +1,7 @@
 package com.asianpaints.apse.service_engineer.controller;
 
 import com.asianpaints.apse.service_engineer.client.FileUploadClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,9 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("api/v1")
+@RequiredArgsConstructor
 public class FileUploadController {
     private final FileUploadClient fileUploadClient;
-
-    public FileUploadController(FileUploadClient fileUploadClient){
-        this.fileUploadClient = fileUploadClient;
-    }
 
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> fileUpload(@RequestParam("file") MultipartFile file) throws IOException {

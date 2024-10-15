@@ -77,6 +77,5 @@ public class SecurityConfig {
             "/api/v1/users/signup",
             "/api/v1/users/designation",
             "/api/v1/users/type",
-            "/api/v1/file/upload"
         };
 }

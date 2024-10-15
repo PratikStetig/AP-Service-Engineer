@@ -30,16 +30,6 @@ public class ApUserController {
     private final EditUserRequestValidator editUserRequestValidator;
     private final PreAuthorizeAuthorizationService preAuthorizeAuthorizationService;
 
-//    public ApUserController(ApUserService apUserService,
-//                            SignUpRequestValidator signUpRequestValidator,
-//                            AddUserRequestValidator addUserRequestValidator,
-//                            EditUserRequestValidator editUserRequestValidator){
-//        this.apUserService = apUserService;
-//        this.signUpRequestValidator = signUpRequestValidator;
-//        this.addUserRequestValidator = addUserRequestValidator;
-//        this.editUserRequestValidator = editUserRequestValidator;
-//    }
-
     @PostMapping("/signup")
     public ResponseEntity<Object> signup(@RequestBody SignUpRequest signUpRequest){
 

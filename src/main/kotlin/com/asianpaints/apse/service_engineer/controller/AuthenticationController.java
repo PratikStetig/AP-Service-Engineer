@@ -8,6 +8,7 @@ import com.asianpaints.apse.service_engineer.exception.EmailVerificationFailedEx
 import com.asianpaints.apse.service_engineer.exception.UserNotFoundException;
 import com.asianpaints.apse.service_engineer.service.AuthenticationService;
 import com.asianpaints.apse.service_engineer.validator.AuthenticationRequestValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final AuthenticationRequestValidator authenticationRequestValidator;
-
-    public AuthenticationController(AuthenticationService authenticationService,
-                                    AuthenticationRequestValidator authenticationRequestValidator){
-        this.authenticationService = authenticationService;
-        this.authenticationRequestValidator = authenticationRequestValidator;
-    }
 
     @RequestMapping(value = "/signUp/requestOtp/{email}",method = RequestMethod.GET)
     public ResponseEntity<Object> generateOtp(@PathVariable String email){

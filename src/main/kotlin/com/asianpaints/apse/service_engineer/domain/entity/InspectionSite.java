@@ -27,7 +27,7 @@ public class InspectionSite {
     private String conductedAt;
     @ManyToOne()
     @JoinColumn(name = "conducted_by")
-    private ApUser user;
+    private ApUser conductedBy;
     @Column(name = "site_id")
     private String siteId;
     private String state;
