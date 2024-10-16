@@ -18,8 +18,9 @@ public class InspectionSiteAcknowledgement {
     @Id
     @Column(name = "id")
     private Long id;
-    @Column(name = "inspection_site_id")
-    private Long inspectionSiteId;
+    @ManyToOne
+    @JoinColumn(name = "inspection_site_id")
+    private InspectionSite inspectionSite;
     @Column(name = "person_name")
     private String personName;
     private String designation;

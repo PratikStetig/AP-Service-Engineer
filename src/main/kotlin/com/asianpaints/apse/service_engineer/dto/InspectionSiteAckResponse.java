@@ -16,5 +16,5 @@ public class InspectionSiteAckResponse {
     private Long id;
     private Long inspectionId;
     private LocalDate inspectionDate;
-    private List<SiteAckResponse> acknowledgements;
+    private List<InspectionSiteAckDto> acknowledgements;
 }

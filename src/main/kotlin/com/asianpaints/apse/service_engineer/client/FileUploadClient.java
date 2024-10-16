@@ -1,5 +1,6 @@
 package com.asianpaints.apse.service_engineer.client;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
@@ -8,15 +9,11 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@RequiredArgsConstructor
 public class FileUploadClient {
 
     private String url = "https://apidev.asianpaints.com/v1/contentstorage?apikey=jJs5QR9LY5YJcMej3TjnMdXDZ8Air1Zz";
     private final RestTemplate restTemplate;
-
-    public FileUploadClient(RestTemplate restTemplate)
-    {
-        this.restTemplate = restTemplate;
-    }
 
     public ResponseEntity<String> addFile(String fileName, byte[] fileBytesArray) {
 

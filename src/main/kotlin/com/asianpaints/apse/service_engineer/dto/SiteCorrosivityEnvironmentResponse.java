@@ -1,5 +1,6 @@
 package com.asianpaints.apse.service_engineer.dto;
 
+import com.asianpaints.apse.service_engineer.domain.entity.SiteArea;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class SiteCorrosivityEnvironmentDto {
+public class SiteCorrosivityEnvironmentResponse {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
     private Long inspectionSiteId;
@@ -29,5 +30,5 @@ public class SiteCorrosivityEnvironmentDto {
     private String imageUrl1;
     private String imageUrl2;
     private String imageUrl3;
-    private Set<Long> areaIds;
+    private Set<SiteAreaDto> siteAreas;
 }

@@ -42,7 +42,7 @@ public class InspectionSitePreliminaryObservationService {
             String errMsg = String.format("InspectionSite with id %s does not exist in system", sitePreliminaryObservationDto.getInspectionSiteId());
             throw new InspectionSiteNotFound(errMsg);
         }
-       SitePreliminaryObservation sitePreliminaryObservation = sitePreliminaryObservationMapper.toEntity(sitePreliminaryObservationDto);
+       SitePreliminaryObservation sitePreliminaryObservation = sitePreliminaryObservationMapper.toEntity(sitePreliminaryObservationDto, inspectionSite);
        SitePreliminaryObservation persistedSitePreliminaryObservation = sitePreliminaryObservationRepository.save(sitePreliminaryObservation);
        return sitePreliminaryObservationMapper.toDto(persistedSitePreliminaryObservation);
     }
@@ -57,8 +57,8 @@ public class InspectionSitePreliminaryObservationService {
             String errMsg = String.format("sitePreliminaryObservation with id %s does not exist in system", id);
             throw new InspectionSitePreliminaryObservationNotFoundException(errMsg);
         }
-        sitePreliminaryObservationMapper.toEditEntity(sitePreliminaryObservation, sitePreliminaryObservationDto);
-        SitePreliminaryObservation persistedSitePreliminaryObservation = sitePreliminaryObservationRepository.save(sitePreliminaryObservation);
+        SitePreliminaryObservation editedSitePreliminaryObservation = sitePreliminaryObservationMapper.toEditEntity(sitePreliminaryObservation, sitePreliminaryObservationDto, inspectionSite);
+        SitePreliminaryObservation persistedSitePreliminaryObservation = sitePreliminaryObservationRepository.save(editedSitePreliminaryObservation);
         return sitePreliminaryObservationMapper.toDto(persistedSitePreliminaryObservation);
     }
 
@@ -71,10 +71,10 @@ public class InspectionSitePreliminaryObservationService {
         sitePreliminaryObservationRepository.deleteById(id);
     }
 
-    public SitePreliminaryObservationDto getSitePreliminaryObservation(Long id){
-        SitePreliminaryObservation sitePreliminaryObservation = sitePreliminaryObservationRepository.findById(id).orElse(null);
+    public SitePreliminaryObservationDto getSitePreliminaryObservation(Long inspectionSiteId){
+        SitePreliminaryObservation sitePreliminaryObservation = sitePreliminaryObservationRepository.findByInspectionSiteId(inspectionSiteId).orElse(null);
         if (sitePreliminaryObservation == null) {
-            String errMsg = String.format("sitePreliminaryObservation with id %s does not exist in system", id);
+            String errMsg = String.format("sitePreliminaryObservation with inspectionSiteId %s does not exist in system", inspectionSiteId);
             throw new InspectionSitePreliminaryObservationNotFoundException(errMsg);
         }
         return sitePreliminaryObservationMapper.toDto(sitePreliminaryObservation);

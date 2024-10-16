@@ -16,16 +16,13 @@ import java.util.stream.Collectors;
 @Service
 public class InspectionSiteAckService {
 
-    private final ApUserService apUserService;
     private final InspectionSiteAcknowledgementMapper inspectionSiteAcknowledgementMapper;
     private final InspectionSiteRepository inspectionSiteRepository;
     private final InspectionSiteAcknowledgmentRepository inspectionSiteAcknowledgmentRepository;
 
-    public InspectionSiteAckService(ApUserService apUserService,
-                                    InspectionSiteAcknowledgementMapper inspectionSiteAcknowledgementMapper,
+    public InspectionSiteAckService(InspectionSiteAcknowledgementMapper inspectionSiteAcknowledgementMapper,
                                     InspectionSiteRepository inspectionSiteRepository,
                                     InspectionSiteAcknowledgmentRepository inspectionSiteAcknowledgmentRepository) {
-        this.apUserService = apUserService;
         this.inspectionSiteRepository = inspectionSiteRepository;
         this.inspectionSiteAcknowledgementMapper = inspectionSiteAcknowledgementMapper;
         this.inspectionSiteAcknowledgmentRepository = inspectionSiteAcknowledgmentRepository;
@@ -37,7 +34,7 @@ public class InspectionSiteAckService {
             String errMsg = String.format("InspectionSite with id %s does not exist in system", inspectionSiteAckDto.getInspectionId());
             throw new InspectionSiteNotFound(errMsg);
         }
-        InspectionSiteAcknowledgement inspectionSiteAcknowledgement = inspectionSiteAcknowledgementMapper.toEntity(inspectionSiteAckDto);
+        InspectionSiteAcknowledgement inspectionSiteAcknowledgement = inspectionSiteAcknowledgementMapper.toEntity(inspectionSiteAckDto, inspectionSite);
         InspectionSiteAcknowledgement savedInspectionSiteAcknowledgement = inspectionSiteAcknowledgmentRepository.save(inspectionSiteAcknowledgement);
         return inspectionSiteAcknowledgementMapper.toDto(savedInspectionSiteAcknowledgement);
     }
@@ -53,12 +50,14 @@ public class InspectionSiteAckService {
             String errMsg = String.format("InspectionSiteAcknowledgement with id %s does not exist in system", id);
             throw new InspectionSiteAckNotFoundException(errMsg);
         }
-        InspectionSiteAcknowledgement editedInspectionSiteAcknowledgement = inspectionSiteAcknowledgementMapper.toEditEntity(inspectionSiteAcknowledgement,inspectionSiteAckDto);
-        InspectionSiteAcknowledgement savedInspectionSiteAcknowledgement = inspectionSiteAcknowledgmentRepository.save(inspectionSiteAcknowledgement);
+        InspectionSiteAcknowledgement editedInspectionSiteAcknowledgement = inspectionSiteAcknowledgementMapper.toEditEntity(inspectionSiteAcknowledgement,
+                inspectionSiteAckDto,
+                inspectionSite);
+        InspectionSiteAcknowledgement savedInspectionSiteAcknowledgement = inspectionSiteAcknowledgmentRepository.save(editedInspectionSiteAcknowledgement);
         return inspectionSiteAcknowledgementMapper.toDto(savedInspectionSiteAcknowledgement);
     }
 
-    public void deleteInspectionSiteAcknowledgement(Long id){
+    public void deleteInspectionSiteAcknowledgement(Long id) {
         InspectionSiteAcknowledgement inspectionSiteAcknowledgement = inspectionSiteAcknowledgmentRepository.findById(id).orElse(null);
         if (inspectionSiteAcknowledgement == null) {
             String errMsg = String.format("InspectionSiteAcknowledgement with id %s does not exist in system", id);
@@ -67,7 +66,7 @@ public class InspectionSiteAckService {
         inspectionSiteAcknowledgmentRepository.deleteById(id);
     }
 
-    public List<InspectionSiteAckDto> getAllAckByInspectionId(Long inspectionId){
+    public List<InspectionSiteAckDto> getAllAckByInspectionId(Long inspectionId) {
         InspectionSite inspectionSite = inspectionSiteRepository.findById(inspectionId).orElse(null);
         if (inspectionSite == null) {
             String errMsg = String.format("InspectionSite with id %s does not exist in system", inspectionId);

@@ -15,5 +15,5 @@ import java.util.List;
 public class EditInspectionSiteAckRequest {
     private Long inspectionId;
     private LocalDate inspectionDate;
-    private List<SiteAckResponse> acknowledgements;
+    private List<InspectionSiteAckDto> acknowledgements;
 }

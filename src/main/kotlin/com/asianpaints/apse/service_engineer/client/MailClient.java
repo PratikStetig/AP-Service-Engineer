@@ -1,6 +1,7 @@
 package com.asianpaints.apse.service_engineer.client;
 
 import com.asianpaints.apse.service_engineer.model.EmailDetails;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -9,17 +10,14 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@RequiredArgsConstructor
 public class MailClient {
 
     @Value("${mail.from}")
     private String mailFrom;
     @Value("${mail.trigger.endpoint.base-url}")
     private String baseUrl;
-    private RestTemplate restTemplate;
-
-    public MailClient(RestTemplate restTemplate){
-        this.restTemplate = restTemplate;
-    }
+    private final RestTemplate restTemplate;
 
     public void sendMail(EmailDetails emailDetails){
         HttpHeaders headers = new HttpHeaders();

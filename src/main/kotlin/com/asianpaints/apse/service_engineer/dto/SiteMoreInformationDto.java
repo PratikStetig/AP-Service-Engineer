@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SiteMoreInformationDto {
     private Long id;
-    private Long inspectionSiteId;
+    private Long corrosivityEnvironmentId;
     private String possibleSurfacePreparation;
     private String recoatingInterval;
     private String serviceLife;

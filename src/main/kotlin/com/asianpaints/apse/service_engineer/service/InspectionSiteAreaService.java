@@ -35,7 +35,7 @@ public class InspectionSiteAreaService {
             String errMsg = String.format("InspectionSite with id %s does not exist in system", siteAreaDto.getInspectionSiteId());
             throw new InspectionSiteNotFound(errMsg);
         }
-        SiteArea siteArea = siteAreaMapper.toEntity(siteAreaDto);
+        SiteArea siteArea = siteAreaMapper.toEntity(siteAreaDto,inspectionSite);
         SiteArea persistedSiteArea = siteAreaRepository.save(siteArea);
         return siteAreaMapper.toDto(persistedSiteArea);
     }
@@ -51,8 +51,8 @@ public class InspectionSiteAreaService {
             String errMsg = String.format("SiteArea with id %s does not exist in system", id);
             throw new SiteAreaNotFoundException(errMsg);
         }
-        siteAreaMapper.toEditEntity(siteArea,siteAreaDto);
-        SiteArea persistedSiteArea = siteAreaRepository.save(siteArea);
+        SiteArea editedSiteArea = siteAreaMapper.toEditEntity(siteArea,siteAreaDto,inspectionSite);
+        SiteArea persistedSiteArea = siteAreaRepository.save(editedSiteArea);
         return siteAreaMapper.toDto(persistedSiteArea);
     }
 

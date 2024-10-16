@@ -18,8 +18,9 @@ public class SitePreliminaryObservation {
     @Id
     @Column(name = "id")
     private Long id;
-    @Column(name = "inspection_site_id")
-    private Long inspectionSiteId;
+    @OneToOne
+    @JoinColumn(name = "inspection_site_id")
+    private InspectionSite inspectionSite;
     private boolean ruralArea;
     private boolean urbanArea;
     private boolean coastalArea;

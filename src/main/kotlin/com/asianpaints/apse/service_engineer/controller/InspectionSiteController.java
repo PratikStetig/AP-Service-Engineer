@@ -1,16 +1,8 @@
 package com.asianpaints.apse.service_engineer.controller;
 
-import com.asianpaints.apse.service_engineer.dto.InspectionSiteAckDto;
-import com.asianpaints.apse.service_engineer.dto.InspectionSiteRequest;
-import com.asianpaints.apse.service_engineer.dto.InspectionSiteResponse;
-import com.asianpaints.apse.service_engineer.dto.SitePreliminaryObservationDto;
-import com.asianpaints.apse.service_engineer.exception.InspectionSiteAckNotFoundException;
-import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound;
-import com.asianpaints.apse.service_engineer.exception.InspectionSitePreliminaryObservationNotFoundException;
-import com.asianpaints.apse.service_engineer.exception.UserNotFoundException;
-import com.asianpaints.apse.service_engineer.service.InspectionSiteAckService;
-import com.asianpaints.apse.service_engineer.service.InspectionSitePreliminaryObservationService;
-import com.asianpaints.apse.service_engineer.service.InspectionSiteService;
+import com.asianpaints.apse.service_engineer.dto.*;
+import com.asianpaints.apse.service_engineer.exception.*;
+import com.asianpaints.apse.service_engineer.service.*;
 import com.asianpaints.apse.service_engineer.validator.InspectionSiteValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +19,9 @@ public class InspectionSiteController {
     private final InspectionSiteValidator inspectionSiteValidator;
     private final InspectionSiteAckService inspectionSiteAckService;
     private final InspectionSitePreliminaryObservationService inspectionSitePreliminaryObservationService;
+    private final InspectionSiteAreaService inspectionSiteAreaService;
+    private final SiteCorrosivityEnvironmentService siteCorrosivityEnvironmentService;
+    private final SiteMoreInformationService siteMoreInformationService;
 
     @PostMapping("/inspection-site")
     public ResponseEntity<Object> createInspectionSite(@RequestBody InspectionSiteRequest inspectionSiteRequest) {
@@ -72,6 +67,262 @@ public class InspectionSiteController {
             InspectionSiteResponse inspectionSiteResponse = inspectionSiteService.getInspectionSite(id);
             return ResponseEntity.ok(inspectionSiteResponse);
         } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/inspection-site/acknowledgments/")
+    public ResponseEntity<Object> createInspectionSiteAcknowledgment(@RequestBody InspectionSiteAckDto inspectionSiteAckDto) {
+        try {
+            InspectionSiteAckDto createdinspectionSiteAckDto = inspectionSiteAckService.createInspectionSiteAcknowledgement(inspectionSiteAckDto);
+            return ResponseEntity.ok(createdinspectionSiteAckDto);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PutMapping("/inspection-site/acknowledgments/{ackId}")
+    public ResponseEntity<Object> editInspectionSiteAcknowledgment(@PathVariable Long ackId, @RequestBody InspectionSiteAckDto inspectionSiteAckDto) {
+        try {
+            InspectionSiteAckDto editedinspectionSiteAckDto = inspectionSiteAckService.editInspectionSiteAcknowledgement(ackId, inspectionSiteAckDto);
+            return ResponseEntity.ok(editedinspectionSiteAckDto);
+        } catch (InspectionSiteNotFound | InspectionSiteAckNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/inspection-site/acknowledgments/{ackId}")
+    public ResponseEntity<Object> deleteInspectionSiteAcknowledgment(@PathVariable Long ackId) {
+        try {
+            inspectionSiteAckService.deleteInspectionSiteAcknowledgement(ackId);
+            return ResponseEntity.noContent().build();
+        } catch (InspectionSiteAckNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/acknowledgments/")
+    public ResponseEntity<Object> getAllAcknowledgmentByInspectionSite(@PathVariable Long inspectionSiteId) {
+        try {
+            List<InspectionSiteAckDto> inspectionSiteAckDtos = inspectionSiteAckService.getAllAckByInspectionId(inspectionSiteId);
+            return ResponseEntity.ok(inspectionSiteAckDtos);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/inspection-site/preliminary-observation/")
+    public ResponseEntity<Object> createPreliminaryObservation(@RequestBody SitePreliminaryObservationDto sitePreliminaryObservationDto) {
+        try {
+            SitePreliminaryObservationDto createdSitePreliminaryObservationDto = inspectionSitePreliminaryObservationService.createSitePreliminaryObservation(sitePreliminaryObservationDto);
+            return ResponseEntity.ok(createdSitePreliminaryObservationDto);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PutMapping("/inspection-site/preliminary-observation/{observationId}")
+    public ResponseEntity<Object> editPreliminaryObservation(@PathVariable Long observationId, @RequestBody SitePreliminaryObservationDto sitePreliminaryObservationDto) {
+        try {
+            SitePreliminaryObservationDto editedSitePreliminaryObservationDto = inspectionSitePreliminaryObservationService.editSitePreliminaryObservation(observationId, sitePreliminaryObservationDto);
+            return ResponseEntity.ok(editedSitePreliminaryObservationDto);
+        } catch (InspectionSiteNotFound | InspectionSitePreliminaryObservationNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/inspection-site/preliminary-observation/{observationId}")
+    public ResponseEntity<Object> deletePreliminaryObservation(@PathVariable Long observationId) {
+        try {
+            inspectionSitePreliminaryObservationService.deleteSitePreliminaryObservation(observationId);
+            return ResponseEntity.noContent().build();
+        } catch (InspectionSitePreliminaryObservationNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/preliminary-observation/")
+    public ResponseEntity<Object> getPreliminaryObservationByInspectionSite(@PathVariable Long inspectionSiteId) {
+        try {
+            SitePreliminaryObservationDto sitePreliminaryObservationDto = inspectionSitePreliminaryObservationService.getSitePreliminaryObservation(inspectionSiteId);
+            return ResponseEntity.ok(sitePreliminaryObservationDto);
+        } catch (InspectionSitePreliminaryObservationNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/inspection-site/areas/")
+    public ResponseEntity<Object> createInspectionSiteArea(@RequestBody SiteAreaDto siteAreaDto) {
+        try {
+            SiteAreaDto createdSiteAreaDto = inspectionSiteAreaService.createSiteArea(siteAreaDto);
+            return ResponseEntity.ok(createdSiteAreaDto);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PutMapping("/inspection-site/areas/{areaId}")
+    public ResponseEntity<Object> editInspectionSiteArea(@PathVariable Long areaId, @RequestBody SiteAreaDto siteAreaDto) {
+        try {
+            SiteAreaDto editedSiteAreaDto = inspectionSiteAreaService.editSiteArea(areaId, siteAreaDto);
+            return ResponseEntity.ok(editedSiteAreaDto);
+        } catch (InspectionSiteNotFound | SiteAreaNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/inspection-site/areas/{areaId}")
+    public ResponseEntity<Object> deleteInspectionSiteArea(@PathVariable Long areaId) {
+        try {
+            inspectionSiteAreaService.deleteSiteArea(areaId);
+            return ResponseEntity.noContent().build();
+        } catch (SiteAreaNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/areas/")
+    public ResponseEntity<Object> getAllAreasByInspectionSite(@PathVariable Long inspectionSiteId) {
+        try {
+            List<SiteAreaDto> siteAreaDtos = inspectionSiteAreaService.getAllSiteAreaByInspectionId(inspectionSiteId);
+            return ResponseEntity.ok(siteAreaDtos);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/inspection-site/areas/corrosivity-environment/")
+    public ResponseEntity<Object> createSiteCorrosivityEnvironment(@RequestBody SiteCorrosivityEnvironmentDto siteCorrosivityEnvironmentDto) {
+        try {
+            SiteCorrosivityEnvironmentResponse createdSiteCorrosivityEnvironmentResponse = siteCorrosivityEnvironmentService.createSiteCorrosivityEnvironment(siteCorrosivityEnvironmentDto);
+            return ResponseEntity.ok(createdSiteCorrosivityEnvironmentResponse);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PutMapping("/inspection-site/areas/corrosivity-environment/{corrosivityEnvironmetId}")
+    public ResponseEntity<Object> editSiteCorrosivityEnvironment(@PathVariable Long corrosivityEnvironmetId, @RequestBody SiteCorrosivityEnvironmentDto siteCorrosivityEnvironmentDto) {
+        try {
+            SiteCorrosivityEnvironmentResponse createdSiteCorrosivityEnvironmentResponse = siteCorrosivityEnvironmentService.editSiteCorrosivityEnvironment(corrosivityEnvironmetId, siteCorrosivityEnvironmentDto);
+            return ResponseEntity.ok(createdSiteCorrosivityEnvironmentResponse);
+        } catch (InspectionSiteNotFound | SiteCorrosivityEnvironmentNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("/inspection-site/areas/corrosivity-environment/{corrosivityEnvironmetId}")
+    public ResponseEntity<Object> deleteSiteCorrosivityEnvironment(@PathVariable Long corrosivityEnvironmetId) {
+        try {
+            siteCorrosivityEnvironmentService.deleteSiteCorrosivityEnvironmentDto(corrosivityEnvironmetId);
+            return ResponseEntity.noContent().build();
+        } catch (SiteCorrosivityEnvironmentNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/areas/corrosivity-environment/")
+    public ResponseEntity<Object> getAllSiteCorrosivityEnvironmentByInspectionId(@PathVariable Long inspectionSiteId) {
+        try {
+            List<SiteCorrosivityEnvironmentResponse> siteCorrosivityEnvironmentResponses = siteCorrosivityEnvironmentService.getAllCorrosivityEnvironmentByInspectionId(inspectionSiteId);
+            return ResponseEntity.ok(siteCorrosivityEnvironmentResponses);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("/inspection-site/areas/corrosivity-environment/more-information/")
+    public ResponseEntity<Object> createSiteCorrosivityEnvironmentMoreInformation(@RequestBody SiteMoreInformationDto siteMoreInformationDto) {
+        try {
+            SiteMoreInformationDto createdSiteMoreInformationDto = siteMoreInformationService.createSiteMoreInformation(siteMoreInformationDto);
+            return ResponseEntity.ok(createdSiteMoreInformationDto);
+        } catch (SiteCorrosivityEnvironmentNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+    @PutMapping("/inspection-site/areas/corrosivity-environment/more-information/{moreInformationId}")
+    public ResponseEntity<Object> editSiteCorrosivityEnvironmentMoreInformation(@PathVariable Long moreInformationId, @RequestBody SiteMoreInformationDto siteMoreInformationDto) {
+        try {
+            SiteMoreInformationDto editedSiteMoreInformationDto = siteMoreInformationService.editSiteMoreInformation(moreInformationId,siteMoreInformationDto);
+            return ResponseEntity.ok(editedSiteMoreInformationDto);
+        } catch (SiteCorrosivityEnvironmentNotFoundException | SiteMoreInformationNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("/inspection-site/areas/corrosivity-environment/more-information/{moreInformationId}")
+    public ResponseEntity<Object> deleteSiteCorrosivityEnvironmentMoreInformation(@PathVariable Long moreInformationId) {
+        try {
+           siteMoreInformationService.deleteSiteMoreInformation(moreInformationId);
+            return ResponseEntity.noContent().build();
+        } catch (SiteMoreInformationNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/inspection-site/areas/corrosivity-environment/{corrosivityEnvironmetId}/more-information/")
+    public ResponseEntity<Object> getSiteCorrosivityEnvironmentMoreInformation(@PathVariable Long corrosivityEnvironmetId) {
+        try {
+            SiteMoreInformationDto siteMoreInformationDto = siteMoreInformationService.getSiteMoreInformation(corrosivityEnvironmetId);
+            return ResponseEntity.ok(siteMoreInformationDto);
+        } catch (SiteMoreInformationNotFoundException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());

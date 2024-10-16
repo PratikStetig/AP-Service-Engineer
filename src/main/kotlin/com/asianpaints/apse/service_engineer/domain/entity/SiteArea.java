@@ -18,8 +18,9 @@ public class SiteArea {
     @Id
     @Column(name = "id")
     private Long id;
-    @Column(name = "inspection_site_id")
-    private Long inspectionSiteId;
+    @ManyToOne
+    @JoinColumn(name = "inspection_site_id")
+    private InspectionSite inspectionSite;
     private String area;
     @Column(name = "coating_condition")
     private String coatingCondition;

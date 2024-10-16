@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class SiteAreaDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long inspectionSiteId;
     private String area;
     private String coatingCondition;

@@ -18,8 +18,9 @@ public class SiteMoreInformation {
     @Id
     @Column(name = "id")
     private Long id;
-    @Column(name = "inspection_site_id")
-    private Long inspectionSiteId;
+    @OneToOne
+    @JoinColumn(name = "corrosivity_environment_id")
+    private SiteCorrosivityEnvironment siteCorrosivityEnvironment;
     @Column(name = "possible_surface_preparation")
     private String possibleSurfacePreparation;
     @Column(name = "recoating_interval")
