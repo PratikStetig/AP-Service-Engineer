@@ -7,7 +7,7 @@ import com.asianpaints.apse.service_engineer.dto.CoatingSystemDto
 
 object CoatingSystemMapper {
 
-    fun toEntity(dto: CoatingSystemDto, inspectionReport: InspectionSite, products: List<ProductMaster>): CoatingSystem {
+    fun toEntity(dto: CoatingSystemDto, inspectionReport: InspectionSite, products: MutableList<ProductMaster>): CoatingSystem {
         return CoatingSystem(
             id = dto.id,
             coatingSystemName = dto.coatingSystemName,

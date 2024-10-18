@@ -1,6 +1,8 @@
 package com.asianpaints.apse.service_engineer.domain.entity
 
 
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
 
 @Entity
@@ -13,31 +15,31 @@ data class CoatingSystem(
     val id: Long = 0,
 
     @Column(name = "coating_system_name", columnDefinition = "TEXT")
-    val coatingSystemName: String,
+    var coatingSystemName: String,
 
     @Column(name = "corrosivity_level")
-    val corrosivityLevel: String,  // Drop-down should be implemented on the frontend
+    var corrosivityLevel: String,  // Drop-down should be implemented on the frontend
 
     @Column(name = "type_of_structures", columnDefinition = "TEXT")
-    val typeOfStructures: String,
+    var typeOfStructures: String,
 
     @Column(name = "surface_preparation", columnDefinition = "TEXT")
-    val surfacePreparation: String,
+    var surfacePreparation: String,
 
     @Column(name = "srfa_bare_metal", columnDefinition = "TEXT")
-    val srfaBareMetal: String,
+    var srfaBareMetal: String,
 
     @Column(name = "paint")
-    val paint: Boolean,
+    var paint: Boolean,
 
     @Column(name = "spary")
-    val spray: Boolean,
+    var spray: Boolean,
 
     @Column(name = "WFT")
-    val wft: Double,
+    var wft: Double,
 
     @Column(name = "DFT")
-    val dft: Double,
+    var dft: Double,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inspection_site_id")
@@ -49,6 +51,7 @@ data class CoatingSystem(
         joinColumns = [JoinColumn(name = "coating_system_id")],
         inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
-    val products: List<ProductMaster> = mutableListOf()
+    @OnDelete(action = OnDeleteAction.CASCADE)  // Cascade delete for related Products
+    val products: MutableList<ProductMaster> = mutableListOf()  // Make this mutable
 )
 
