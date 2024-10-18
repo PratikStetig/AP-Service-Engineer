@@ -20,7 +20,7 @@ public class InspectionSite {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "id")
-    private Long id;
+    public Long id;
     @Column(name = "report_name")
     private String reportName;
     @Column(name = "conducted_at")

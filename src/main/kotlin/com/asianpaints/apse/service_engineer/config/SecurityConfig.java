@@ -77,5 +77,10 @@ public class SecurityConfig {
             "/api/v1/users/signup",
             "/api/v1/users/designation",
             "/api/v1/users/type",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**",
+            "/**"
         };
 }
