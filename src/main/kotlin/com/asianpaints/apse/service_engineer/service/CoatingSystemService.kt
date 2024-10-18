@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service
 @Service
 class CoatingSystemService(
     private val coatingSystemRepository: CoatingSystemRepository,
-    private val inspectionReportRepository: InspectionSiteRepository,
-    private val productMasterRepository: ProductMasterRepository
+    private val inspectionSiteRepository: InspectionSiteRepository,
+    private val productMasterRepository: ProductMasterRepository,
 ) {
 
     fun addCoatingSystem(coatingSystemDto: CoatingSystemDto): CoatingSystem {
-        val inspectionReport = inspectionReportRepository.findById(coatingSystemDto.inspectionReportId).orElseThrow { throw InspectionSiteNotFound("Inspection Report not found") }
+        val inspectionReport = inspectionSiteRepository.findById(coatingSystemDto.inspectionReportId).orElseThrow { throw InspectionSiteNotFound("Inspection Report not found") }
 
         val products = productMasterRepository.findAllById(coatingSystemDto.products)
 
@@ -27,5 +27,14 @@ class CoatingSystemService(
         val coatingSystem = CoatingSystemMapper.toEntity(coatingSystemDto, inspectionReport, products)
 
         return coatingSystemRepository.save(coatingSystem)
+    }
+
+
+    fun getAllCoatingSystemByInspectionId(inspectionId: Long): List<CoatingSystemDto> {
+        inspectionSiteRepository.findById(inspectionId).orElseThrow {
+            throw InspectionSiteNotFound(String.format("InspectionSite with id %s does not exist in system", inspectionId))
+        }
+        val inspectionSiteAcknowledgements: List<CoatingSystem> = coatingSystemRepository.getCoatingSystemByInspectionId(inspectionId)
+        return inspectionSiteAcknowledgements.map { CoatingSystemMapper.toDto(it) }
     }
 }

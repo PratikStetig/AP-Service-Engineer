@@ -19,7 +19,7 @@ object CoatingSystemMapper {
             spray = dto.spray,
             wft = dto.wft,
             dft = dto.dft,
-            inspectionReport = inspectionReport,
+            inspectionSiteId = inspectionReport,
             products = products
         )
     }
@@ -36,7 +36,7 @@ object CoatingSystemMapper {
             spray = entity.spray,
             wft = entity.wft,
             dft = entity.dft,
-            inspectionReportId = entity.inspectionReport.id,
+            inspectionReportId = entity.inspectionSiteId.id,
             products = entity.products.map { it.id }
         )
     }

@@ -40,8 +40,8 @@ data class CoatingSystem(
     val dft: Double,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "inspection_report_id")
-    val inspectionReport: InspectionSite,
+    @JoinColumn(name = "inspection_site_id")
+    val inspectionSiteId: InspectionSite,
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
