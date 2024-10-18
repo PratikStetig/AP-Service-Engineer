@@ -8,9 +8,11 @@ import com.asianpaints.apse.service_engineer.dto.InspectionSiteResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
-public class InspectionSiteMapperImpl implements InspectionSiteMapper{
+public class InspectionSiteMapperImpl implements InspectionSiteMapper {
     @Override
     public InspectionSite toEntity(InspectionSiteRequest inspectionSiteRequest, ApUser user) {
         return InspectionSite.builder()
@@ -25,7 +27,7 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper{
                 .status(InspectionSiteStatus.Draft)
                 .inspectionDate(inspectionSiteRequest.getInspectionDate())
                 .build();
-     }
+    }
 
     @Override
     public InspectionSite toEditEntity(InspectionSite inspectionSite, InspectionSiteRequest inspectionSiteRequest, ApUser user) {
@@ -53,11 +55,17 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper{
                 .city(inspectionSite.getCity())
                 .state(inspectionSite.getState())
                 .conductedAt(inspectionSite.getConductedAt())
-                .conductedBy (inspectionSite.getConductedBy().getId())
+                .conductedBy(inspectionSite.getConductedBy().getId())
                 .imageUrl(inspectionSite.getImageUrl())
                 .status(inspectionSite.getStatus())
                 .inspectionDate(inspectionSite.getInspectionDate())
                 .build();
+    }
+
+    public List<InspectionSiteResponse> toDtoList(List<InspectionSite> inspectionSites) {
+        return inspectionSites.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
 }

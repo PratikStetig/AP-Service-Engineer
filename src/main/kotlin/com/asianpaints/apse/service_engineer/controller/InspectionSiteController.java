@@ -74,6 +74,18 @@ public class InspectionSiteController {
 
     }
 
+    @GetMapping("/inspection-site/user/{id}")
+    public ResponseEntity<Object> getInspectionSiteUser(@PathVariable Long id) {
+        try {
+            List<InspectionSiteResponse> inspectionSiteResponse = inspectionSiteService.getInspectionSiteConductedBy(id);
+            return ResponseEntity.ok(inspectionSiteResponse);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
     @PostMapping("/inspection-site/acknowledgments/")
     public ResponseEntity<Object> createInspectionSiteAcknowledgment(@RequestBody InspectionSiteAckDto inspectionSiteAckDto) {
         try {
@@ -291,10 +303,11 @@ public class InspectionSiteController {
         }
 
     }
+
     @PutMapping("/inspection-site/areas/corrosivity-environment/more-information/{moreInformationId}")
     public ResponseEntity<Object> editSiteCorrosivityEnvironmentMoreInformation(@PathVariable Long moreInformationId, @RequestBody SiteMoreInformationDto siteMoreInformationDto) {
         try {
-            SiteMoreInformationDto editedSiteMoreInformationDto = siteMoreInformationService.editSiteMoreInformation(moreInformationId,siteMoreInformationDto);
+            SiteMoreInformationDto editedSiteMoreInformationDto = siteMoreInformationService.editSiteMoreInformation(moreInformationId, siteMoreInformationDto);
             return ResponseEntity.ok(editedSiteMoreInformationDto);
         } catch (SiteCorrosivityEnvironmentNotFoundException | SiteMoreInformationNotFoundException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
@@ -307,7 +320,7 @@ public class InspectionSiteController {
     @DeleteMapping("/inspection-site/areas/corrosivity-environment/more-information/{moreInformationId}")
     public ResponseEntity<Object> deleteSiteCorrosivityEnvironmentMoreInformation(@PathVariable Long moreInformationId) {
         try {
-           siteMoreInformationService.deleteSiteMoreInformation(moreInformationId);
+            siteMoreInformationService.deleteSiteMoreInformation(moreInformationId);
             return ResponseEntity.noContent().build();
         } catch (SiteMoreInformationNotFoundException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());

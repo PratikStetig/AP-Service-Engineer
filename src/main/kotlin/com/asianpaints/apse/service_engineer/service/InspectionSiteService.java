@@ -11,6 +11,8 @@ import com.asianpaints.apse.service_engineer.repository.InspectionSiteRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class InspectionSiteService {
@@ -49,5 +51,16 @@ public class InspectionSiteService {
             throw new InspectionSiteNotFound(errMsg);
         }
         return inspectionSiteMapper.toDto(inspectionSite);
+    }
+
+    public List<InspectionSiteResponse> getInspectionSiteConductedBy(Long conductedBy) {
+        List<InspectionSite> inspectionSite = inspectionSiteRepository.findAllInspectionSiteConductedBy(conductedBy);
+        if (inspectionSite == null) {
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", conductedBy);
+            throw new InspectionSiteNotFound(errMsg);
+        }
+
+
+        return inspectionSiteMapper.toDtoList(inspectionSite);
     }
 }
