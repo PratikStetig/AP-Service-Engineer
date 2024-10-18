@@ -3,6 +3,7 @@ package com.asianpaints.apse.service_engineer.controller;
 import com.asianpaints.apse.service_engineer.domain.entity.Zone;
 import com.asianpaints.apse.service_engineer.service.ZoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ZoneController {
 
+    @Autowired
     private ZoneService zoneService;
 
     @GetMapping()

@@ -13,6 +13,7 @@ import com.asianpaints.apse.service_engineer.validator.AddUserRequestValidator;
 import com.asianpaints.apse.service_engineer.validator.EditUserRequestValidator;
 import com.asianpaints.apse.service_engineer.validator.SignUpRequestValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApUserController {
 
+    @Autowired
     private final ApUserService apUserService;
     private final SignUpRequestValidator signUpRequestValidator;
     private final AddUserRequestValidator addUserRequestValidator;

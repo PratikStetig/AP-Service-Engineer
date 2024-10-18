@@ -14,7 +14,7 @@
 	<version>1.0.0</version>
 	<name>service-engineer</name>
 	<description>Demo project for Spring Boot</description>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -154,5 +154,39 @@
 			</plugin>
 		</plugins>
 	</build>
+
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<build>
+				<finalName>${project.artifactId}-dev</finalName>
+				<filters>
+					<filter>src/main/resources/application-dev.properties</filter>
+				</filters>
+			</build>
+
+		</profile>
+		<profile>
+			<id>uat</id>
+			<build>
+				<finalName>${project.artifactId}-uat</finalName>
+				<filters>
+					<filter>src/main/resources/application-uat.properties</filter>
+				</filters>
+			</build>
+
+		</profile>
+		<profile>
+			<id>live</id>
+			<build>
+				<finalName>${project.artifactId}-live</finalName>
+				<filters>
+					<filter>src/main/resources/application-live.properties</filter>
+				</filters>
+			</build>
+
+		</profile>
+	</profiles>
 
 </project>
