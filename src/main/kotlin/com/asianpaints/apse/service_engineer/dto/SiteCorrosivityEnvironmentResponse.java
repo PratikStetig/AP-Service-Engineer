@@ -31,4 +31,14 @@ public class SiteCorrosivityEnvironmentResponse {
     private String imageUrl2;
     private String imageUrl3;
     private Set<SiteAreaDto> siteAreas;
+
+    /*------------------ ADD MORE INFORMATION MERGE------------------------*/
+    private String possibleSurfacePreparation;
+    private String recoatingInterval;
+    private String serviceLife;
+    private String shade;
+    private String aesthetic;
+    private String existingPaintingSystem;
+    private String dftExistingSystem;
+    private String remarks;
 }

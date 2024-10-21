@@ -34,6 +34,16 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .imageUrl2(siteCorrosivityEnvironmentDto.getImageUrl2())
                 .imageUrl3(siteCorrosivityEnvironmentDto.getImageUrl3())
                 .siteAreas(siteAreas)
+
+                /*------------------ ADD MORE INFORMATION MERGE------------------------*/
+                .possibleSurfacePreparation(siteCorrosivityEnvironmentDto.getPossibleSurfacePreparation())
+                .recoatingInterval(siteCorrosivityEnvironmentDto.getRecoatingInterval())
+                .serviceLife(siteCorrosivityEnvironmentDto.getServiceLife())
+                .shade(siteCorrosivityEnvironmentDto.getShade())
+                .aesthetic(siteCorrosivityEnvironmentDto.getAesthetic())
+                .existingPaintingSystem(siteCorrosivityEnvironmentDto.getExistingPaintingSystem())
+                .dftExistingSystem(siteCorrosivityEnvironmentDto.getDftExistingSystem())
+                .remarks(siteCorrosivityEnvironmentDto.getRemarks())
                 .build();
     }
 
@@ -60,6 +70,16 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .imageUrl2(siteCorrosivityEnvironmentDto.getImageUrl2())
                 .imageUrl3(siteCorrosivityEnvironmentDto.getImageUrl3())
                 .siteAreas(siteAreas)
+
+                /*------------------ ADD MORE INFORMATION MERGE------------------------*/
+                .possibleSurfacePreparation(siteCorrosivityEnvironmentDto.getPossibleSurfacePreparation())
+                .recoatingInterval(siteCorrosivityEnvironmentDto.getRecoatingInterval())
+                .serviceLife(siteCorrosivityEnvironmentDto.getServiceLife())
+                .shade(siteCorrosivityEnvironmentDto.getShade())
+                .aesthetic(siteCorrosivityEnvironmentDto.getAesthetic())
+                .existingPaintingSystem(siteCorrosivityEnvironmentDto.getExistingPaintingSystem())
+                .dftExistingSystem(siteCorrosivityEnvironmentDto.getDftExistingSystem())
+                .remarks(siteCorrosivityEnvironmentDto.getRemarks())
                 .build();
 
     }
@@ -84,6 +104,17 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .imageUrl2(siteCorrosivityEnvironment.getImageUrl2())
                 .imageUrl3(siteCorrosivityEnvironment.getImageUrl3())
                 .siteAreas(getAreas(siteCorrosivityEnvironment.getSiteAreas()))
+
+                /*------------------ ADD MORE INFORMATION MERGE------------------------*/
+                .possibleSurfacePreparation(siteCorrosivityEnvironment.getPossibleSurfacePreparation())
+                .recoatingInterval(siteCorrosivityEnvironment.getRecoatingInterval())
+                .serviceLife(siteCorrosivityEnvironment.getServiceLife())
+                .shade(siteCorrosivityEnvironment.getShade())
+                .aesthetic(siteCorrosivityEnvironment.getAesthetic())
+                .existingPaintingSystem(siteCorrosivityEnvironment.getExistingPaintingSystem())
+                .dftExistingSystem(siteCorrosivityEnvironment.getDftExistingSystem())
+                .remarks(siteCorrosivityEnvironment.getRemarks())
+
                 .build();
     }
 

@@ -1,8 +1,7 @@
 package com.asianpaints.apse.service_engineer.controller
 
-import com.asianpaints.apse.service_engineer.domain.entity.CoatingSystem
 import com.asianpaints.apse.service_engineer.dto.CoatingSystemDto
-import com.asianpaints.apse.service_engineer.dto.InspectionSiteAckDto
+import com.asianpaints.apse.service_engineer.dto.CoatingSystemResponse
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound
 import com.asianpaints.apse.service_engineer.exception.ProductLimitException
 import com.asianpaints.apse.service_engineer.service.CoatingSystemService
@@ -53,7 +52,7 @@ class CoatingSystemController(private val coatingSystemService: CoatingSystemSer
     }
 
     @PutMapping("/{id}")
-    fun updateCoatingSystem(@PathVariable id: Long, @RequestBody coatingSystemDto: CoatingSystemDto): ResponseEntity<CoatingSystemDto> {
+    fun updateCoatingSystem(@PathVariable id: Long, @RequestBody coatingSystemDto: CoatingSystemDto): ResponseEntity<CoatingSystemResponse> {
         return try {
             val updatedCoatingSystem = coatingSystemService.updateCoatingSystem(id, coatingSystemDto)
             ResponseEntity.ok(updatedCoatingSystem)

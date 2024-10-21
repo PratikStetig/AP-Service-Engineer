@@ -17,15 +17,15 @@ public class SiteArea {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "id")
-    private Long id;
+    public Long id;
     @ManyToOne
     @JoinColumn(name = "inspection_site_id")
-    private InspectionSite inspectionSite;
-    private String area;
+    public InspectionSite inspectionSite;
+    public String area;
     @Column(name = "coating_condition")
-    private String coatingCondition;
+    public String coatingCondition;
     @Column(name = "corrosion_type")
     @Enumerated(EnumType.STRING)
-    private CorrosionType corrosionType;
-    private Integer rating;
+    public CorrosionType corrosionType;
+    public Integer rating;
 }

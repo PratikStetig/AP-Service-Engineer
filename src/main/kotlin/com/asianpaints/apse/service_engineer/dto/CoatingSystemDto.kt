@@ -1,7 +1,9 @@
 package com.asianpaints.apse.service_engineer.dto
 
 
-import javax.validation.constraints.*
+import javax.validation.constraints.DecimalMin
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 data class CoatingSystemDto(
     val id: Long = 0,
@@ -36,6 +38,9 @@ data class CoatingSystemDto(
     @field:NotNull(message = "Inspection report ID cannot be null")
     val inspectionReportId: Long,
 
-    val products: List<Long>
-)
+    val products: List<Long>,
+
+    val areaIds: MutableSet<Long>,
+
+    )
 

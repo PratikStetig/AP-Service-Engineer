@@ -52,6 +52,12 @@ data class CoatingSystem(
         inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
     @OnDelete(action = OnDeleteAction.CASCADE)  // Cascade delete for related Products
-    val products: MutableList<ProductMaster> = mutableListOf()  // Make this mutable
+    var products: MutableSet<ProductMaster> = mutableSetOf(),
+
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH]
+    )
+    @JoinTable(name = "AREA_COATING_SYSTEM_MAPPING", joinColumns = [JoinColumn(name = "coating_system_id")], inverseJoinColumns = [JoinColumn(name = "area_id")]) val siteAreas: Set<SiteArea>
 )
 

@@ -1,18 +1,17 @@
 package com.asianpaints.apse.service_engineer.service
 
 import com.asianpaints.apse.service_engineer.domain.entity.CoatingSystem
+import com.asianpaints.apse.service_engineer.domain.entity.SiteArea
 import com.asianpaints.apse.service_engineer.dto.CoatingSystemDto
+import com.asianpaints.apse.service_engineer.dto.CoatingSystemResponse
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound
 import com.asianpaints.apse.service_engineer.exception.ProductLimitException
 import com.asianpaints.apse.service_engineer.mapper.CoatingSystemMapper
 import com.asianpaints.apse.service_engineer.repository.CoatingSystemRepository
 import com.asianpaints.apse.service_engineer.repository.InspectionSiteRepository
 import com.asianpaints.apse.service_engineer.repository.ProductMasterRepository
-import org.springframework.http.ResponseEntity
+import com.asianpaints.apse.service_engineer.repository.SiteAreaRepository
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
 import javax.persistence.EntityNotFoundException
 import javax.transaction.Transactional
 
@@ -21,22 +20,33 @@ class CoatingSystemService(
     private val coatingSystemRepository: CoatingSystemRepository,
     private val inspectionSiteRepository: InspectionSiteRepository,
     private val productMasterRepository: ProductMasterRepository,
+    private val siteAreaRepository: SiteAreaRepository,
 ) {
 
     fun addCoatingSystem(coatingSystemDto: CoatingSystemDto): CoatingSystem {
-        val inspectionReport = inspectionSiteRepository.findById(coatingSystemDto.inspectionReportId).orElseThrow { throw InspectionSiteNotFound("Inspection Report not found") }
-
+        val inspectionSite = inspectionSiteRepository.findById(coatingSystemDto.inspectionReportId).orElseThrow { throw InspectionSiteNotFound("Inspection Report not found") }
         val products = productMasterRepository.findAllById(coatingSystemDto.products)
+        if (products.size > 4) {
+            throw ProductLimitException("Cannot add more than 4 products")
+        }
+        val siteAreas: Set<SiteArea> = siteAreaRepository.findByIds(coatingSystemDto.areaIds)
+        if (siteAreas.isEmpty()) {
+            throw InspectionSiteNotFound(String.format("SiteArea with ids %s does not part of InspectionSite %s in system", coatingSystemDto.areaIds.toString(), inspectionSite.id))
+        }
+        for (siteArea in siteAreas) {
+            if (siteArea.inspectionSite.id != inspectionSite.id) {
+                val errMsg = String.format("SiteArea with id %s does not part of InspectionSite %s in system", siteArea.id, inspectionSite.id)
+                throw InspectionSiteNotFound(errMsg)
+            }
+        }
 
-        if (products.size > 4) throw ProductLimitException("Cannot add more than 4 products")
-
-        val coatingSystem = CoatingSystemMapper.toEntity(coatingSystemDto, inspectionReport, products)
+        val coatingSystem = CoatingSystemMapper.toEntity(coatingSystemDto, inspectionSite, products.toMutableSet(), siteAreas)
 
         return coatingSystemRepository.save(coatingSystem)
     }
 
 
-    fun getAllCoatingSystemByInspectionId(inspectionId: Long): List<CoatingSystemDto> {
+    fun getAllCoatingSystemByInspectionId(inspectionId: Long): List<CoatingSystemResponse> {
         inspectionSiteRepository.findById(inspectionId).orElseThrow {
             throw InspectionSiteNotFound(String.format("InspectionSite with id %s does not exist in system", inspectionId))
         }
@@ -53,9 +63,8 @@ class CoatingSystemService(
     }
 
 
-
     @Transactional
-    fun updateCoatingSystem(id: Long, coatingSystemDto: CoatingSystemDto): CoatingSystemDto {
+    fun updateCoatingSystem(id: Long, coatingSystemDto: CoatingSystemDto): CoatingSystemResponse {
         val existingCoatingSystem = coatingSystemRepository.findById(id).orElseThrow {
             throw EntityNotFoundException("Coating System not found with id: $id")
         }

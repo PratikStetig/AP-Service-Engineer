@@ -51,4 +51,18 @@ public class SiteCorrosivityEnvironment {
     @JoinTable(name = "AREA_CORROSIVITY_ENVIRONMENT_MAPPING", joinColumns = @JoinColumn(name = "corrosivity_environment_id"),
             inverseJoinColumns = @JoinColumn(name = "area_id"))
     private Set<SiteArea> siteAreas;
+
+    @Column(name = "possible_surface_preparation")
+    private String possibleSurfacePreparation;
+    @Column(name = "recoating_interval")
+    private String recoatingInterval;
+    @Column(name = "service_life")
+    private String serviceLife;
+    private String shade;
+    private String aesthetic;
+    @Column(name = "existing_painting_system")
+    private String existingPaintingSystem;
+    @Column(name = "dft_existing_system")
+    private String dftExistingSystem;
+    private String remarks;
 }
