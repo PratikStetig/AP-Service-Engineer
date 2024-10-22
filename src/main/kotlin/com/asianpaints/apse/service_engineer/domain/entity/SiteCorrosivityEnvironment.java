@@ -41,15 +41,8 @@ public class SiteCorrosivityEnvironment {
     private String color;
     @Column(name = "overall_appearance")
     private String overallAppearance;
-    @Column(name = "image_url_1")
-    private String imageUrl1;
-    @Column(name = "image_url_2")
-    private String imageUrl2;
-    @Column(name = "image_url_3")
-    private String imageUrl3;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinTable(name = "AREA_CORROSIVITY_ENVIRONMENT_MAPPING", joinColumns = @JoinColumn(name = "corrosivity_environment_id"),
-            inverseJoinColumns = @JoinColumn(name = "area_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "AREA_CORROSIVITY_ENVIRONMENT_MAPPING", joinColumns = @JoinColumn(name = "corrosivity_environment_id"), inverseJoinColumns = @JoinColumn(name = "area_id"))
     private Set<SiteArea> siteAreas;
 
     @Column(name = "possible_surface_preparation")

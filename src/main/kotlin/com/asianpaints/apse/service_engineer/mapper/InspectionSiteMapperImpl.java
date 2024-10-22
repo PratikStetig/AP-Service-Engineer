@@ -30,6 +30,21 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper {
     }
 
     @Override
+    public InspectionSite toEntityFromResponse(InspectionSiteResponse inspectionSiteResponse) {
+        return InspectionSite.builder()
+                .siteId(inspectionSiteResponse.getSiteId())
+                .createdOn(LocalDateTime.now())
+                .reportName(inspectionSiteResponse.getReportName())
+                .city(inspectionSiteResponse.getCity())
+                .state(inspectionSiteResponse.getState())
+                .conductedAt(inspectionSiteResponse.getConductedAt())
+                .imageUrl(inspectionSiteResponse.getImageUrl())
+                .status(InspectionSiteStatus.Draft)
+                .inspectionDate(inspectionSiteResponse.getInspectionDate())
+                .build();
+    }
+
+    @Override
     public InspectionSite toEditEntity(InspectionSite inspectionSite, InspectionSiteRequest inspectionSiteRequest, ApUser user) {
         InspectionSite.InspectionSiteBuilder inspectionSiteBuilder = inspectionSite.toBuilder();
         return inspectionSiteBuilder

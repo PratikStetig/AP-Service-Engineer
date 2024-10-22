@@ -30,9 +30,6 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .flakingQty(siteCorrosivityEnvironmentDto.getFlakingQty())
                 .color(siteCorrosivityEnvironmentDto.getColor())
                 .overallAppearance(siteCorrosivityEnvironmentDto.getOverallAppearance())
-                .imageUrl1(siteCorrosivityEnvironmentDto.getImageUrl1())
-                .imageUrl2(siteCorrosivityEnvironmentDto.getImageUrl2())
-                .imageUrl3(siteCorrosivityEnvironmentDto.getImageUrl3())
                 .siteAreas(siteAreas)
 
                 /*------------------ ADD MORE INFORMATION MERGE------------------------*/
@@ -66,9 +63,6 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .flakingQty(siteCorrosivityEnvironmentDto.getFlakingQty())
                 .color(siteCorrosivityEnvironmentDto.getColor())
                 .overallAppearance(siteCorrosivityEnvironmentDto.getOverallAppearance())
-                .imageUrl1(siteCorrosivityEnvironmentDto.getImageUrl1())
-                .imageUrl2(siteCorrosivityEnvironmentDto.getImageUrl2())
-                .imageUrl3(siteCorrosivityEnvironmentDto.getImageUrl3())
                 .siteAreas(siteAreas)
 
                 /*------------------ ADD MORE INFORMATION MERGE------------------------*/
@@ -100,9 +94,6 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .flakingQty(siteCorrosivityEnvironment.getFlakingQty())
                 .color(siteCorrosivityEnvironment.getColor())
                 .overallAppearance(siteCorrosivityEnvironment.getOverallAppearance())
-                .imageUrl1(siteCorrosivityEnvironment.getImageUrl1())
-                .imageUrl2(siteCorrosivityEnvironment.getImageUrl2())
-                .imageUrl3(siteCorrosivityEnvironment.getImageUrl3())
                 .siteAreas(getAreas(siteCorrosivityEnvironment.getSiteAreas()))
 
                 /*------------------ ADD MORE INFORMATION MERGE------------------------*/

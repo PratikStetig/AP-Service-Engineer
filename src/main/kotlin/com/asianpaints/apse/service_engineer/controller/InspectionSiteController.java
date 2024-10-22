@@ -250,8 +250,7 @@ public class InspectionSiteController {
     @GetMapping("/inspection-site/{inspectionSiteId}/areas/")
     public ResponseEntity<Object> getAllAreasByInspectionSite(@PathVariable Long inspectionSiteId) {
         try {
-            List<SiteAreaDto> siteAreaDtos = inspectionSiteAreaService.getAllSiteAreaByInspectionId(inspectionSiteId);
-            return ResponseEntity.ok(siteAreaDtos);
+            return ResponseEntity.ok(inspectionSiteAreaService.getAllSiteAreaByInspectionId(inspectionSiteId));
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
@@ -375,6 +374,17 @@ public class InspectionSiteController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
             // Handle any other exceptions and return a 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/site/images")
+    public ResponseEntity<Object> getAllInspectionCoatingSystemImages(@PathVariable Long inspectionSiteId) {
+        try {
+            return ResponseEntity.ok(inspectionSiteAreaService.getSiteAreaWithImages(inspectionSiteId));
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }

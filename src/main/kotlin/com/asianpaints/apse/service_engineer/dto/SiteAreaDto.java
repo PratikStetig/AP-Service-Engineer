@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 public class SiteAreaDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long id;
-    public Long inspectionSiteId;
     public String area;
+    public Long inspectionSiteId;
     public String coatingCondition;
     public CorrosionType corrosionType;
     public Integer rating;

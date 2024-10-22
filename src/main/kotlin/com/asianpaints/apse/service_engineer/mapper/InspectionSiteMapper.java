@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface InspectionSiteMapper {
     InspectionSite toEntity(InspectionSiteRequest inspectionSiteRequest, ApUser user);
+    InspectionSite toEntityFromResponse(InspectionSiteResponse inspectionSiteRequest);
     InspectionSite toEditEntity(InspectionSite inspectionSite,
                                 InspectionSiteRequest inspectionSiteRequest,
                                 ApUser user);
