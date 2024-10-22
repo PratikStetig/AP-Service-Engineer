@@ -4,10 +4,13 @@ import com.asianpaints.apse.service_engineer.dto.*;
 import com.asianpaints.apse.service_engineer.exception.*;
 import com.asianpaints.apse.service_engineer.service.*;
 import com.asianpaints.apse.service_engineer.validator.InspectionSiteValidator;
+import kotlin.jvm.internal.markers.KMutableMap;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -22,6 +25,7 @@ public class InspectionSiteController {
     private final InspectionSiteAreaService inspectionSiteAreaService;
     private final SiteCorrosivityEnvironmentService siteCorrosivityEnvironmentService;
     private final SiteMoreInformationService siteMoreInformationService;
+    private final CoatingSystemService coatingSystemService;
 
     @PostMapping("/inspection-site")
     public ResponseEntity<Object> createInspectionSite(@RequestBody InspectionSiteRequest inspectionSiteRequest) {
@@ -66,6 +70,23 @@ public class InspectionSiteController {
         try {
             InspectionSiteResponse inspectionSiteResponse = inspectionSiteService.getInspectionSite(id);
             return ResponseEntity.ok(inspectionSiteResponse);
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/inspection-site/{id}/summary")
+    public ResponseEntity<Object> getInspectionSiteSubmitDetails(@PathVariable Long id) {
+        try {
+            HashMap<String, Object> responseMap = new HashMap<>();
+            responseMap.put("addedArea", inspectionSiteAreaService.getAllSiteAreaByInspectionId(id));
+            responseMap.put("preliminaryObservation", inspectionSitePreliminaryObservationService.getSitePreliminaryObservation(id));
+            responseMap.put("corrosivityDetails", siteCorrosivityEnvironmentService.getAllCorrosivityEnvironmentByInspectionId(id));
+            responseMap.put("coatingSystem", coatingSystemService.getAllCoatingSystemByInspectionId(id));
+            return ResponseEntity.ok(responseMap);
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
@@ -342,5 +363,21 @@ public class InspectionSiteController {
         }
 
     }
+
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/coating-system")
+    public ResponseEntity<Object> getAllInspectionCoatingSystem(@PathVariable Long inspectionSiteId) {
+        try {
+            // Fetch all coating systems for the given inspection site ID
+            return ResponseEntity.ok(coatingSystemService.getAllCoatingSystemByInspectionId(inspectionSiteId));
+        } catch (InspectionSiteNotFound ex) {
+            // Return a Bad Request response in case the inspection site is not found
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            // Handle any other exceptions and return a 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 
 }

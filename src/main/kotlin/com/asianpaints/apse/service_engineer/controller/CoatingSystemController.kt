@@ -15,17 +15,6 @@ import javax.persistence.EntityNotFoundException
 class CoatingSystemController(private val coatingSystemService: CoatingSystemService) {
 
 
-    @GetMapping("/inspection-site/{inspectionSiteId}")
-    fun getAllInspectionCoatingSystem(@PathVariable inspectionSiteId: Long): ResponseEntity<Any> {
-        return try {
-            ResponseEntity.ok(coatingSystemService.getAllCoatingSystemByInspectionId(inspectionSiteId))
-        } catch (ex: InspectionSiteNotFound) {
-            ResponseEntity.badRequest().body(ex.message)
-        } catch (e: java.lang.Exception) {
-            ResponseEntity.internalServerError().body(e.message)
-        }
-    }
-
     @PostMapping
     fun createCoatingSystem(@RequestBody coatingSystem: CoatingSystemDto): ResponseEntity<Any> {
         return try {
