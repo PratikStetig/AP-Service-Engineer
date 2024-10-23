@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 public interface SiteAreaRepository extends JpaRepository<SiteArea, Long> {
+
+
     List<SiteArea> findByInspectionSiteId(Long inspectionSiteId);
 
     @Query(value = "select * from site_area where id in (:areaIds)",

@@ -1,5 +1,6 @@
 package com.asianpaints.apse.service_engineer.domain.entity
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -10,9 +11,11 @@ data class SiteAreaImages(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.DETACH])
+    @JsonBackReference
     @JoinColumn(name = "site_area_id", nullable = false)
-    val siteAreaId: SiteArea,
+
+    val siteArea: SiteArea,
 
     @Column(name = "image_url", length = 500, nullable = false)
     val imageUrl: String,

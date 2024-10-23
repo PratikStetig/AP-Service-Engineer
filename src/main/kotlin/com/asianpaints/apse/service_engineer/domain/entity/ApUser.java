@@ -1,6 +1,7 @@
 package com.asianpaints.apse.service_engineer.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,5 +32,6 @@ public class ApUser {
     private boolean isActive;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @JsonManagedReference
     private List<Token> tokens;
 }

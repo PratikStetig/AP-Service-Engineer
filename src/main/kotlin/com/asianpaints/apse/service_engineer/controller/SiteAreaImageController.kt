@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 import java.sql.SQLException
 
 @RestController
-@RequestMapping("/api/v1/site-area-images")
+@RequestMapping("/api/v1/area-images")
 class SiteAreaImageController(private val siteAreaImageService: SiteAreaImageService) {
 
     @PostMapping
@@ -48,15 +48,6 @@ class SiteAreaImageController(private val siteAreaImageService: SiteAreaImageSer
         } else {
             // Handle cases where the root cause is not SQLException
             ResponseEntity.internalServerError().body("Database Error: ${e.message}")
-        }
-    }
-
-    @GetMapping("/{siteAreaId}")
-    fun getImagesByArea(@PathVariable siteAreaId: Long): ResponseEntity<Any> {
-        return try {
-            ResponseEntity.ok(siteAreaImageService.getSiteAreaImage(siteAreaId))
-        } catch (e: Exception) {
-            ResponseEntity.internalServerError().body(e.message)
         }
     }
 

@@ -8,6 +8,7 @@ import com.asianpaints.apse.service_engineer.exception.SiteAreaNotFoundException
 import com.asianpaints.apse.service_engineer.mapper.SiteAreaMapper;
 import com.asianpaints.apse.service_engineer.repository.InspectionSiteRepository;
 import com.asianpaints.apse.service_engineer.repository.SiteAreaRepository;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -71,53 +72,54 @@ public class InspectionSiteAreaService {
         siteAreaRepository.deleteById(id);
     }
 
-    public List<SiteAreaDto> getAllSiteAreaByInspectionId(Long inspectionId) {
+    public List<SiteAreaResponse> getAllSiteAreaByInspectionId(Long inspectionId) {
         InspectionSite inspectionSite = inspectionSiteRepository.findById(inspectionId).orElse(null);
         if (inspectionSite == null) {
             String errMsg = String.format("InspectionSite with id %s does not exist in system", inspectionId);
             throw new InspectionSiteNotFound(errMsg);
         }
         List<SiteArea> siteAreas = siteAreaRepository.findByInspectionSiteId(inspectionId);
+        siteAreas.forEach(siteArea -> Hibernate.initialize(siteArea.getImages()));
         return siteAreas.stream()
-                .map(siteAreaMapper::toDto)
+                .map(siteAreaMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
 
-    public SiteAreaWithImagesResponse getSiteAreaWithImages(Long inspectionSiteId) {
-        List<Object[]> result = siteAreaRepository.findSiteAreaWithImages(inspectionSiteId);
-        return mapResultToResponse(result);
-    }
+//    public SiteAreaWithImagesResponse getSiteAreaWithImages(Long inspectionSiteId) {
+//        List<Object[]> result = siteAreaRepository.findSiteAreaWithImages(inspectionSiteId);
+//        return mapResultToResponse(result);
+//    }
 
-    private SiteAreaWithImagesResponse mapResultToResponse(List<Object[]> result) {
-        SiteAreaResponse siteAreaDto = null;
-        List<SiteAreaImageDto> images = new ArrayList<>();
-
-        // Loop through the result and extract site area and images
-        for (Object[] row : result) {
-            // Map siteArea (only once, since it's the same for all rows)
-            if (siteAreaDto == null) {
-                siteAreaDto = new SiteAreaResponse(
-                        ((BigInteger) row[0]).longValue(),  // siteAreaId
-                        (String) row[1],                   // area
-                        ((BigInteger) row[4]).longValue(),  // inspectionSiteId
-                        (String) row[2],                   // coatingCondition
-                        (String) row[3],                   // corrosionType
-                        (Integer) row[5]                   // rating
-                );
-            }
-
-            // Add each image to the images list
-            SiteAreaImageDto imageDto = new SiteAreaImageDto(
-                    ((BigInteger) row[6]).longValue(),    // imageId
-                    (String) row[7],                     // imageUrl
-                    ((BigInteger) row[8]).longValue(),    // siteAreaId
-                    ((Timestamp) row[9]).toLocalDateTime() // uploadedAt
-            );
-            images.add(imageDto);
-        }
-
-        // Return the combined site area and images response
-        return new SiteAreaWithImagesResponse(siteAreaDto, images);
-    }
+//    private SiteAreaWithImagesResponse mapResultToResponse(List<Object[]> result) {
+//        SiteAreaResponse siteAreaDto = null;
+//        List<SiteAreaImageDto> images = new ArrayList<>();
+//
+//        // Loop through the result and extract site area and images
+//        for (Object[] row : result) {
+//            // Map siteArea (only once, since it's the same for all rows)
+//            if (siteAreaDto == null) {
+//                siteAreaDto = new SiteAreaResponse(
+//                        ((BigInteger) row[0]).longValue(),  // siteAreaId
+//                        (String) row[1],                   // area
+//                        ((BigInteger) row[4]).longValue(),  // inspectionSiteId
+//                        (String) row[2],                   // coatingCondition
+//                        (String) row[3],                   // corrosionType
+//                        (Integer) row[5]                   // rating
+//                );
+//            }
+//
+//            // Add each image to the images list
+//            SiteAreaImageDto imageDto = new SiteAreaImageDto(
+//                    ((BigInteger) row[6]).longValue(),    // imageId
+//                    (String) row[7],                     // imageUrl
+//                    ((BigInteger) row[8]).longValue(),    // siteAreaId
+//                    ((Timestamp) row[9]).toLocalDateTime() // uploadedAt
+//            );
+//            images.add(imageDto);
+//        }
+//
+//        // Return the combined site area and images response
+//        return new SiteAreaWithImagesResponse(siteAreaDto, images);
+//    }
 }

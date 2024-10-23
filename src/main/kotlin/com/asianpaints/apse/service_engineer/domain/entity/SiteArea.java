@@ -1,5 +1,6 @@
 package com.asianpaints.apse.service_engineer.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,4 +31,7 @@ public class SiteArea {
     @Enumerated(EnumType.STRING)
     public CorrosionType corrosionType;
     public Integer rating;
+    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<SiteAreaImages> images = new ArrayList<>();
 }

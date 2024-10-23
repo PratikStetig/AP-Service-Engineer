@@ -3,6 +3,7 @@ package com.asianpaints.apse.service_engineer.mapper;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
 import com.asianpaints.apse.service_engineer.domain.entity.SiteArea;
 import com.asianpaints.apse.service_engineer.dto.SiteAreaDto;
+import com.asianpaints.apse.service_engineer.dto.SiteAreaResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +16,19 @@ public class SiteAreaMapperImpl implements SiteAreaMapper{
                 .corrosionType(siteAreaDto.getCorrosionType())
                 .rating(siteAreaDto.getRating())
                 .area(siteAreaDto.getArea())
+                .build();
+    }
+
+    @Override
+    public SiteAreaResponse toResponse(SiteArea siteArea) {
+        return SiteAreaResponse.builder()
+                .id(siteArea.getId())
+                .inspectionSiteId(siteArea.getInspectionSite().getId())
+                .coatingCondition(siteArea.getCoatingCondition())
+                .corrosionType(siteArea.getCorrosionType().name())
+                .rating(siteArea.getRating())
+                .area(siteArea.getArea())
+                .images(siteArea.getImages())
                 .build();
     }
 

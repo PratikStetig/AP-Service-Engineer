@@ -16,7 +16,7 @@ class SiteAreaImageService(
 
     fun createSiteAreaImage(dto: SiteAreaImageDto): SiteAreaImages {
         val inspectionSiteArea = siteAreaRepository.findById(dto.siteAreaId).orElseThrow { throw IllegalArgumentException("Site area not found for Id ${dto.siteAreaId}") }
-        val image = SiteAreaImages(siteAreaId = inspectionSiteArea!!, imageUrl = dto.imageUrl)
+        val image = SiteAreaImages(siteArea = inspectionSiteArea!!, imageUrl = dto.imageUrl)
         return siteAreaImageRepository.save(image)
     }
 

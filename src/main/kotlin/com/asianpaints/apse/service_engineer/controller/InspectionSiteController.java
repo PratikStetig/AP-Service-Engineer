@@ -26,6 +26,7 @@ public class InspectionSiteController {
     private final SiteCorrosivityEnvironmentService siteCorrosivityEnvironmentService;
     private final SiteMoreInformationService siteMoreInformationService;
     private final CoatingSystemService coatingSystemService;
+    private final SiteAreaImageService siteAreaImageService;
 
     @PostMapping("/inspection-site")
     public ResponseEntity<Object> createInspectionSite(@RequestBody InspectionSiteRequest inspectionSiteRequest) {
@@ -378,16 +379,26 @@ public class InspectionSiteController {
         }
     }
 
-    @GetMapping("/inspection-site/{inspectionSiteId}/site/images")
-    public ResponseEntity<Object> getAllInspectionCoatingSystemImages(@PathVariable Long inspectionSiteId) {
+//    @GetMapping("/inspection-site/{inspectionSiteId}/site-area/images")
+//    public ResponseEntity<Object> getAllInspectionCoatingSystemImages(@PathVariable Long inspectionSiteId) {
+//        try {
+//            return ResponseEntity.ok(inspectionSiteAreaService.getSiteAreaWithImages(inspectionSiteId));
+//        } catch (InspectionSiteNotFound ex) {
+//            return ResponseEntity.badRequest().body(ex.getMessage());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+//        }
+//    }
+
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/area/{areaId}/images")
+    public ResponseEntity<Object> getInspectionAreaImages(@PathVariable Long inspectionSiteId, @PathVariable Long areaId) {
         try {
-            return ResponseEntity.ok(inspectionSiteAreaService.getSiteAreaWithImages(inspectionSiteId));
+            return ResponseEntity.ok(siteAreaImageService.getSiteAreaImage(areaId));
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-
-
 }

@@ -10,7 +10,7 @@ interface CoatingSystemRepository : JpaRepository<CoatingSystem, Long> {
     fun findByInspectionSiteId(inspectionSiteId: Long): List<CoatingSystem>
 
 
-    @Query("SELECT CS.* FROM COATING_SYSTEM CS WHERE CS.INSPECTION_SITE_ID = :inspectionSiteId", nativeQuery = true)
+    @Query("SELECT CS.* FROM coating_system CS WHERE CS.INSPECTION_SITE_ID = :inspectionSiteId", nativeQuery = true)
     fun getCoatingSystemByInspectionId(@Param("inspectionSiteId") inspectionSiteId: Long): List<CoatingSystem>
 
 }
