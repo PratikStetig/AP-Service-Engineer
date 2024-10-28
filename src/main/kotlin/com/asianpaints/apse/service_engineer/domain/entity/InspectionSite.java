@@ -39,5 +39,7 @@ public class InspectionSite {
     @Column(name = "created_on")
     private LocalDateTime createdOn;
     @Enumerated(EnumType.STRING)
-    private InspectionSiteStatus status;
+    public InspectionSiteStatus status;
+    @Column(name = "deleted")
+    private Boolean deleted = false;
 }

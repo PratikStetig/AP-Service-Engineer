@@ -2,6 +2,7 @@ package com.asianpaints.apse.service_engineer.service;
 
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteAcknowledgement;
+import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteStatus;
 import com.asianpaints.apse.service_engineer.dto.InspectionSiteAckDto;
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteAckNotFoundException;
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound;

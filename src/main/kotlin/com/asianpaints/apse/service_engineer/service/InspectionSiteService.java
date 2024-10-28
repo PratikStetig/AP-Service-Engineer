@@ -2,6 +2,8 @@ package com.asianpaints.apse.service_engineer.service;
 
 import com.asianpaints.apse.service_engineer.domain.entity.ApUser;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
+import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteStatus;
+import com.asianpaints.apse.service_engineer.dto.InspectionSiteAckDto;
 import com.asianpaints.apse.service_engineer.dto.InspectionSiteRequest;
 import com.asianpaints.apse.service_engineer.dto.InspectionSiteResponse;
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound;
@@ -62,5 +64,16 @@ public class InspectionSiteService {
 
 
         return inspectionSiteMapper.toDtoList(inspectionSite);
+    }
+
+    public InspectionSiteResponse submitInspectionSite(Long inspectionSiteId) {
+        InspectionSite inspectionSite = inspectionSiteRepository.findById(inspectionSiteId).orElse(null);
+        if (inspectionSite == null) {
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", inspectionSiteId);
+            throw new InspectionSiteNotFound(errMsg);
+        }
+        inspectionSite.setStatus(InspectionSiteStatus.Pending);
+        inspectionSiteRepository.save(inspectionSite);
+        return inspectionSiteMapper.toDto(inspectionSite);
     }
 }

@@ -4,7 +4,6 @@ import com.asianpaints.apse.service_engineer.dto.*;
 import com.asianpaints.apse.service_engineer.exception.*;
 import com.asianpaints.apse.service_engineer.service.*;
 import com.asianpaints.apse.service_engineer.validator.InspectionSiteValidator;
-import kotlin.jvm.internal.markers.KMutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +26,7 @@ public class InspectionSiteController {
     private final SiteMoreInformationService siteMoreInformationService;
     private final CoatingSystemService coatingSystemService;
     private final SiteAreaImageService siteAreaImageService;
+    private final InspectionSiteApprovalService inspectionSiteApprovalService;
 
     @PostMapping("/inspection-site")
     public ResponseEntity<Object> createInspectionSite(@RequestBody InspectionSiteRequest inspectionSiteRequest) {
@@ -80,7 +80,7 @@ public class InspectionSiteController {
     }
 
     @GetMapping("/inspection-site/{id}/summary")
-    public ResponseEntity<Object> getInspectionSiteSubmitDetails(@PathVariable Long id) {
+    public ResponseEntity<Object> getInspectionSiteSummary(@PathVariable Long id) {
         try {
             HashMap<String, Object> responseMap = new HashMap<>();
             responseMap.put("addedArea", inspectionSiteAreaService.getAllSiteAreaByInspectionId(id));
@@ -257,7 +257,6 @@ public class InspectionSiteController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
-
     }
 
     @PostMapping("/inspection-site/areas/corrosivity-environment/")
@@ -399,6 +398,30 @@ public class InspectionSiteController {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/inspection-site/{inspectionSiteId}/user/{userId}")
+    public ResponseEntity<Object> updateInspectionSiteStatus(@PathVariable Long inspectionSiteId, @PathVariable Long userId, @RequestBody ApprovalHistoryRequest approvalHistoryRequest) {
+        try {
+            return ResponseEntity.ok(inspectionSiteApprovalService.updateInspectionReportStatus(inspectionSiteId, userId, approvalHistoryRequest));
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+
+    @PutMapping("/inspection-site/{inspectionSiteId}/submit")
+    public ResponseEntity<Object> submitInspectionSite(@PathVariable Long inspectionSiteId) {
+        try {
+            return ResponseEntity.ok(inspectionSiteService.submitInspectionSite(inspectionSiteId));
+        } catch (InspectionSiteNotFound | InspectionSiteAckNotFoundException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 }
