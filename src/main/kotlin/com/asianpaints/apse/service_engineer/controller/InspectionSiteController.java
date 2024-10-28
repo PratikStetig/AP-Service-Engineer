@@ -69,8 +69,7 @@ public class InspectionSiteController {
     @GetMapping("/inspection-site/{id}")
     public ResponseEntity<Object> getInspectionSite(@PathVariable Long id) {
         try {
-            InspectionSiteResponse inspectionSiteResponse = inspectionSiteService.getInspectionSite(id);
-            return ResponseEntity.ok(inspectionSiteResponse);
+            return ResponseEntity.ok(inspectionSiteService.getInspectionSite(id));
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
@@ -150,7 +149,10 @@ public class InspectionSiteController {
     public ResponseEntity<Object> getAllAcknowledgmentByInspectionSite(@PathVariable Long inspectionSiteId) {
         try {
             List<InspectionSiteAckDto> inspectionSiteAckDtos = inspectionSiteAckService.getAllAckByInspectionId(inspectionSiteId);
-            return ResponseEntity.ok(inspectionSiteAckDtos);
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("inspectionDetails", inspectionSiteService.getInspectionSite(inspectionSiteId));
+            response.put("peoples", inspectionSiteAckDtos);
+            return ResponseEntity.ok(response);
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {

@@ -48,7 +48,7 @@ public class SiteAreaMapperImpl implements SiteAreaMapper{
     public SiteAreaDto toDto(SiteArea siteArea) {
         return SiteAreaDto.builder()
                 .id(siteArea.getId())
-                .inspectionSiteId(siteArea.getInspectionSite().getId())
+                .inspectionId(siteArea.getInspectionSite().getId())
                 .coatingCondition(siteArea.getCoatingCondition())
                 .corrosionType(siteArea.getCorrosionType())
                 .rating(siteArea.getRating())

@@ -15,7 +15,7 @@ public class SiteAreaDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long id;
     public String area;
-    public Long inspectionSiteId;
+    public Long inspectionId;
     public String coatingCondition;
     public CorrosionType corrosionType;
     public Integer rating;

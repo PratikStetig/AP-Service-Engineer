@@ -37,9 +37,9 @@ public class InspectionSiteAreaService {
     }
 
     public SiteAreaDto createSiteArea(SiteAreaDto siteAreaDto) {
-        InspectionSite inspectionSite = inspectionSiteRepository.findById(siteAreaDto.getInspectionSiteId()).orElse(null);
+        InspectionSite inspectionSite = inspectionSiteRepository.findById(siteAreaDto.getInspectionId()).orElse(null);
         if (inspectionSite == null) {
-            String errMsg = String.format("InspectionSite with id %s does not exist in system", siteAreaDto.getInspectionSiteId());
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", siteAreaDto.getInspectionId());
             throw new InspectionSiteNotFound(errMsg);
         }
         SiteArea siteArea = siteAreaMapper.toEntity(siteAreaDto, inspectionSite);
@@ -48,9 +48,9 @@ public class InspectionSiteAreaService {
     }
 
     public SiteAreaDto editSiteArea(Long id, SiteAreaDto siteAreaDto) {
-        InspectionSite inspectionSite = inspectionSiteRepository.findById(siteAreaDto.getInspectionSiteId()).orElse(null);
+        InspectionSite inspectionSite = inspectionSiteRepository.findById(siteAreaDto.getId()).orElse(null);
         if (inspectionSite == null) {
-            String errMsg = String.format("InspectionSite with id %s does not exist in system", siteAreaDto.getInspectionSiteId());
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", siteAreaDto.getId());
             throw new InspectionSiteNotFound(errMsg);
         }
         SiteArea siteArea = siteAreaRepository.findById(id).orElse(null);

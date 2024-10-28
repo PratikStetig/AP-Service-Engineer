@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InspectionSiteResponse {
-    private Long id;
+    private Long inspectionId;
     private String reportName;
     private String conductedAt;
     private Long conductedBy;
