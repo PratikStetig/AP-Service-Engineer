@@ -14,16 +14,17 @@ import java.util.stream.Collectors;
 @Service
 public class PreAuthorizeAuthorizationService {
 
-    public AuthorizationDecision check(String... roles){
+    public AuthorizationDecision check(String... roles) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
         List<String> userRoles = authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+        System.out.println("User Roles: " + userRoles);
         userRoles.retainAll(Arrays.asList(roles));
-        if(userRoles.size() > 0){
-           return new AuthorizationDecision(true);
+        if (userRoles.size() > 0) {
+            return new AuthorizationDecision(true);
         }
         return new AuthorizationDecision(false);
     }

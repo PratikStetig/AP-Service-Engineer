@@ -37,9 +37,9 @@ public class InspectionSitePreliminaryObservationService {
     }
 
     public SitePreliminaryObservationDto createSitePreliminaryObservation(SitePreliminaryObservationDto sitePreliminaryObservationDto){
-        InspectionSite inspectionSite = inspectionSiteRepository.findById(sitePreliminaryObservationDto.getInspectionId()).orElse(null);
+        InspectionSite inspectionSite = inspectionSiteRepository.findById(sitePreliminaryObservationDto.getInspectionSiteId()).orElse(null);
         if (inspectionSite == null) {
-            String errMsg = String.format("InspectionSite with id %s does not exist in system", sitePreliminaryObservationDto.getInspectionId());
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", sitePreliminaryObservationDto.getInspectionSiteId());
             throw new InspectionSiteNotFound(errMsg);
         }
        SitePreliminaryObservation sitePreliminaryObservation = sitePreliminaryObservationMapper.toEntity(sitePreliminaryObservationDto, inspectionSite);
@@ -47,9 +47,9 @@ public class InspectionSitePreliminaryObservationService {
        return sitePreliminaryObservationMapper.toDto(persistedSitePreliminaryObservation);
     }
     public SitePreliminaryObservationDto editSitePreliminaryObservation(Long id, SitePreliminaryObservationDto sitePreliminaryObservationDto){
-        InspectionSite inspectionSite = inspectionSiteRepository.findById(sitePreliminaryObservationDto.getInspectionId()).orElse(null);
+        InspectionSite inspectionSite = inspectionSiteRepository.findById(sitePreliminaryObservationDto.getInspectionSiteId()).orElse(null);
         if (inspectionSite == null) {
-            String errMsg = String.format("InspectionSite with id %s does not exist in system", sitePreliminaryObservationDto.getInspectionId());
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", sitePreliminaryObservationDto.getInspectionSiteId());
             throw new InspectionSiteNotFound(errMsg);
         }
         SitePreliminaryObservation sitePreliminaryObservation = sitePreliminaryObservationRepository.findById(id).orElse(null);

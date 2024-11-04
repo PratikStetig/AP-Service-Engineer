@@ -111,15 +111,14 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
 
     private Set<SiteAreaDto> getAreas(Set<SiteArea> siteAreas) {
         return siteAreas.stream()
-                .map(siteArea -> {
-                            return SiteAreaDto.builder()
-                                    .id(siteArea.getId())
-                                    .coatingCondition(siteArea.getCoatingCondition())
-                                    .corrosionType(siteArea.getCorrosionType())
-                                    .rating(siteArea.getRating())
-                                    .area(siteArea.getArea())
-                                    .build();
-                        }
+                .map(siteArea -> SiteAreaDto.builder()
+                        .id(siteArea.getId())
+                        .coatingCondition(siteArea.getCoatingCondition())
+                        .corrosionType(siteArea.getCorrosionType())
+                        .rating(siteArea.getRating())
+                        .area(siteArea.getArea())
+                        .images(siteArea.getImages())
+                        .build()
                 ).collect(Collectors.toSet());
 
     }

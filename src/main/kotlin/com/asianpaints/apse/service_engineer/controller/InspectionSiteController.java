@@ -152,7 +152,7 @@ public class InspectionSiteController {
             HashMap<String, Object> response = new HashMap<>();
             response.put("inspectionDetails", inspectionSiteService.getInspectionSite(inspectionSiteId));
             response.put("peoples", inspectionSiteAckDtos);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(inspectionSiteAckDtos);
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {

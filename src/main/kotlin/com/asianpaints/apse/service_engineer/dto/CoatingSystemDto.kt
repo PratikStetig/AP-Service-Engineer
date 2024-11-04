@@ -2,6 +2,7 @@ package com.asianpaints.apse.service_engineer.dto
 
 
 import javax.validation.constraints.DecimalMin
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -29,11 +30,14 @@ data class CoatingSystemDto(
     @field:NotNull(message = "Spray field cannot be null")
     var spray: Boolean,
 
-    @field:DecimalMin(value = "0.0", inclusive = false, message = "WFT must be greater than 0")
-    var wft: Double,
-
     @field:DecimalMin(value = "0.0", inclusive = false, message = "DFT must be greater than 0")
     var dft: Double,
+
+    @field:Min(value = 1, message = "Wft Min must be greater than 0")
+    var wftMin: Int,
+
+    @field:Min(value = 1, message = "Wft Max must be greater than 0")
+    var wftMax: Int,
 
     @field:NotNull(message = "Inspection report ID cannot be null")
     val inspectionReportId: Long,

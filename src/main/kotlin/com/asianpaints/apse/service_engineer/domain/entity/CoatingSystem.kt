@@ -35,11 +35,12 @@ data class CoatingSystem(
     @Column(name = "spary")
     var spray: Boolean,
 
-    @Column(name = "WFT")
-    var wft: Double,
-
-    @Column(name = "DFT")
-    var dft: Double,
+    @Column(name = "wft_min")
+    val wftMin: Int,
+    @Column(name = "wft_max")
+    val wftMax: Int,
+    @Column(name = "dft")
+    val dft: Double,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inspection_site_id")

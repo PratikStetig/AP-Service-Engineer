@@ -1,11 +1,14 @@
 package com.asianpaints.apse.service_engineer.dto;
 
 import com.asianpaints.apse.service_engineer.domain.entity.CorrosionType;
+import com.asianpaints.apse.service_engineer.domain.entity.SiteAreaImages;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -15,8 +18,9 @@ public class SiteAreaDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long id;
     public String area;
-    public Long inspectionId;
+    public Long inspectionSiteId;
     public String coatingCondition;
     public CorrosionType corrosionType;
+    public List<SiteAreaImages> images;
     public Integer rating;
 }

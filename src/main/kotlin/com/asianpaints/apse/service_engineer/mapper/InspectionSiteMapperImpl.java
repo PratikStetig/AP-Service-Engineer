@@ -63,7 +63,7 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper {
     @Override
     public InspectionSiteResponse toDto(InspectionSite inspectionSite) {
         return InspectionSiteResponse.builder()
-                .inspectionId(inspectionSite.getId())
+                .inspectionSiteId(inspectionSite.getId())
                 .siteId(inspectionSite.getSiteId())
                 .createdOn(inspectionSite.getCreatedOn())
                 .reportName(inspectionSite.getReportName())

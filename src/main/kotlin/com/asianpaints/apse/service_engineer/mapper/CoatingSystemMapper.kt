@@ -21,11 +21,12 @@ object CoatingSystemMapper {
             srfaBareMetal = dto.srfaBareMetal,
             paint = dto.paint,
             spray = dto.spray,
-            wft = dto.wft,
             dft = dto.dft,
             inspectionSiteId = inspectionReport,
             products = products,
             siteAreas = siteAreas,
+            wftMin = dto.wftMin,
+            wftMax = dto.wftMax
         )
     }
 
@@ -39,7 +40,8 @@ object CoatingSystemMapper {
             srfaBareMetal = entity.srfaBareMetal,
             paint = entity.paint,
             spray = entity.spray,
-            wft = entity.wft,
+            wftMax = entity.wftMax,
+            wftMin = entity.wftMax,
             dft = entity.dft,
             inspectionSiteId = entity.inspectionSiteId.id,
             products = entity.products,

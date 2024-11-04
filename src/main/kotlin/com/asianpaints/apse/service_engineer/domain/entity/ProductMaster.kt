@@ -9,8 +9,15 @@ data class ProductMaster(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
     @Column(name = "product_name")
-    val productName: String
+    val productName: String,
+    @Column(name = "product_spec")
+    val productSpec: String,
+    @Column(name = "volume_solids")
+    val volumeSolids: Int,
+    @Column(name = "mixing_ratio")
+    val mixingRatio:String,
+    @Column(name = "over_coating_interval")
+    val overCoatingInterval: String,
 )
 

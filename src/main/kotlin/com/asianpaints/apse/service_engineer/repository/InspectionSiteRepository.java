@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface InspectionSiteRepository extends JpaRepository<InspectionSite, Long> {
 
-    @Query(value = "SELECT * FROM INSPECTION_SITE WHERE CONDUCTED_BY = :conductedBy", nativeQuery = true)
+    @Query(value = "SELECT * FROM inspection_site WHERE CONDUCTED_BY = :conductedBy ORDER BY created_on DESC", nativeQuery = true)
     List<InspectionSite> findAllInspectionSiteConductedBy(Long conductedBy);
 }

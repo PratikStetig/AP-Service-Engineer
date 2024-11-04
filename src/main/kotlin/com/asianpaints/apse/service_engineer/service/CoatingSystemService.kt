@@ -77,8 +77,6 @@ class CoatingSystemService(
             srfaBareMetal = coatingSystemDto.srfaBareMetal
             paint = coatingSystemDto.paint
             spray = coatingSystemDto.spray
-            wft = coatingSystemDto.wft
-            dft = coatingSystemDto.dft
         }
 
         return CoatingSystemMapper.toDto(coatingSystemRepository.save(existingCoatingSystem))

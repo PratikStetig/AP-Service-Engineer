@@ -22,7 +22,7 @@ public class SiteArea {
     @Column(name = "id")
     public Long id;
     @ManyToOne
-    @JoinColumn(name = "inspection_id")
+    @JoinColumn(name = "inspection_site_id")
     public InspectionSite inspectionSite;
     public String area;
     @Column(name = "coating_condition")

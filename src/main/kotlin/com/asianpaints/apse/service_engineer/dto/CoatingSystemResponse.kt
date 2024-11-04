@@ -24,7 +24,8 @@ data class CoatingSystemResponse(
     val srfaBareMetal: String? = null,
     val paint: Boolean? = null,
     val spray: Boolean? = null,
-    val wft: Double? = null,
+    val wftMin: Int? = null,
+    val wftMax: Int? = null,
     val dft: Double? = null,
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

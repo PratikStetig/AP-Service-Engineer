@@ -37,9 +37,9 @@ public class InspectionSiteAreaService {
     }
 
     public SiteAreaDto createSiteArea(SiteAreaDto siteAreaDto) {
-        InspectionSite inspectionSite = inspectionSiteRepository.findById(siteAreaDto.getInspectionId()).orElse(null);
+        InspectionSite inspectionSite = inspectionSiteRepository.findById(siteAreaDto.getInspectionSiteId()).orElse(null);
         if (inspectionSite == null) {
-            String errMsg = String.format("InspectionSite with id %s does not exist in system", siteAreaDto.getInspectionId());
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", siteAreaDto.getInspectionSiteId());
             throw new InspectionSiteNotFound(errMsg);
         }
         SiteArea siteArea = siteAreaMapper.toEntity(siteAreaDto, inspectionSite);

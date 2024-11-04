@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class SitePreliminaryObservationDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
-    private Long inspectionId;
+    private Long inspectionSiteId;
     private boolean ruralArea;
     private boolean urbanArea;
     private boolean coastalArea;

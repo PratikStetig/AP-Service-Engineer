@@ -44,7 +44,7 @@ public class SitePreliminaryObservationMapperImpl implements SitePreliminaryObse
     public SitePreliminaryObservationDto toDto(SitePreliminaryObservation sitePreliminaryObservation) {
         return SitePreliminaryObservationDto.builder()
                 .id(sitePreliminaryObservation.getId())
-                .inspectionId(sitePreliminaryObservation.getInspectionSite().getId())
+                .inspectionSiteId(sitePreliminaryObservation.getInspectionSite().getId())
                 .ruralArea(sitePreliminaryObservation.isRuralArea())
                 .urbanArea(sitePreliminaryObservation.isUrbanArea())
                 .coastalArea(sitePreliminaryObservation.isCoastalArea())
