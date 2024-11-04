@@ -22,11 +22,14 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         ApUser user = apUserRepository.findByEmail(email);
-        if(user==null){
+        if (user == null) {
             throw new UsernameNotFoundException(email);
         }
         UserType userType = userTypeRepository.findById(user.getUserType().getId()).orElse(null);
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), "",
-                Collections.singletonList(new SimpleGrantedAuthority(userType.getUserType())));
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                "",
+                Collections.singletonList(new SimpleGrantedAuthority(userType.getUserType()))
+        );
     }
 }

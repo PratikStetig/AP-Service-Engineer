@@ -1,5 +1,6 @@
 package com.asianpaints.apse.service_engineer.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Token {
     private boolean revoked;
     @ManyToOne
     @JoinColumn(name="user_id")
+    @JsonBackReference
     private  ApUser user;
 
 }

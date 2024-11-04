@@ -1,17 +1,12 @@
 package com.asianpaints.apse.service_engineer.mapper
 
-import com.asianpaints.apse.service_engineer.domain.entity.CoatingSystem
-import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite
-import com.asianpaints.apse.service_engineer.domain.entity.ProductMaster
-import com.asianpaints.apse.service_engineer.domain.entity.SiteArea
-import com.asianpaints.apse.service_engineer.dto.CoatingSystemDto
-import com.asianpaints.apse.service_engineer.dto.CoatingSystemResponse
-import com.asianpaints.apse.service_engineer.dto.SiteAreaDto
+import com.asianpaints.apse.service_engineer.domain.entity.*
+import com.asianpaints.apse.service_engineer.dto.*
 import java.util.stream.Collectors
 
 object CoatingSystemMapper {
 
-    fun toEntity(dto: CoatingSystemDto, inspectionReport: InspectionSite, products: MutableSet<ProductMaster>, siteAreas: Set<SiteArea>): CoatingSystem {
+    fun toEntity(dto: CoatingSystemDTO, inspectionReport: InspectionSite, products: MutableSet<CoatingSystemProductDetailsDTO>, siteAreas: Set<SiteArea>): CoatingSystem {
         return CoatingSystem(
             id = dto.id,
             coatingSystemName = dto.coatingSystemName,
@@ -19,14 +14,9 @@ object CoatingSystemMapper {
             typeOfStructures = dto.typeOfStructures,
             surfacePreparation = dto.surfacePreparation,
             srfaBareMetal = dto.srfaBareMetal,
-            paint = dto.paint,
-            spray = dto.spray,
-            dft = dto.dft,
             inspectionSiteId = inspectionReport,
-            products = products,
+//            productDetails = convertToEntityList(coatingSystem = dto, products, ),
             siteAreas = siteAreas,
-            wftMin = dto.wftMin,
-            wftMax = dto.wftMax
         )
     }
 
@@ -38,13 +28,24 @@ object CoatingSystemMapper {
             typeOfStructures = entity.typeOfStructures,
             surfacePreparation = entity.surfacePreparation,
             srfaBareMetal = entity.srfaBareMetal,
-            paint = entity.paint,
-            spray = entity.spray,
-            wftMax = entity.wftMax,
-            wftMin = entity.wftMax,
-            dft = entity.dft,
             inspectionSiteId = entity.inspectionSiteId.id,
-            products = entity.products,
+            products = entity.productDetails.map {
+                CoatingSystemProductDetailsResponse(
+                    id = it.id,
+                    productId = it.product.id,
+                    productName = it.product.productName,
+                    productSpec = it.product.productSpec,
+                    volumeSolids = it.product.volumeSolids,
+                    mixingRatio = it.product.mixingRatio,
+                    overCoatingInterval = it.product.overCoatingInterval,
+                    wftMin = it.wftMin,
+                    wftMax = it.wftMax,
+                    dft = it.dft,
+                    layerOrder = it.layerOrder,
+                    paint = it.paint,
+                    spray = it.spray,
+                )
+            },
             siteAreas = getAreas(entity.siteAreas)
         )
     }

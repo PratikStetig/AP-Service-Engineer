@@ -1,5 +1,6 @@
 package com.asianpaints.apse.service_engineer.controller;
 
+import com.asianpaints.apse.service_engineer.constants.UserRole;
 import com.asianpaints.apse.service_engineer.domain.entity.ApUser;
 import com.asianpaints.apse.service_engineer.domain.entity.UserDesignation;
 import com.asianpaints.apse.service_engineer.domain.entity.UserType;
@@ -33,115 +34,113 @@ public class ApUserController {
     private final PreAuthorizeAuthorizationService preAuthorizeAuthorizationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> signup(@RequestBody SignUpRequest signUpRequest){
+    public ResponseEntity<Object> signup(@RequestBody SignUpRequest signUpRequest) {
 
         List<String> validationErrors = signUpRequestValidator.validate(signUpRequest);
-        if(!validationErrors.isEmpty()){
+        if (!validationErrors.isEmpty()) {
             String errorMsg = String.join(",", validationErrors);
             return ResponseEntity.badRequest().body(errorMsg);
         }
         try {
             ApiResponse apiResponse = apUserService.signUp(signUpRequest);
             return ResponseEntity.ok(apiResponse);
-        }
-        catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> addUser(@RequestBody ApUserDto addUserRequest){
-        AuthorizationDecision authorizationDecision = checkAuthorization();
-        if(!authorizationDecision.isGranted()) {
+    public ResponseEntity<Object> addUser(@RequestBody ApUserDto addUserRequest) {
+        AuthorizationDecision authorizationDecision = checkAdminAuthorization();
+        if (!authorizationDecision.isGranted()) {
             return ResponseEntity.status(403).build();
         }
         List<String> validationErrors = addUserRequestValidator.validate(addUserRequest);
-        if(!validationErrors.isEmpty()){
+        if (!validationErrors.isEmpty()) {
             String errorMsg = String.join(",", validationErrors);
             return ResponseEntity.badRequest().body(errorMsg);
         }
         try {
             ApUser apUser = apUserService.addUser(addUserRequest);
             return ResponseEntity.ok(apUser);
-        }
-        catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
+
     @PutMapping("/{userId}")
-    public ResponseEntity<Object> editUser(@PathVariable Long userId, @RequestBody ApUserDto addUserRequest){
-        AuthorizationDecision authorizationDecision = checkAuthorization();
-        if(!authorizationDecision.isGranted()) {
+    public ResponseEntity<Object> editUser(@PathVariable Long userId, @RequestBody ApUserDto addUserRequest) {
+        AuthorizationDecision authorizationDecision = checkAdminAuthorization();
+        if (!authorizationDecision.isGranted()) {
             return ResponseEntity.status(403).build();
         }
-        List<String> validationErrors = editUserRequestValidator.validate(userId,addUserRequest);
-        if(!validationErrors.isEmpty()){
+        List<String> validationErrors = editUserRequestValidator.validate(userId, addUserRequest);
+        if (!validationErrors.isEmpty()) {
             String errorMsg = String.join(",", validationErrors);
             return ResponseEntity.badRequest().body(errorMsg);
         }
         try {
-            ApUser apUser = apUserService.editUser(userId,addUserRequest);
+            ApUser apUser = apUserService.editUser(userId, addUserRequest);
             return ResponseEntity.ok(apUser);
-        }catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
-        }
-        catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long userId){
-        AuthorizationDecision authorizationDecision = checkAuthorization();
-        if(!authorizationDecision.isGranted()) {
+    public ResponseEntity<Object> deleteUser(@PathVariable Long userId) {
+        AuthorizationDecision authorizationDecision = checkAdminAuthorization();
+        if (!authorizationDecision.isGranted()) {
             return ResponseEntity.status(403).build();
         }
         try {
             apUserService.deleteUser(userId);
             return ResponseEntity.noContent().build();
-        }catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-     }
+    }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Object> getUser(@PathVariable("userId") Long userId){
-        AuthorizationDecision authorizationDecision = checkAuthorization();
-        if(!authorizationDecision.isGranted()) {
+    public ResponseEntity<Object> getUser(@PathVariable("userId") Long userId) {
+        AuthorizationDecision authorizationDecision = checkAdminAuthorization();
+        if (!authorizationDecision.isGranted()) {
             return ResponseEntity.status(403).build();
         }
         try {
             ApUser user = apUserService.getUser(userId);
             return ResponseEntity.ok(user);
-        }catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> getAllUsers(){
-       AuthorizationDecision authorizationDecision = checkAuthorization();
-       if(!authorizationDecision.isGranted()) {
-           return ResponseEntity.status(403).build();
-       }
-       List<ApUser> users = apUserService.getAllUserUsers();
-       return ResponseEntity.ok(users);
+    public ResponseEntity<Object> getAllUsers() {
+        AuthorizationDecision authorizationDecision = checkAdminAuthorization();
+        if (!authorizationDecision.isGranted()) {
+            return ResponseEntity.status(403).build();
+        }
+        List<ApUser> users = apUserService.getAllUserUsers();
+        return ResponseEntity.ok(users);
 
     }
 
     @GetMapping("/designation")
-    public ResponseEntity<Object> getAllUserDesignations(){
+    public ResponseEntity<Object> getAllUserDesignations() {
         List<UserDesignation> designations = apUserService.getAllUserDesignations();
         return ResponseEntity.ok(designations);
     }
 
     @GetMapping("/type")
-    public ResponseEntity<Object> getAllUserTypes(){
+    public ResponseEntity<Object> getAllUserTypes() {
         List<UserType> userTypes = apUserService.getAllUserTypes();
         return ResponseEntity.ok(userTypes);
     }
 
-    private AuthorizationDecision checkAuthorization(){
-        return preAuthorizeAuthorizationService.check("Service Engineer");
+    private AuthorizationDecision checkAdminAuthorization() {
+        return preAuthorizeAuthorizationService.check(UserRole.ADMIN);
     }
 }
