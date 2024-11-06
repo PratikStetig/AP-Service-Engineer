@@ -36,8 +36,5 @@ data class CoatingSystemProductDetails(
 
     @Column(name = "layer_order")
     val layerOrder: Int
-){
-    override fun equals(other: Any?): Boolean = (other is CoatingSystemProductDetails) && other.id == this.id
-    override fun hashCode(): Int = id.hashCode()
-}
+)
 

@@ -1,16 +1,22 @@
 package com.asianpaints.apse.service_engineer.controller;
 
+import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
+import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteFilter;
+import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteStatus;
 import com.asianpaints.apse.service_engineer.dto.*;
 import com.asianpaints.apse.service_engineer.exception.*;
 import com.asianpaints.apse.service_engineer.service.*;
 import com.asianpaints.apse.service_engineer.validator.InspectionSiteValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/inspections")
@@ -95,11 +101,20 @@ public class InspectionSiteController {
 
     }
 
-    @GetMapping("/inspection-site/user/{id}")
-    public ResponseEntity<Object> getInspectionSiteUser(@PathVariable Long id) {
+
+    @GetMapping("/user/filter")
+    public ResponseEntity<Object> getFilteredInspectionSites(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate,
+            @RequestParam(required = false) String siteId,
+            @RequestParam(required = false) InspectionSiteStatus status,
+            @RequestParam(required = false) String reportName,
+            @RequestParam(required = true) Long conductedBy) {
+
         try {
-            List<InspectionSiteResponse> inspectionSiteResponse = inspectionSiteService.getInspectionSiteConductedBy(id);
-            return ResponseEntity.ok(inspectionSiteResponse);
+            InspectionSiteFilter filter = new InspectionSiteFilter(conductedBy, fromDate, toDate, siteId, status, reportName);
+            List<InspectionSiteResponse> filteredSites = inspectionSiteService.getFilteredInspectionSites(filter);
+            return ResponseEntity.ok(filteredSites);
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
@@ -148,11 +163,15 @@ public class InspectionSiteController {
     @GetMapping("/inspection-site/{inspectionSiteId}/acknowledgments/")
     public ResponseEntity<Object> getAllAcknowledgmentByInspectionSite(@PathVariable Long inspectionSiteId) {
         try {
-            List<InspectionSiteAckDto> inspectionSiteAckDtos = inspectionSiteAckService.getAllAckByInspectionId(inspectionSiteId);
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("inspectionDetails", inspectionSiteService.getInspectionSite(inspectionSiteId));
+            final List<InspectionSiteAckDto> inspectionSiteAckDtos = inspectionSiteAckService.getAllAckByInspectionId(inspectionSiteId);
+            final InspectionSiteResponse inspectionSiteResponse = inspectionSiteService.getInspectionSite(inspectionSiteId);
+            final HashMap<String, Object> response = new HashMap<>();
+            final Map<String, Object> inspectionDetails = new HashMap<>();
+            inspectionDetails.put("reportName", inspectionSiteResponse.getReportName());
+            inspectionDetails.put("inspectionDate", inspectionSiteResponse.getInspectionDate());
             response.put("peoples", inspectionSiteAckDtos);
-            return ResponseEntity.ok(inspectionSiteAckDtos);
+            response.put("inspectionDetails", inspectionDetails);
+            return ResponseEntity.ok(response);
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {

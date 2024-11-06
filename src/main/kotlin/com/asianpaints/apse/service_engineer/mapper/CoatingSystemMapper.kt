@@ -6,7 +6,7 @@ import java.util.stream.Collectors
 
 object CoatingSystemMapper {
 
-    fun toEntity(dto: CoatingSystemDTO, inspectionReport: InspectionSite, products: MutableSet<CoatingSystemProductDetailsDTO>, siteAreas: Set<SiteArea>): CoatingSystem {
+    fun toEntity(dto: CoatingSystemDTO, inspectionReport: InspectionSite, products: MutableSet<CoatingSystemProductDetailsDTO>, siteAreas: MutableSet<SiteArea>): CoatingSystem {
         return CoatingSystem(
             id = dto.id,
             coatingSystemName = dto.coatingSystemName,

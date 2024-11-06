@@ -3,12 +3,14 @@ package com.asianpaints.apse.service_engineer.mapper;
 import com.asianpaints.apse.service_engineer.domain.entity.ApUser;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteStatus;
+import com.asianpaints.apse.service_engineer.domain.entity.Zone;
 import com.asianpaints.apse.service_engineer.dto.InspectionSiteRequest;
 import com.asianpaints.apse.service_engineer.dto.InspectionSiteResponse;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -26,6 +28,8 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper {
                 .imageUrl(inspectionSiteRequest.getImageUrl())
                 .status(InspectionSiteStatus.Draft)
                 .inspectionDate(inspectionSiteRequest.getInspectionDate())
+                .deleted(inspectionSiteRequest.getDeleted())
+                .zone(user.getZone())
                 .build();
     }
 
@@ -74,6 +78,7 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper {
                 .imageUrl(inspectionSite.getImageUrl())
                 .status(inspectionSite.getStatus())
                 .inspectionDate(inspectionSite.getInspectionDate())
+                .zoneName(Optional.ofNullable(inspectionSite.getZone()).map(Zone::getName).orElse(null))
                 .build();
     }
 

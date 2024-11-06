@@ -2,6 +2,7 @@ package com.asianpaints.apse.service_engineer.controller
 
 import com.asianpaints.apse.service_engineer.dto.CoatingSystemDTO
 import com.asianpaints.apse.service_engineer.dto.CoatingSystemResponse
+import com.asianpaints.apse.service_engineer.exception.CoatingSystemNotFoundException
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound
 import com.asianpaints.apse.service_engineer.exception.ProductLimitException
 import com.asianpaints.apse.service_engineer.service.CoatingSystemService
@@ -26,7 +27,27 @@ class CoatingSystemController(private val coatingSystemService: CoatingSystemSer
         } catch (e: Exception) {
             ResponseEntity.internalServerError().body(e.message)
         }
+    }
 
+
+    @PutMapping("/{id}")
+    fun updateCoatingSystem(
+        @PathVariable id: Long,
+        @RequestBody coatingSystem: CoatingSystemDTO
+    ): ResponseEntity<Any> {
+        return try {
+            // Call the service to update the coating system, assuming it returns the updated object
+            val updatedCoatingSystem = coatingSystemService.updateCoatingSystem(id, coatingSystem)
+            ResponseEntity.ok(updatedCoatingSystem)
+        } catch (ex: CoatingSystemNotFoundException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
+        } catch (ex: InspectionSiteNotFound) {
+            ResponseEntity.badRequest().body(ex.message)
+        } catch (ex: ProductLimitException) {
+            ResponseEntity.badRequest().body(ex.message)
+        } catch (e: Exception) {
+            ResponseEntity.internalServerError().body(e.message)
+        }
     }
 
 
@@ -37,16 +58,6 @@ class CoatingSystemController(private val coatingSystemService: CoatingSystemSer
             ResponseEntity.ok("Coating System deleted successfully")
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body("Coating System not found")
-        }
-    }
-
-    @PutMapping("/{id}")
-    fun updateCoatingSystem(@PathVariable id: Long, @RequestBody coatingSystemDto: CoatingSystemDTO): ResponseEntity<CoatingSystemResponse> {
-        return try {
-            val updatedCoatingSystem = coatingSystemService.updateCoatingSystem(id, coatingSystemDto)
-            ResponseEntity.ok(updatedCoatingSystem)
-        } catch (e: EntityNotFoundException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }
     }
 

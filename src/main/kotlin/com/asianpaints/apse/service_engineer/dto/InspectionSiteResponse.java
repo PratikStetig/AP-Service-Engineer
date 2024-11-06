@@ -1,6 +1,7 @@
 package com.asianpaints.apse.service_engineer.dto;
 
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteStatus;
+import com.asianpaints.apse.service_engineer.domain.entity.Zone;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +26,5 @@ public class InspectionSiteResponse {
     private LocalDateTime createdOn;
     private LocalDate inspectionDate;
     private InspectionSiteStatus status;
-
+    private String zoneName;
 }

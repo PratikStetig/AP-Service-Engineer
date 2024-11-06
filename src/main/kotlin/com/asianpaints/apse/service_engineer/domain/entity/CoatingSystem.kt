@@ -31,7 +31,7 @@ data class CoatingSystem(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inspection_site_id")
-    val inspectionSiteId: InspectionSite,
+    var inspectionSiteId: InspectionSite,
 
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(
@@ -56,7 +56,7 @@ data class CoatingSystem(
         name = "AREA_COATING_SYSTEM_MAPPING",
         joinColumns = [JoinColumn(name = "coating_system_id")],
         inverseJoinColumns = [JoinColumn(name = "area_id")]
-    ) val siteAreas: Set<SiteArea>
+    ) var siteAreas: MutableSet<SiteArea> = mutableSetOf()
 ) {
 
     fun addProduct(product: ProductMaster, wftMin: Int, wftMax: Int, dft: Double, layerOrder: Int, paint: Boolean, spray: Boolean) {

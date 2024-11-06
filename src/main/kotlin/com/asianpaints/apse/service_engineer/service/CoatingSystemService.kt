@@ -5,6 +5,7 @@ import com.asianpaints.apse.service_engineer.dto.CoatingSystemDTO
 import com.asianpaints.apse.service_engineer.dto.CoatingSystemProductDetailsDTO
 import com.asianpaints.apse.service_engineer.dto.CoatingSystemProductDetailsResponse
 import com.asianpaints.apse.service_engineer.dto.CoatingSystemResponse
+import com.asianpaints.apse.service_engineer.exception.CoatingSystemNotFoundException
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound
 import com.asianpaints.apse.service_engineer.mapper.CoatingSystemMapper
 import com.asianpaints.apse.service_engineer.mapper.CoatingSystemProductDetailsMapper
@@ -24,35 +25,6 @@ class CoatingSystemService(
     private val siteAreaRepository: SiteAreaRepository,
     private val coatingSystemProductDetailsMapper: CoatingSystemProductDetailsMapper,
 ) {
-
-//    @Transactional
-//    fun addCoatingSystem(coatingSystemDto: CoatingSystemDto): CoatingSystem {
-//        val inspectionSite = inspectionSiteRepository.findById(coatingSystemDto.inspectionSiteId).orElseThrow { throw InspectionSiteNotFound("Inspection Report not found") }
-//        val productIds = coatingSystemDto.coatingSystemProductDetailsRequests.map { it.productId }.toList()
-//        val products = productMasterRepository.findAllById(productIds)
-//        if (products.size > 4) {
-//            throw ProductLimitException("Cannot add more than 4 products")
-//        }
-//        val siteAreas: Set<SiteArea> = siteAreaRepository.findByIds(coatingSystemDto.areaIds)
-//        if (siteAreas.isEmpty()) {
-//            throw InspectionSiteNotFound(String.format("SiteArea with ids %s does not part of InspectionSite %s in system", coatingSystemDto.areaIds.toString(), inspectionSite.id))
-//        }
-//        for (siteArea in siteAreas) {
-//            if (siteArea.inspectionSite.id != inspectionSite.id) {
-//                val errMsg = String.format("SiteArea with id %s does not part of InspectionSite %s in system", siteArea.id, inspectionSite.id)
-//                throw InspectionSiteNotFound(errMsg)
-//            }
-//        }
-//
-//        return coatingSystemRepository.save(
-//            CoatingSystemMapper.toEntity(
-//                coatingSystemDto,
-//                inspectionSite,
-//                coatingSystemDto.coatingSystemProductDetailsRequests.toMutableSet(),
-//                siteAreas
-//            )
-//        );
-//    }
 
     @Transactional
     fun addProductDetails(coatingSystemId: Long, request: CoatingSystemProductDetailsDTO): CoatingSystemProductDetailsResponse {
@@ -87,24 +59,6 @@ class CoatingSystemService(
             throw EntityNotFoundException("Coating System not found with id: $id")
         }
         coatingSystemRepository.delete(coatingSystem)
-    }
-
-
-    @Transactional
-    fun updateCoatingSystem(id: Long, coatingSystemDto: CoatingSystemDTO): CoatingSystemResponse {
-        val existingCoatingSystem = coatingSystemRepository.findById(id).orElseThrow {
-            throw EntityNotFoundException("Coating System not found with id: $id")
-        }
-
-        existingCoatingSystem.apply {
-            coatingSystemName = coatingSystemDto.coatingSystemName
-            corrosivityLevel = coatingSystemDto.corrosivityLevel
-            typeOfStructures = coatingSystemDto.typeOfStructures
-            surfacePreparation = coatingSystemDto.surfacePreparation
-            srfaBareMetal = coatingSystemDto.srfaBareMetal
-        }
-
-        return CoatingSystemMapper.toDto(coatingSystemRepository.save(existingCoatingSystem))
     }
 
 
@@ -172,7 +126,7 @@ class CoatingSystemService(
             surfacePreparation = dto.surfacePreparation,
             srfaBareMetal = dto.srfaBareMetal,
             inspectionSiteId = inspectionSite,
-            siteAreas = siteAreas.toSet()
+            siteAreas = siteAreas.toMutableSet()
         )
 
         // Map and add product details
@@ -205,4 +159,58 @@ class CoatingSystemService(
         )
     }
 
+    @Transactional
+    fun updateCoatingSystem(id: Long, dto: CoatingSystemDTO): CoatingSystemResponse {
+        // Find the existing coating system
+        val existingCoatingSystem = coatingSystemRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("Coating system not found for ID: $id") }
+
+        // Fetch related entities
+        val inspectionSite = inspectionSiteRepository.findById(dto.inspectionSiteId)
+            .orElseThrow { IllegalArgumentException("Invalid inspection site ID: ${dto.inspectionSiteId}") }
+
+        val siteAreas = siteAreaRepository.findAllById(dto.siteAreaIds).toMutableSet()
+
+        // Update fields in the existing CoatingSystem entity
+        existingCoatingSystem.apply {
+            coatingSystemName = dto.coatingSystemName
+            corrosivityLevel = dto.corrosivityLevel
+            typeOfStructures = dto.typeOfStructures
+            surfacePreparation = dto.surfacePreparation
+            srfaBareMetal = dto.srfaBareMetal
+            inspectionSiteId = inspectionSite
+            this.siteAreas = siteAreas
+        }
+
+        // Clear existing product details and re-add them from DTO
+        existingCoatingSystem.productDetails.clear()
+
+        dto.productDetails.forEach { productDetailDTO ->
+            val product = productMasterRepository.findById(productDetailDTO.productId)
+                .orElseThrow { IllegalArgumentException("Invalid product ID: ${productDetailDTO.productId}") }
+
+            existingCoatingSystem.addProduct(
+                product = product,
+                wftMin = productDetailDTO.wftMin,
+                wftMax = productDetailDTO.wftMax,
+                dft = productDetailDTO.dft,
+                layerOrder = productDetailDTO.layerOrder,
+                paint = productDetailDTO.paint,
+                spray = productDetailDTO.spray
+            )
+        }
+
+        // Save the updated CoatingSystem entity
+        val updatedCoatingSystem = coatingSystemRepository.save(existingCoatingSystem)
+
+        // Return the response
+        return CoatingSystemResponse(
+            id = updatedCoatingSystem.id,
+            coatingSystemName = updatedCoatingSystem.coatingSystemName,
+            corrosivityLevel = updatedCoatingSystem.corrosivityLevel,
+            typeOfStructures = updatedCoatingSystem.typeOfStructures,
+            surfacePreparation = updatedCoatingSystem.surfacePreparation,
+            srfaBareMetal = updatedCoatingSystem.srfaBareMetal
+        )
+    }
 }

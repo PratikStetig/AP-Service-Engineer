@@ -1,10 +1,12 @@
 package com.asianpaints.apse.service_engineer.dto
 
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 data class CoatingSystemDTO(
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     val id: Long = 0,
     @field:NotBlank(message = "Coating system name cannot be blank")
     var coatingSystemName: String,

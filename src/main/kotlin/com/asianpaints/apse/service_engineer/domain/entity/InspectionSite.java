@@ -40,6 +40,9 @@ public class InspectionSite {
     private LocalDateTime createdOn;
     @Enumerated(EnumType.STRING)
     public InspectionSiteStatus status;
-    @Column(name = "deleted")
+    @Column(name = "deleted", nullable = false)
     private Boolean deleted = false;
+    @ManyToOne()
+    @JoinColumn(name = "zone_id")
+    private Zone zone;
 }

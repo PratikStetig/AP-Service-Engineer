@@ -30,4 +30,5 @@ public class InspectionSiteRequest {
     @NotNull(message = "inspectionDate field can't be null")
     @DateBeforeOrEqualToday
     private LocalDate inspectionDate;
+    private Boolean deleted = false;
 }
