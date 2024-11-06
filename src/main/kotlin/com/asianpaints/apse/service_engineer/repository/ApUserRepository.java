@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ApUserRepository extends JpaRepository<ApUser,Long> {
     ApUser findByEmail(String email);
 
-    boolean existsByIdAndUserDesignation_IdAndIsActive(Long id, Long designationId, boolean isActive);
+    boolean existsByIdAndUserType_IdAndIsActive(Long id, Long typeId, boolean isActive);
 
 }

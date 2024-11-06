@@ -1,5 +1,6 @@
 package com.asianpaints.apse.service_engineer.service
 
+import com.asianpaints.apse.service_engineer.constants.UserRole
 import com.asianpaints.apse.service_engineer.domain.entity.ApprovalHistory
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite
 import com.asianpaints.apse.service_engineer.dto.ApprovalHistoryRequest
@@ -34,7 +35,7 @@ class InspectionSiteApprovalService(
     @Transactional
     fun updateInspectionReportStatus(inspectionSiteId: Long, approverId: Long, approvalHistoryRequest: ApprovalHistoryRequest): InspectionSite {
         val inspectionReport = inspectionSiteRepository.findById(inspectionSiteId).orElseThrow { InspectionSiteNotFound("Inspection report not found Id $inspectionSiteId") }
-        val isValidUser = apUserRepository.existsByIdAndUserDesignation_IdAndIsActive(approverId, 6, true)
+        val isValidUser = apUserRepository.existsByIdAndUserType_IdAndIsActive(approverId, UserRole.APPROVER_ID, true)
         if (isValidUser) {
             inspectionReport.status = approvalHistoryRequest.status
             val inspectionSite = inspectionSiteRepository.save(inspectionReport)
