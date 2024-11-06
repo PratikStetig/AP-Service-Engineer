@@ -445,4 +445,15 @@ public class InspectionSiteController {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/comments")
+    public ResponseEntity<Object> getInspectionComments(@PathVariable Long inspectionSiteId) {
+        try {
+            return ResponseEntity.ok(inspectionSiteService.getInspectionComments(inspectionSiteId));
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }

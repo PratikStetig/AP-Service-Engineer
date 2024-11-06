@@ -10,6 +10,7 @@ import com.asianpaints.apse.service_engineer.dto.InspectionSiteResponse;
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound;
 import com.asianpaints.apse.service_engineer.exception.UserNotFoundException;
 import com.asianpaints.apse.service_engineer.mapper.InspectionSiteMapper;
+import com.asianpaints.apse.service_engineer.repository.ApprovalHistoryRepository;
 import com.asianpaints.apse.service_engineer.repository.InspectionSiteRepository;
 import com.asianpaints.apse.service_engineer.specification.InspectionSiteSpecification;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class InspectionSiteService {
     private final ApUserService apUserService;
     private final InspectionSiteMapper inspectionSiteMapper;
     private final InspectionSiteRepository inspectionSiteRepository;
+    private final ApprovalHistoryRepository approvalHistoryRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(InspectionSiteService.class);
 
     public InspectionSiteResponse createInspectionSite(InspectionSiteRequest inspectionSiteRequest) {
@@ -84,5 +87,15 @@ public class InspectionSiteService {
         inspectionSite.setStatus(InspectionSiteStatus.Pending);
         inspectionSiteRepository.save(inspectionSite);
         return inspectionSiteMapper.toDto(inspectionSite);
+    }
+
+    public Object getInspectionComments(Long inspectionSiteId) {
+        InspectionSite inspectionSite = inspectionSiteRepository.findById(inspectionSiteId).orElse(null);
+        if (inspectionSite == null) {
+            String errMsg = String.format("InspectionSite with id %s does not exist in system", inspectionSiteId);
+            throw new InspectionSiteNotFound(errMsg);
+        }
+
+        return approvalHistoryRepository.findByInspectionSiteIdComments(inspectionSiteId);
     }
 }
