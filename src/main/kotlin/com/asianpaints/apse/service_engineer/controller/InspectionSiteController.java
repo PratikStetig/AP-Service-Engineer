@@ -167,7 +167,7 @@ public class InspectionSiteController {
             final InspectionSiteResponse inspectionSiteResponse = inspectionSiteService.getInspectionSite(inspectionSiteId);
             final HashMap<String, Object> response = new HashMap<>();
             final Map<String, Object> inspectionDetails = new HashMap<>();
-            inspectionDetails.put("reportName", inspectionSiteResponse.getReportName());
+            inspectionDetails.put("reportName", inspectionSiteResponse.getConductedAt());
             inspectionDetails.put("inspectionDate", inspectionSiteResponse.getInspectionDate());
             response.put("peoples", inspectionSiteAckDtos);
             response.put("inspectionDetails", inspectionDetails);
