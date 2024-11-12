@@ -20,14 +20,13 @@ public class SitePreliminaryObservation {
     private Long id;
     @OneToOne
     @JoinColumn(name = "inspection_site_id")
-    private InspectionSite inspectionSite;
-    private boolean ruralArea;
-    private boolean urbanArea;
-    private boolean coastalArea;
-    private boolean industrialPollutedArea;
-    private String chemicalsExposed;
-    private boolean salineAtmosphere;
-    private double averageHumidity;
-    private String description;
-
+    public InspectionSite inspectionSite;
+    public boolean ruralArea;
+    public boolean urbanArea;
+    public boolean coastalArea;
+    public boolean industrialPollutedArea;
+    public String chemicalsExposed;
+    public boolean salineAtmosphere;
+    public double averageHumidity;
+    public String description;
 }

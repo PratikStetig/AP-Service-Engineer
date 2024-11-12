@@ -22,27 +22,27 @@ public class InspectionSite {
     @Column(name = "id")
     public Long id;
     @Column(name = "report_name")
-    private String reportName;
+    public String reportName;
     @Column(name = "conducted_at")
-    private String conductedAt;
+    public String conductedAt;
     @ManyToOne()
     @JoinColumn(name = "conducted_by")
-    private ApUser conductedBy;
+    public ApUser conductedBy;
     @Column(name = "site_id")
-    private String siteId;
-    private String state;
-    private String city;
+    public String siteId;
+    public String state;
+    public String city;
     @Column(name = "image_url")
-    private String imageUrl;
+    public String imageUrl;
     @Column(name = "inspection_date")
-    private LocalDate inspectionDate;
+    public LocalDate inspectionDate;
     @Column(name = "created_on")
-    private LocalDateTime createdOn;
+    public LocalDateTime createdOn;
     @Enumerated(EnumType.STRING)
     public InspectionSiteStatus status;
     @Column(name = "deleted", nullable = false)
-    private Boolean deleted = false;
+    public Boolean deleted = false;
     @ManyToOne()
     @JoinColumn(name = "zone_id")
-    private Zone zone;
+    public Zone zone;
 }

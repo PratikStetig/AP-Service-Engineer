@@ -17,7 +17,7 @@ public class ApUser {
     @Id
     @Column(name = "id")
     private Long id;
-    private String name;
+    public String name;
     @ManyToOne()
     @JoinColumn(name = "user_type_id")
     private UserType userType;

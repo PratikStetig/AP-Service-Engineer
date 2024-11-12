@@ -1,13 +1,11 @@
 package com.asianpaints.apse.service_engineer.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+
+@Getter
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +18,8 @@ public class InspectionSiteAcknowledgement {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "inspection_site_id")
-    private InspectionSite inspectionSite;
+    public InspectionSite inspectionSite;
     @Column(name = "person_name")
-    private String personName;
-    private String designation;
+    public String personName;
+    public String designation;
 }
