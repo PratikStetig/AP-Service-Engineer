@@ -8,6 +8,9 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 @RequiredArgsConstructor
 public class FileUploadClient {
@@ -28,10 +31,14 @@ public class FileUploadClient {
         fileMap.add(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString());
         HttpEntity<byte[]> fileEntity = new HttpEntity<>(fileBytesArray, fileMap);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDateTime = LocalDateTime.now().format(formatter);
+        long currentTimeMillis = System.currentTimeMillis();
+
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("fileData", fileEntity);
-        body.add("fileContainer", "bathsense");
-        body.add("fileLocation", "bathsense/test");
+        body.add("fileContainer", "aplms");
+        body.add("fileLocation", "LK2001/" + formattedDateTime + "/"+currentTimeMillis);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity =
                 new HttpEntity<>(body, headers);
