@@ -13,4 +13,5 @@ public class AuthenticationResponse {
     private String accessToken;
     private String userName;
     private String designation;
+    private Long userId;
 }
