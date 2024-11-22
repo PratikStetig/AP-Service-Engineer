@@ -41,6 +41,19 @@
             position: relative;
             page-break-after: always;
         }
+        .pdf-style::after {
+            content: "Page " counter(page);
+            position: fixed; /* Change to fixed position */
+            bottom: 20px;
+            right: 20px;
+            font-size: 12px;
+            color: #000;
+            font-family: Arial, sans-serif; /* Add a font-family for consistency */
+            background: white; /* Add background to prevent text showing through */
+            padding: 5px 10px; /* Add some padding around the page number */
+            z-index: 1000; /* Ensure it stays on top */
+        }
+
         .site-image {
             width: 95%;
             align: center;
@@ -55,6 +68,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0px;
+            counter-reset: page;
+        }
+        /* Add margin to last element in pdf-style to prevent overlap */
+        .pdf-style > *:last-child {
+            margin-bottom: 40px;
         }
         h1,
         h2,
@@ -290,7 +308,8 @@
                 counter-increment: page;
             }
             .page-number::before {
-                content: counter(page);
+                counter-increment: page;
+                content: "Page " counter(page);
             }
         }
         .backImg0{
@@ -347,15 +366,6 @@
                 background-position-x: center, right;
 
             }
-        }
-
-        .content-background {
-            background-image: url('@{classpath:static/assets/Img/content.png}'); /* adjust the path if necessary */
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: left;
-            margin-left: 0;
-
         }
         .backImg11{
             background-image: url('./assets/Img/CONTENT.png');

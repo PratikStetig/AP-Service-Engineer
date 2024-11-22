@@ -21,6 +21,6 @@ public class SiteAreaDto {
     public Long inspectionSiteId;
     public String coatingCondition;
     public CorrosionType corrosionType;
-    public List<SiteAreaImages> images;
+    public List<SiteAreaImageDto> images;
     public Integer rating;
 }

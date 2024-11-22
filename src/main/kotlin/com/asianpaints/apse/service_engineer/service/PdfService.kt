@@ -33,7 +33,7 @@ class PdfService {
         val document: Document = Jsoup.parse(htmlContent)
         document.select("img[src]").forEach { img ->
             val src = img.attr("src")
-            if (src.startsWith("http")) {
+            if (src.startsWith("http") || src.startsWith("https")) {
                 val base64Image = encodeImageToBase64(src)
                 img.attr("src", base64Image)
             }

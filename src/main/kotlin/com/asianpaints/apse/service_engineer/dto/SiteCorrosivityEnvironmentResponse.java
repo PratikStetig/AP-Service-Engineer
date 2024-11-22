@@ -1,13 +1,15 @@
 package com.asianpaints.apse.service_engineer.dto;
 
-import com.asianpaints.apse.service_engineer.domain.entity.SiteArea;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Builder(toBuilder = true)
@@ -41,4 +43,19 @@ public class SiteCorrosivityEnvironmentResponse {
     private String existingPaintingSystem;
     private String dftExistingSystem;
     private String remarks;
+
+    public String siteAreaNamesCSV() {
+        return siteAreas.stream()
+                .map(SiteAreaDto::getArea)
+                .collect(Collectors.joining(", "));
+    }
+
+    public List<String> siteAreaImagesUrl() {
+        return siteAreas.stream()
+                .flatMap(siteArea -> siteArea.getImages().stream())  // Flatten each list of SiteAreaImageDto objects
+                .map(SiteAreaImageDto::getImageUrl)                  // Map each SiteAreaImageDto to its imageUrl
+                .collect(Collectors.toCollection(ArrayList::new));   // Collect into an ArrayList of Strings
+    }
+
+
 }

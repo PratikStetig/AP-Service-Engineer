@@ -3,12 +3,597 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asian Paint</title>
-<!--    <link rel="stylesheet" href="/css/styles.css">-->
-    <link rel="stylesheet" th:href="@{classpath:static/css/style.css}" />
+
+    <style>
+        @page{
+    margin:0;
+    margin-bottom:-10mm;
+}
+.pdf-style {
+    padding: 2.5rem 2.5rem;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0px;
+    background-image: url('https://e7.pngegg.com/pngimages/431/996/png-clipart-draft-text-nfl-draft-watermark-stamp-miscellaneous-angle-thumbnail.png');
+    background-size: none;
+    background-repeat: no-repeat;
+    background-position: center;
+<!--    background-position: bottom right; /* Position the image in the bottom-right corner */-->
+    padding: 20px; /* Optional padding to avoid overlap with content */
+    box-sizing: border-box;
+    max-width: 100%; /* Ensure it doesn’t exceed the page width */
+    position: relative;
+    width: 100%;
+    height: 297mm;
+}
+.site-image {
+    width: 95%;
+    align: center;
+}
+.Last-Page-pdf-style {
+    padding: 2.5rem 2.5rem;
+    page-break-after: inherit;
+    height: 305mm;
+    width: 210mm;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    padding: 0px;
+    margin: 0px;
+    font-weight: 600;
+}
+p {
+    padding: 0px;
+    margin: 0px;
+    font-weight: 400;
+    font-size: 1.25rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    border-radius: 8px;
+}
+
+th {
+    color: #332269;
+    font-weight: 600;
+    text-align: center;
+    padding: 12px 8px;
+    font-size: 0.85rem;
+    background: #EFEBF9;
+    white-space: nowrap;
+}
+
+td {
+    padding: 8px 8px;
+    color: #6A6A6A;
+    font-size: 14px;
+    line-height: 18.5px;
+}
+
+th,
+td {
+    border: 1px solid #c2aff1;
+}
+
+ul {
+    margin-top: 4px;
+}
+
+li {
+    color: #19577C;
+    font-size: 1rem;
+}
+
+td>ul {
+    margin: 0px;
+    padding-left: 20px;
+}
+
+td>ul>li {
+    font-size: 0.75rem;
+    color: #6A6A6A;
+}
+
+
+.orangeText {
+    color: #FC8413;
+    font-weight: 800;
+}
+
+.voiletText {
+    color: #1d2f91;
+    font-weight: 700
+}
+
+.blueText {
+    color: #19577C;
+    font-size: 1.3rem;
+}
+
+.redText {
+    color: #FF0000;
+}
+
+.orangeTextNormal {
+    color: #FC8413;
+}
+
+.greenText {
+    color: #1EC600;
+}
+
+.pt-8 {
+    padding-top: 1rem;
+}
+
+.pt-16 {
+    padding-top: 2rem;
+}
+
+.pb-8 {
+    padding-bottom: 1rem;
+}
+
+.mt-8 {
+    margin-top: 8px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.gap-8 {
+    gap: 16px;
+}
+
+.text-align-end {
+    text-align: end;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Optional: Adjust vertical alignment */
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.d-flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.fill-available {
+    height: -webkit-fill-available;
+}
+
+.w-90p {
+    width: 90%;
+}
+
+.w-50p {
+    width: 50%;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.font-normal {
+    font-size: 1rem;
+}
+
+.font-w-600 {
+    font-weight: 600;
+}
+
+.note-container {
+    background: #EFEBF9;
+    padding: 4px;
+}
+
+.note-container>p {
+    font-size: 12px;
+    color: #6A6A6A;
+}
+
+.table-with-left-header>tbody>tr>th {
+    text-align: start;
+}
+.backImg{
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, right bottom, left bottom;
+    background-position-x: left, right, left;
+}
+@media print {
+    .backImg {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('classpath:static/assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+        background-repeat: no-repeat;
+        background-size: auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, right bottom, left bottom;
+        background-position-x: left, right, left;
+    }
+}
+.backImg0{
+  width: 100%;
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 20px; /* Adjust padding to ensure no overflow */
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, right bottom, left bottom;
+    background-position-x: left, right, left;
+}
+@media print {
+    .backImg0 {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, right bottom, left bottom;
+        background-position-x: left, right, left;
+        overflow:hidden;
+    }
+}
+
+.backImg1{
+    background-image: url('./assets/Img/APLogoBack.png'),url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-origin: content-box;
+    background-position: center center, right bottom;
+    background-position-x: center ,right;
+
+}
+@media print {
+    .backImg1 {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/APLogoBack.png'),url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-origin: content-box;
+        background-position: center center, right bottom;
+        background-position-x: center, right;
+
+    }
+}
+.backImg11{
+    background-image: url('./assets/Img/CONTENT.png');
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-origin: content-box;
+    background-position: left top;
+    background-position-x: left;
+
+}
+@media print {
+    .backImg11 {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/CONTENT.png');
+        background-repeat: no-repeat;
+        background-size: auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-origin: content-box;
+        background-position: left top;
+        background-position-x: left;
+
+    }
+}
+.backImg2{
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset4.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, right top, right bottom;
+    background-position-x: left, right, right;
+}
+@media print {
+    .backImg2 {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset4.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, right top, right bottom;
+        background-position-x: left, right, right;
+    }
+}
+.backImg3{
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset5.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, left bottom, right bottom;
+    background-position-x: left, left, right;
+}
+@media print {
+    .backImg3 {
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset5.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, left bottom, right bottom;
+        background-position-x: left, left, right;
+    }
+}
+.backImg4{
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset6.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, left bottom, right bottom;
+    background-position-x: left, left, right;
+}
+@media print {
+    .backImg4{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset6.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, left bottom, right bottom;
+        background-position-x: left, left, right;
+    }
+}
+.backImg5{
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset7.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, left bottom, right bottom;
+    background-position-x: left, left, right;
+}
+@media print {
+    .backImg5{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset7.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, left bottom, right bottom;
+        background-position-x: left, left, right;
+    }
+}
+.backImg6{
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset8.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, left bottom, right bottom;
+    background-position-x: left, left, right;
+}
+@media print {
+    .backImg6{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset8.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, left bottom, right bottom;
+        background-position-x: left, left, right;
+    }
+}
+.backImg7{
+    background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset9.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top, left bottom, right bottom;
+    background-position-x: left, left, right;
+}
+@media print {
+    .backImg7{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset9.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top, left bottom, right bottom;
+        background-position-x: left, left, right;
+    }
+}
+.backImg8{
+    background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset11.png'), url('./assets/Img/asset10.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top,right top, left bottom, right bottom;
+    background-position-x: left, right, left, right;
+}
+@media print {
+    .backImg8{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset11.png'), url('./assets/Img/asset10.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top,right top, left bottom, right bottom;
+        background-position-x: left, right, left, right;
+        z-index: -1;
+    }
+}
+.backImg9{
+    background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset16.png'), url('./assets/Img/asset14.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top,right top, left bottom, right bottom;
+    background-position-x: left, right, left, right;
+}
+@media print {
+    .backImg9{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset16.png'), url('./assets/Img/asset14.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top,right top, left bottom, right bottom;
+        background-position-x: left, right, left, right;
+        z-index: -1;
+    }
+}
+.backImg10{
+    background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset19.png'), url('./assets/Img/asset20.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top,right top, left bottom, right bottom;
+    background-position-x: left, right, left, right;
+}
+@media print {
+    .backImg10{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset19.png'), url('./assets/Img/asset20.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top,right top, left bottom, right bottom;
+        background-position-x: left, right, left, right;
+        z-index: -1;
+    }
+}
+.backImg11{
+    background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset24.png'), url('./assets/Img/asset23.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top,right top, left bottom, right bottom;
+    background-position-x: left, right, left, right;
+}
+@media print {
+    .backImg11{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset24.png'), url('./assets/Img/asset23.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top,right top, left bottom, right bottom;
+        background-position-x: left, right, left, right;
+        z-index: -1;
+    }
+}
+.backImg12{
+    background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset26.png'), url('./assets/Img/asset25.png'), url('./assets/Img/Group35614.png');
+    background-repeat: no-repeat;
+    background-size: 340px 400px, auto, auto, auto;
+    background-origin: padding-box;
+    background-attachment: scroll;
+    background-position: left top,right top, left bottom, right bottom;
+    background-position-x: left, right, left, right;
+}
+@media print {
+    .backImg12{
+        -webkit-print-color-adjust: exact; /* Chrome, Safari */
+        print-color-adjust: exact;         /* Firefox */
+        background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset26.png'), url('./assets/Img/asset25.png'), url('./assets/Img/Group35614.png');
+        background-repeat: no-repeat;
+        background-size: 340px 400px, auto, auto, auto;
+        background-origin: padding-box;
+        background-attachment: scroll;
+        background-position: left top,right top, left bottom, right bottom;
+        background-position-x: left, right, left, right;
+        z-index: -1;
+    }
+}
+.COATINGEVALUATION{
+    width: 50%;
+    margin: 1% 25%;
+    border-collapse: collapse;
+}
+.COATINGEVALUATION thead tr th{
+    text-align: center;
+}
+.COATINGEVALUATION tbody tr td{
+    text-align: center;
+    color:#fff;
+}
+.COATINGEVALUATION tbody{
+    background: linear-gradient(180deg, #FF0000 16.12%, rgba(255, 157, 0, 0.73) 47.35%, rgba(255, 157, 0, 0.73) 65%, rgba(30, 198, 0, 0.5) 100%);
+
+}
+.COATINGEVALUATION {
+    border: 1.5px solid rgba(51, 34, 105, 1);
+    border-radius: 20px;
+}
+
+    </style>
 </head>
 
 <body>
-
 <div class="mainPage">
     <div class="pdf-style">
         <div class="d-flex-col fill-available">
@@ -21,7 +606,7 @@
                 <p class="blueText pt-16">Conducted At</p>
                 <h2 class="blueText pb-8" th:text="${conductedAt}"></h2>
 
-                <!--                <img th:src="@{classpath:static/assets/company-image.jpg}" alt="" class="pt-16" style="width: 100%;"/>-->
+<!--                <img th:src="@{classpath:static/assets/company-image.jpg}" alt="" class="pt-16" style="width: 100%;"/>-->
                 <img class ="site-image" th:src="${siteImage}" alt="Asian Paint">
             </div>
             <div class="text-align-end pb-8">
@@ -30,7 +615,6 @@
                 <h5 class="blueText text-uppercase" th:text="${conductedBy}"></h5>
             </div>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -62,8 +646,6 @@
         <ul>
             <li th:each="item : ${items}" th:text="${item}"></li>
         </ul>
-
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -71,75 +653,50 @@
     <div class="pdf-style">
         <img src="./assets/logo.svg" alt="Asian Paint">
         <h1 class="orangeText pt-16">Table Of <span class="voiletText">Content</span></h1>
-
-        <!-- Table structure with headings -->
-        <table class="content-background w-90p ml-auto pt-8">
-            <thead>
-            <tr>
-                <th class="blueText">S.No</th>
-                <th class="blueText">Description</th>
-                <th class="blueText">Page Number</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="pt-16">
-                <td class="blueText">01</td>
-                <td class="blueText">Abstract on Environmental Classification</td>
-                <td class="blueText">4</td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">02</td>
-                <td class="blueText">Designation of degree of rusting</td>
-                <td class="blueText">4</td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">03</td>
-                <td class="blueText">Surface Preparation Standard</td>
-                <td class="blueText">5</td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">04</td>
-                <td class="blueText">Pressure Categorization for water washing</td>
-                <td class="blueText">6</td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">05</td>
-                <td class="blueText">Preliminary Observations</td>
-                <td class="blueText">7</td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">06</td>
-                <td class="blueText">List of Areas Inspected</td>
-                <td class="blueText">8</td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">07</td>
-                <td class="blueText">Inspection details and observations overall</td>
-                <td class="blueText">9</td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">08</td>
-                <td class="blueText">Coating System Recommendation</td>
-                <td class="blueText" th:text="${coatingSystemStartPage}"></td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">09</td>
-                <td class="blueText">Product Datasheets</td>
-                <td class="blueText" th:text="${productDataSheetStartPage}"></td>
-            </tr>
-            <tr class="pt-16">
-                <td class="blueText">10</td>
-                <td class="blueText">General Practice for the Recommended coating system</td>
-                <td class="blueText" th:text="${generalPracticeForTheRecommendedCoatingSystem}"></td>
-            </tr>
-            </tbody>
-        </table>
-
-        <!-- Footer with page number -->
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div class="w-90p ml-auto pt-8" style="background-image: url(./assets/Img/CONTENT.png);background-repeat:no-repeat;background-size:contain;background-position:left;margin-left:0;margin-top:20px;padding-left:105px;">
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">05 </p>
+                <p p class="blueText">Abstract on Environmental Classification</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">05</p>
+                <p p class="blueText">Designation of degree of rusting</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">06</p>
+                <p p class="blueText">Surface Preparation Standard</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">07</p>
+                <p p class="blueText">Pressure Categorization for water washing</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">08</p>
+                <p p class="blueText">Preliminary Observations</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">09 </p>
+                <p p class="blueText">List of Areas Inspected</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">10 </p>
+                <p p class="blueText">Inspection details and observations overall</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">11 </p>
+                <p p class="blueText">Coating System Recommendation</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">12</p>
+                <p p class="blueText">Product Datasheets</p>
+            </div>
+            <div class="d-flex gap-8 pt-16">
+                <p class="blueText">13</p>
+                <p p class="blueText">General Practice for the Recommended coating system</p>
+            </div>
+        </div>
     </div>
 </div>
-
 
 <div class="ClassificationOfIso">
     <div class="pdf-style">
@@ -232,7 +789,6 @@
                 <img th:src="@{classpath:static/assets/test.jpg}" />
             </div>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -333,7 +889,6 @@
             obtain a complete set
             of “Surface Preparation Specifications” contact SSPC: The Society for Protective Coatings, 40 24th Street
             6th Florr, Pittsburgh, pennsylvania 115222-4656 US. (www.sspc.org)</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -370,7 +925,6 @@
         </table>
         <p class="blueText font-normal pt-8">Refer 1498-Hydrojetting Information sheets and actual standards for
             reference</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -475,205 +1029,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
-    </div>
-</div>
-
-<div class="ListOfAreas">
-    <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
-        <h5 class="blueText pt-16 font-normal font-w-600">
-            1.2 List of Areas Inspected
-        </h5>
-        <table>
-            <thead>
-            <tr>
-                <th>Sr No.</th>
-                <th>Locations</th>
-                <th>Coating Condition</th>
-                <th>Risk Level</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="siteArea, iterStat : ${siteAreas}">
-                <td class="text-align-center" th:text="${iterStat.count}">1</td>
-                <td th:text="${siteArea.area}">ZLD (Zero Liquid Discharge)</td>
-                <td th:text="'Structure - ' + ${siteArea.coatingCondition}">Structure - 0S, Pipe line - 0S</td>
-                <td th:classappend="${siteArea.rating == 1} ? 'redText' : (${siteArea.rating == 2} ? 'orangeTextNormal' : 'greenText')"
-                    class="text-align-center font-w-600"
-                    th:text="${siteArea.rating == 1} ? 'High' : (${siteArea.rating == 2} ? 'Medium' : 'Low')">High</td>
-            </tr>
-
-            </tbody>
-        </table>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
-    </div>
-</div>
-
-<div class="ListOfAreaDetails" th:each="areaDetail, iterStat : ${areaDetails}">
-    <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
-        <p class="orangeText-margin pt-16 font-med font-w-600">
-            2. INSPECTION <span class="voiletText">DETAILS AND OBSERVATIONS OVERALL</span>
-        </p>
-        <p class="blueText font-normal pt-8">
-            <span class="font-w-600">AREA </span>-
-            <span th:text="${areaDetail.siteAreaNamesCSV()}">ZLD, SRS, Production Block B,C,E,G,K,M,ETP,WTP, Cooling Tower (STRUCTURE & PIPES)</span>
-        </p>
-
-        <div class="image-container">
-            <img class="image-margin-left" th:each="areaImage : ${areaDetail.siteAreaImagesUrl()}"
-                 th:src="${areaImage}" alt="Asian Paint">
-        </div>
-
-        <div class="d-flex pt-16 gap-8">
-            <div class="w-50p text-align-center">
-                <img src="./assets/Image 1.png" style="width: 100%" />
-            </div>
-            <div class="w-50p text-align-center">
-                <img src="./assets/Image 2.png" style="width: 100%" />
-            </div>
-        </div>
-        <h5 class="blueText pt-16 font-normal font-w-600 text-uppercase">
-            Extent of paint defect
-        </h5>
-        <table>
-            <thead>
-            <tr>
-                <th>Category</th>
-                <th>Property</th>
-                <th>Value</th>
-                <th>Description</th>
-                <th>Remark</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!-- Rusting Row -->
-            <tr>
-                <td>ISO 4628</td>
-                <td>Rusting</td>
-                <td th:text="${areaDetail.rustingDegree}">Degree: > Ri5 (S)</td>
-                <td>Corrosion > 50%</td>
-                <td></td>
-            </tr>
-            <!-- Cracking Row -->
-            <tr>
-                <td></td>
-                <td>Cracking</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size & Qty: 5 & 5</td>
-                <td>Cracks penetrating the whole coating system</td>
-                <td></td>
-            </tr>
-            <!-- Pattern Row -->
-            <tr>
-                <td></td>
-                <td>Pattern</td>
-                <td th:text="${areaDetail.pattern}">Pattern: Mosaic</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <!-- Blistering Row -->
-            <tr>
-                <td></td>
-                <td>Blistering</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size & Qty: 5 & 5</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <!-- Flaking Row -->
-            <tr>
-                <td></td>
-                <td>Flaking</td>
-                <td th:text="'Area: ' + ${areaDetail.flakingSize} + ' & ' + ${areaDetail.flakingQty}">Area: 5 & 5</td>
-                <td>More than 15% flaking (exposed up to 30mm)</td>
-                <td th:text="${areaDetail.remarks}">Last Painted 6 Months Before</td>
-            </tr>
-            <!-- X Cut Adhesion -->
-            <tr>
-                <td>X Cut Adhesion</td>
-                <td>Dft (µm)</td>
-                <td>XXXXXXXX</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <!-- Color Row -->
-            <tr>
-                <td>Color</td>
-                <td>Smoke Grey</td>
-                <td th:text="${areaDetail.color}">Smoke Grey, Chalked</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <!-- Overall Appearance Row -->
-            <tr>
-                <td>Overall Appearance</td>
-                <td>Rating</td>
-                <td th:text="${areaDetail.overallAppearance}">Fair</td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div class="MoreInformation">
-                <img src="./assets/logo.svg" alt="Asian Paint">
-                <h5 class="blueText pt-16 font-normal font-w-600">
-                    More Information
-                </h5>
-                <table>
-                    <thead>
-                    <th>Sr No.</th>
-                    <th>Observation</th>
-                    <th>Recommendation</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="text-align-center">1</td>
-                        <td>Possible surface preparation</td>
-                        <td th:text="${areaDetail.possibleSurfacePreparation}"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center">2</td>
-                        <td>Area affected</td>
-                        <td>XXXXXXXXX</td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center" rowspan="5">3</td>
-                        <td>
-                            Expectation<br>
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Recoating interval</td>
-                        <td th:text="${areaDetail.recoatingInterval}"></td>
-                    </tr>
-                    <tr>
-                        <td>Service life</td>
-                        <td th:text="${areaDetail.serviceLife}"></td>
-                    </tr>
-                    <tr>
-                        <td>Shade</td>
-                        <td th:text="${areaDetail.shade}"></td>
-                    </tr>
-                    <tr>
-                        <td>Aesthetic</td>
-                        <td th:text="${areaDetail.aesthetic}"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center">4</td>
-                        <td>Existing Painting system</td>
-                        <td th:text="${areaDetail.existingPaintingSystem}"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center">5</td>
-                        <td>DFT of Existing system</td>
-                        <td th:text="${areaDetail.dftExistingSystem}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-        </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -732,7 +1087,6 @@
                 be used.</p>
             <img src="./assets/image 3.png" />
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -794,7 +1148,6 @@
                 <td th:text="${product.overCoatingInterval}"></td>
             </tr>
         </table>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -808,7 +1161,6 @@
         <p class="blueText font-normal pt-16 font-w-600 text-align-center">General Safety Information given and kindly
             Follow detail
             guideline at respective plant</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
@@ -827,13 +1179,8 @@
             maintenance work. It is the responsibility of the interested parties/users
             to establish appropriate occupational health and safety practices in their
             working area/zone.</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 </body>
 
 </html>
-
-<!--css line no 28-->
-<!--page-break-after: avoid;-->
-<!--page-break-inside: avoid;-->

@@ -26,4 +26,8 @@ data class CoatingSystemResponse(
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     val products: List<CoatingSystemProductDetailsResponse>? = emptyList(),
     val siteAreas: Set<SiteAreaDto>? = emptySet(),
-)
+) {
+    fun areaCsv(): String {
+        return siteAreas?.joinToString(", ") { it.area } ?: "No Area Selected"
+    }
+}

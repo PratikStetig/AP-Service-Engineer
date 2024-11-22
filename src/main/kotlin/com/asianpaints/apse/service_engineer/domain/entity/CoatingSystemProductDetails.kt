@@ -37,4 +37,3 @@ data class CoatingSystemProductDetails(
     @Column(name = "layer_order")
     val layerOrder: Int
 )
-

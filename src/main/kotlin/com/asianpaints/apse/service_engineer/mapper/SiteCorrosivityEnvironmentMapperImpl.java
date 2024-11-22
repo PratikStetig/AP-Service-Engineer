@@ -2,8 +2,10 @@ package com.asianpaints.apse.service_engineer.mapper;
 
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
 import com.asianpaints.apse.service_engineer.domain.entity.SiteArea;
+import com.asianpaints.apse.service_engineer.domain.entity.SiteAreaImages;
 import com.asianpaints.apse.service_engineer.domain.entity.SiteCorrosivityEnvironment;
 import com.asianpaints.apse.service_engineer.dto.SiteAreaDto;
+import com.asianpaints.apse.service_engineer.dto.SiteAreaImageDto;
 import com.asianpaints.apse.service_engineer.dto.SiteCorrosivityEnvironmentDto;
 import com.asianpaints.apse.service_engineer.dto.SiteCorrosivityEnvironmentResponse;
 import org.springframework.stereotype.Component;
@@ -117,9 +119,20 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                         .corrosionType(siteArea.getCorrosionType())
                         .rating(siteArea.getRating())
                         .area(siteArea.getArea())
-                        .images(siteArea.getImages())
+                        .images(getAreaImageDto(siteArea.getImages()))
                         .build()
                 ).collect(Collectors.toSet());
+    }
 
+    private List<SiteAreaImageDto> getAreaImageDto(List<SiteAreaImages> siteAreaImages) {
+        return siteAreaImages.stream()
+                .map(image -> SiteAreaImageDto.builder()
+                        .id(image.getId())
+                        .siteAreaId(image.getSiteArea().getId())
+                        .imageUrl(image.getImageUrl())
+                        .uploadedAt(image.getUploadedAt())
+                        .build()
+                )
+                .collect(Collectors.toList());
     }
 }

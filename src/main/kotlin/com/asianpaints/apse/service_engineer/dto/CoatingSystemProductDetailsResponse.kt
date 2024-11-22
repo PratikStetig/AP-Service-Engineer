@@ -14,4 +14,8 @@ data class CoatingSystemProductDetailsResponse(
     val volumeSolids: Int,
     val mixingRatio: String,
     val overCoatingInterval: String
-)
+) {
+    fun modeOfApplication(): String {
+        return if (paint) "Paint" else if (spray) "Spray" else "NA"
+    }
+}
