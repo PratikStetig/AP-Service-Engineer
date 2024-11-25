@@ -48,7 +48,7 @@ class PdfGenerationService @Autowired constructor(
     private val pdfGenFailureLogRepository: PdfGenFailureLogRepository,
     private val fileUploadClient: FileUploadClient,
     private val taskExecutor: TaskExecutor,
-    private val siteCorrosivityEnvironmentService: SiteCorrosivityEnvironmentService,
+    private val inspectionSiteReportVersionsService: InspectionSiteReportVersionsService,
 ) {
 
     private val logger = LoggerFactory.getLogger(PdfGenerationService::class.java)
@@ -178,10 +178,9 @@ class PdfGenerationService @Autowired constructor(
 
                 // Convert the rendered HTML to PDF
                 val pdfBytes = convertHtmlToPdfBytes(htmlContent)
-                val fileName = "inspectionReport_${inspectionId}_${System.currentTimeMillis()}.pdf"
-                val uploadedPdf = fileUploadClient.addFile(fileName, pdfBytes)
-                val mapper = ObjectMapper()
-                val azureFileResponse: AzureFileUploadResponse = mapper.readValue(uploadedPdf.body, AzureFileUploadResponse::class.java)
+
+                saveInspectionPdf(inspectionId, pdfBytes)
+
                 deferredResult.setResult(
                     ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generated.pdf")
@@ -197,6 +196,17 @@ class PdfGenerationService @Autowired constructor(
             }
         }
         return deferredResult
+    }
+
+    private fun saveInspectionPdf(inspectionId: Long, pdfBytes: ByteArray) {
+        val fileName = "inspectionReport_${inspectionId}_${System.currentTimeMillis()}.pdf"
+        val uploadedPdf = fileUploadClient.addFile(fileName, pdfBytes)
+        val mapper = ObjectMapper()
+        val azureFileResponse: AzureFileUploadResponse = mapper.readValue(uploadedPdf.body, AzureFileUploadResponse::class.java)
+
+        if (azureFileResponse.assetUrl != null) {
+            inspectionSiteReportVersionsService.createReportVersion(azureFileResponse.assetUrl,  14)
+        }
     }
 
     @GetMapping("/generate/{inspectionId}")

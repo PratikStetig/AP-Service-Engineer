@@ -33,6 +33,7 @@ public class InspectionSiteController {
     private final CoatingSystemService coatingSystemService;
     private final SiteAreaImageService siteAreaImageService;
     private final InspectionSiteApprovalService inspectionSiteApprovalService;
+    private final InspectionSiteReportVersionsService inspectionSiteReportVersionsService;
 
     @PostMapping("/inspection-site")
     public ResponseEntity<Object> createInspectionSite(@RequestBody InspectionSiteRequest inspectionSiteRequest) {
@@ -450,6 +451,17 @@ public class InspectionSiteController {
     public ResponseEntity<Object> getInspectionComments(@PathVariable Long inspectionSiteId) {
         try {
             return ResponseEntity.ok(inspectionSiteService.getInspectionComments(inspectionSiteId));
+        } catch (InspectionSiteNotFound ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/inspection-site/{inspectionSiteId}/download-report")
+    public ResponseEntity<Object> downloadInspectionReport(@PathVariable Long inspectionSiteId) {
+        try {
+            return ResponseEntity.ok(inspectionSiteReportVersionsService.getLatestReportByInspectionSiteId(inspectionSiteId));
         } catch (InspectionSiteNotFound ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception e) {
