@@ -10,7 +10,7 @@ data class CoatingSystemProductDetails(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "coating_system_id")
     @JsonIgnore
     val coatingSystem: CoatingSystem,

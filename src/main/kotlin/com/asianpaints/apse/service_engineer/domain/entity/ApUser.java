@@ -30,7 +30,7 @@ public class ApUser {
     private UserDesignation userDesignation;
     @Column(name = "is_active")
     private boolean isActive;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     @JsonManagedReference
     private List<Token> tokens;

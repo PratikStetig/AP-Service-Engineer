@@ -43,6 +43,7 @@ data class CoatingSystem(
 //    var products: MutableSet<ProductMaster> = mutableSetOf(),
 
     @OneToMany(
+        fetch = FetchType.EAGER,
         mappedBy = "coatingSystem",
         cascade = [CascadeType.ALL],
         orphanRemoval = true
@@ -50,7 +51,7 @@ data class CoatingSystem(
 
 
     @ManyToMany(
-        fetch = FetchType.LAZY,
+        fetch = FetchType.EAGER,
         cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH]
     ) @JoinTable(
         name = "AREA_COATING_SYSTEM_MAPPING",

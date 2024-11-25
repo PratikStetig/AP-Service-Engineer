@@ -337,7 +337,7 @@
             .backImg1 {
                 -webkit-print-color-adjust: exact; /* Chrome, Safari */
                 print-color-adjust: exact;         /* Firefox */
-                background-image: url('./assets/Img/APLogoBack.png'),url('./assets/Img/Group35614.png');
+                background-image: url('./assets/Img/APLogoBack.png'),  url('./assets/Img/Group35614.png');
                 background-repeat: no-repeat;
                 background-size: auto;
                 background-origin: padding-box;

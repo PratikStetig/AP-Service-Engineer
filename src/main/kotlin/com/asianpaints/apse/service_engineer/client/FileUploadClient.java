@@ -40,8 +40,7 @@ public class FileUploadClient {
         body.add("fileContainer", "aplms");
         body.add("fileLocation", "LK2001/" + formattedDateTime + "/"+currentTimeMillis);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity =
-                new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
         try {
             return restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
         } catch (HttpClientErrorException e) {

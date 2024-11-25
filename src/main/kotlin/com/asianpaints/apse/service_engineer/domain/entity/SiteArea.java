@@ -31,8 +31,8 @@ public class SiteArea {
     @Enumerated(EnumType.STRING)
     public CorrosionType corrosionType;
     public Integer rating;
-//    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<SiteAreaImages> images = new ArrayList<>();
+    public List<SiteAreaImages> images = new ArrayList<>();
 }

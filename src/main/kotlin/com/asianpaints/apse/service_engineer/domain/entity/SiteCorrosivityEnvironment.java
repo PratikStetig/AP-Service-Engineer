@@ -41,9 +41,9 @@ public class SiteCorrosivityEnvironment {
     private String color;
     @Column(name = "overall_appearance")
     private String overallAppearance;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "AREA_CORROSIVITY_ENVIRONMENT_MAPPING", joinColumns = @JoinColumn(name = "corrosivity_environment_id"), inverseJoinColumns = @JoinColumn(name = "area_id"))
-    private Set<SiteArea> siteAreas;
+    public Set<SiteArea> siteAreas;
 
     @Column(name = "possible_surface_preparation")
     private String possibleSurfacePreparation;

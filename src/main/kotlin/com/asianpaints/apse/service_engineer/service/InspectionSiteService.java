@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -29,6 +30,7 @@ public class InspectionSiteService {
     private final InspectionSiteMapper inspectionSiteMapper;
     private final InspectionSiteRepository inspectionSiteRepository;
     private final ApprovalHistoryRepository approvalHistoryRepository;
+    private final PdfGenerationService pdfGenerationService;
 
     private static final Logger logger = LoggerFactory.getLogger(InspectionSiteService.class);
 
@@ -78,6 +80,7 @@ public class InspectionSiteService {
         return inspectionSiteMapper.toDtoList(results);
     }
 
+    @Transactional
     public InspectionSiteResponse submitInspectionSite(Long inspectionSiteId) {
         InspectionSite inspectionSite = inspectionSiteRepository.findById(inspectionSiteId).orElse(null);
         if (inspectionSite == null) {
@@ -86,6 +89,7 @@ public class InspectionSiteService {
         }
         inspectionSite.setStatus(InspectionSiteStatus.Pending);
         inspectionSiteRepository.save(inspectionSite);
+        pdfGenerationService.generatePdfAsync(14);
         return inspectionSiteMapper.toDto(inspectionSite);
     }
 

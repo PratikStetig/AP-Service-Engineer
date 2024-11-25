@@ -8,6 +8,7 @@ import com.asianpaints.apse.service_engineer.dto.SiteAreaDto;
 import com.asianpaints.apse.service_engineer.dto.SiteAreaImageDto;
 import com.asianpaints.apse.service_engineer.dto.SiteCorrosivityEnvironmentDto;
 import com.asianpaints.apse.service_engineer.dto.SiteCorrosivityEnvironmentResponse;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -113,7 +114,8 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
 
     private Set<SiteAreaDto> getAreas(Set<SiteArea> siteAreas) {
         return siteAreas.stream()
-                .map(siteArea -> SiteAreaDto.builder()
+                .map(siteArea ->
+                        SiteAreaDto.builder()
                         .id(siteArea.getId())
                         .coatingCondition(siteArea.getCoatingCondition())
                         .corrosionType(siteArea.getCorrosionType())
