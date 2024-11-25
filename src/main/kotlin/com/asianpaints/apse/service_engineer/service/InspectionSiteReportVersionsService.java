@@ -2,6 +2,7 @@ package com.asianpaints.apse.service_engineer.service;
 
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteReportVersions;
+import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteStatus;
 import com.asianpaints.apse.service_engineer.dto.InspectionSiteReportVersionsResponse;
 import com.asianpaints.apse.service_engineer.exception.InspectionSiteNotFound;
 import com.asianpaints.apse.service_engineer.repository.InspectionSiteReportVersionsRepository;
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.swing.text.html.Option;
 import javax.validation.ValidationException;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -20,11 +24,13 @@ public class InspectionSiteReportVersionsService {
 
     private final InspectionSiteReportVersionsRepository reportVersionsRepository;
     private final InspectionSiteRepository inspectionSiteRepository;
+    private final PdfGenerationService pdfGenerationService;
 
     @Autowired
-    public InspectionSiteReportVersionsService(InspectionSiteReportVersionsRepository reportVersionsRepository, InspectionSiteRepository inspectionSiteRepository) {
+    public InspectionSiteReportVersionsService(InspectionSiteReportVersionsRepository reportVersionsRepository, InspectionSiteRepository inspectionSiteRepository, PdfGenerationService pdfGenerationService) {
         this.reportVersionsRepository = reportVersionsRepository;
         this.inspectionSiteRepository = inspectionSiteRepository;
+        this.pdfGenerationService = pdfGenerationService;
     }
 
 
@@ -35,13 +41,23 @@ public class InspectionSiteReportVersionsService {
      * @return the latest InspectionSiteReportVersions, if available
      */
     public Optional<InspectionSiteReportVersionsResponse> getLatestReportByInspectionSiteId(Long inspectionSiteId) {
-        InspectionSite inspectionSite = inspectionSiteRepository.findById(inspectionSiteId).orElse(null);
-        if (inspectionSite == null) {
-            String errMsg = String.format("InspectionSite with id %s does not exist in system", inspectionSiteId);
-            throw new InspectionSiteNotFound(errMsg);
+        // Check if the InspectionSite exists; throw custom exception if not
+        final InspectionSite inspectionSite = inspectionSiteRepository.findById(inspectionSiteId)
+                .orElseThrow(() -> new InspectionSiteNotFound(
+                        String.format("InspectionSite with id %s does not exist in the system", inspectionSiteId)
+                ));
+
+        // Retrieve the latest report version, or throw an exception if not present
+        Optional<InspectionSiteReportVersions> inspectionSiteReportVersions = reportVersionsRepository.findFirstByInspectionSiteIdIdAndDeletedFalseOrderByVersionNumberDesc(inspectionSiteId);
+        if (!inspectionSiteReportVersions.isPresent()) {
+            if (inspectionSite.status == InspectionSiteStatus.Pending || inspectionSite.status == InspectionSiteStatus.Rejected) {
+                pdfGenerationService.generatePdfAsync(inspectionSiteId);
+            }
+            throw new RuntimeException("Inspection site report not present, please try after some time");
         }
-        return reportVersionsRepository.findFirstByInspectionSiteIdIdAndDeletedFalseOrderByVersionNumberDesc(inspectionSiteId)
-                .map(this::mapToResponse);
+
+        // Map the entity to the response DTO and return
+        return inspectionSiteReportVersions.map(this::mapToResponse);
     }
 
     /**

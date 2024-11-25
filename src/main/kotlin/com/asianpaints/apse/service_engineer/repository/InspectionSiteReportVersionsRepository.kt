@@ -13,5 +13,5 @@ interface InspectionSiteReportVersionsRepository : JpaRepository<InspectionSiteR
 //    @Query("SELECT r FROM InspectionSiteReportVersions r WHERE r.inspectionSiteId.id = :inspectionSiteId AND r.deleted = false ORDER BY r.versionNumber DESC")
 //    fun findLatestReportByInspectionSiteId(@Param("inspectionSiteId") inspectionSiteId: Long?): Optional<InspectionSiteReportVersions?>?
 
-    fun findFirstByInspectionSiteIdIdAndDeletedFalseOrderByVersionNumberDesc(inspectionSiteId: Long?): Optional<InspectionSiteReportVersions?>?
+    fun findFirstByInspectionSiteIdIdAndDeletedFalseOrderByVersionNumberDesc(inspectionSiteId: Long?): Optional<InspectionSiteReportVersions?>
 }
