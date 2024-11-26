@@ -3,8 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asian Paint</title>
-<!--    <link rel="stylesheet" href="/css/styles.css">-->
-    <link rel="stylesheet" th:href="@{classpath:static/css/style.css}" />
+    <!--    <link rel="stylesheet" href="/css/styles.css">-->
+    <link rel="stylesheet" th:href="@{classpath:static/css/style.css}"/>
 </head>
 
 <body>
@@ -13,31 +13,43 @@
     <div class="pdf-style">
         <div class="d-flex-col fill-available">
             <div style="flex:1;">
-                <img th:src="@{classpath:static/assets/logo.svg}" alt="Asian Paint">
-                <h1 class="orangeText pt-16" th:text="${reportName}">
+                <div style="margin-top: 20px;">
+                    <img style="margin-top: 20px !important;" width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+                </div>
+                <div class="d-flex-col-center">
+                    <h1 class="main-page-heading pt-16 text-align-center" th:text="${reportName}"></h1>
+                </div>
                 </h1>
-                <!-- <h1 class="orangeText pb-8" th:text="${name}'"></h1> -->
-
-                <p class="blueText pt-16">Conducted At</p>
-                <h2 class="blueText pb-8" th:text="${conductedAt}"></h2>
+                <p class="blueText18px pt-16 text-align-center">Conducted At</p>
+                <h2 class="blueText32px pb-8 text-align-center" th:text="${conductedAt}"></h2>
 
                 <!--                <img th:src="@{classpath:static/assets/company-image.jpg}" alt="" class="pt-16" style="width: 100%;"/>-->
-                <img class ="site-image" th:src="${siteImage}" alt="Asian Paint">
-            </div>
-            <div class="text-align-end pb-8">
-                <p class="blueText" th:text="'(Cert. ' + ${certificateNo} + ')'"></p>
-                <p class="blueText" th:text="'Date: ' + ${inspectionDate}"></p>
-                <h5 class="blueText text-uppercase" th:text="${conductedBy}"></h5>
+                <img class="site-image" th:src="${siteImage}" alt="Asian Paint">
             </div>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    margin-top: 120px;
+                    margin-right: 50px;
+                    gap: 12px;">
+            <h5 class="blueText600 font-w-500" th:text="${conductedBy}"></h5>
+            <h5 class="blueText600 font-w-500" th:text="${designation}"></h5>
+            <p class="blueText" th:text="'(Cert. ' + ${certificateNo} + ')'"></p>
+            <p class="blueText" th:text="'Created At: ' + ${inspectionDate}"></p>
+        </div>
+
+        <div
+                style="position: absolute; float: right; left: 640px; bottom: 20px; font-size: 18px; color: #000;"
+                th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|">
+        </div>
     </div>
 </div>
 
 <div class="Acknowledgement">
     <div class="pdf-style">
         <!-- Load logo from static assets using Thymeleaf path resolution -->
-        <img th:src="@{classpath:static/assets/logo.svg}" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
 
         <!-- Heading with dynamic content -->
         <h1 class="orangeText pt-16">Acknow<span class="voiletText">ledgement</span></h1>
@@ -50,8 +62,10 @@
         </p>
 
         <p class="blueText pt-8">
-            We give our sincere thanks to the persons present during the inspection who coordinated all the inspection plans.
-            We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we discussed regarding
+            We give our sincere thanks to the persons present during the inspection who coordinated all the inspection
+            plans.
+            We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we discussed
+            regarding
             <span class="font-w-600" th:text="${conductedAt}"></span>. All the concerned areas were discussed in the
             Kick-off meeting.
         </p>
@@ -63,13 +77,14 @@
             <li th:each="item : ${items}" th:text="${item}"></li>
         </ul>
 
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="TableOfContent">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <h1 class="orangeText pt-16">Table Of <span class="voiletText">Content</span></h1>
 
         <!-- Table structure with headings -->
@@ -136,13 +151,14 @@
         </table>
 
         <!-- Footer with page number -->
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="ClassificationOfIso">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <h2 class="orangeText pt-16 text-uppercase pb-8 font-w-600">Classification <span class="voiletText"> -
                     ISO 12944 - 2
                     Rev-2018</span>
@@ -172,36 +188,44 @@
                 <td>C3 Medium</td>
                 <td>Urban and industrial atmospheres,
                     moderate sulfur dioxide pollution. Coastal
-                    areas with low salinity.</td>
+                    areas with low salinity.
+                </td>
                 <td>Production rooms with high humidity
                     and some air pollution. eg. food
                     processing plants, laundries, breweries,
-                    dairies</td>
+                    dairies
+                </td>
             </tr>
             <tr>
                 <td>C4 High</td>
                 <td>Industrial areas and coastal areas with
-                    moderate salinity.</td>
+                    moderate salinity.
+                </td>
                 <td>Chemical plants, swimming pools,
-                    coastal ship and boatyards</td>
+                    coastal ship and boatyards
+                </td>
             </tr>
             <tr>
                 <td>C5 Very High</td>
                 <td>Industrial areas with high humidity and
                     aggressive atmosphere. Coastal and
-                    offshore areas with high salinity.</td>
+                    offshore areas with high salinity.
+                </td>
                 <td>Buildings or areas with almost
                     permanent condensation and high
-                    pollution.</td>
+                    pollution.
+                </td>
             </tr>
             <tr>
                 <td>CX Extreme</td>
                 <td>Offshore areas with high salinity and
                     industrial areas with extreme humidity
                     and aggressive atmosphere and sub-
-                    tropical and tropical atmospheres.</td>
+                    tropical and tropical atmospheres.
+                </td>
                 <td>Industrial areas with extreme humidity
-                    and aggressive atmosphere.</td>
+                    and aggressive atmosphere.
+                </td>
             </tr>
             </tbody>
         </table>
@@ -213,31 +237,32 @@
         <div class="d-flex gap-8 pt-8">
             <div>
 
-                <img th:src="@{classpath:static/assets/test.jpg}" />
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
             <div>
-                <img th:src="@{classpath:static/assets/test.jpg}" />
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
             <div>
-                <img th:src="@{classpath:static/assets/test.jpg}" />
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
             <div>
-                <img th:src="@{classpath:static/assets/test.jpg}" />
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
             <div>
-                <img th:src="@{classpath:static/assets/test.jpg}" />
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
             <div>
-                <img th:src="@{classpath:static/assets/test.jpg}" />
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="SurfacePreparationStandard">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <h5 class="blueText pt-16" style="font-weight: 400;">
             Surface Preparation Standard
         </h5>
@@ -332,13 +357,14 @@
             obtain a complete set
             of “Surface Preparation Specifications” contact SSPC: The Society for Protective Coatings, 40 24th Street
             6th Florr, Pittsburgh, pennsylvania 115222-4656 US. (www.sspc.org)</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="PressureCategorization">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <h5 class="blueText pt-16" style="font-weight: 400;">
             Pressure Categorization for water washing
         </h5>
@@ -351,7 +377,8 @@
             <tr>
                 <td>Low pressure water Cleaning (LPWC)</td>
                 <td>
-                    <350 Bar OR <5,000 psi</td>
+                    <350 Bar OR <5,000 psi
+                </td>
             </tr>
             <tr>
                 <td>High-Pressure Water Cleaning (HPWC)</td>
@@ -369,13 +396,14 @@
         </table>
         <p class="blueText font-normal pt-8">Refer 1498-Hydrojetting Information sheets and actual standards for
             reference</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="PreliminaryObservation">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <p class="orangeText pt-16 font-med font-w-600">1. Preliminary <span class="voiletText">Observations:</span>
         </p>
         <p class="blueText font-normal pt-8">As per ISO 12944-2 – Classification of environments, location of “
@@ -474,13 +502,14 @@
                 </tbody>
             </table>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="ListOfAreas">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <h5 class="blueText pt-16 font-normal font-w-600">
             1.2 List of Areas Inspected
         </h5>
@@ -500,18 +529,20 @@
                 <td th:text="'Structure - ' + ${siteArea.coatingCondition}">Structure - 0S, Pipe line - 0S</td>
                 <td th:classappend="${siteArea.rating == 1} ? 'redText' : (${siteArea.rating == 2} ? 'orangeTextNormal' : 'greenText')"
                     class="text-align-center font-w-600"
-                    th:text="${siteArea.rating == 1} ? 'High' : (${siteArea.rating == 2} ? 'Medium' : 'Low')">High</td>
+                    th:text="${siteArea.rating == 1} ? 'High' : (${siteArea.rating == 2} ? 'Medium' : 'Low')">High
+                </td>
             </tr>
 
             </tbody>
         </table>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="ListOfAreaDetails" th:each="areaDetail, iterStat : ${areaDetails}">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <p class="orangeText-margin pt-16 font-med font-w-600">
             2. INSPECTION <span class="voiletText">DETAILS AND OBSERVATIONS OVERALL</span>
         </p>
@@ -527,10 +558,10 @@
 
         <div class="d-flex pt-16 gap-8">
             <div class="w-50p text-align-center">
-                <img src="./assets/Image 1.png" style="width: 100%" />
+                <img src="./assets/Image 1.png" style="width: 100%"/>
             </div>
             <div class="w-50p text-align-center">
-                <img src="./assets/Image 2.png" style="width: 100%" />
+                <img src="./assets/Image 2.png" style="width: 100%"/>
             </div>
         </div>
         <h5 class="blueText pt-16 font-normal font-w-600 text-uppercase">
@@ -559,7 +590,9 @@
             <tr>
                 <td></td>
                 <td>Cracking</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size & Qty: 5 & 5</td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size &
+                    Qty: 5 & 5
+                </td>
                 <td>Cracks penetrating the whole coating system</td>
                 <td></td>
             </tr>
@@ -575,7 +608,9 @@
             <tr>
                 <td></td>
                 <td>Blistering</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size & Qty: 5 & 5</td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size &
+                    Qty: 5 & 5
+                </td>
                 <td></td>
                 <td></td>
             </tr>
@@ -615,70 +650,71 @@
         </table>
 
         <div class="MoreInformation">
-                <img src="./assets/logo.svg" alt="Asian Paint">
-                <h5 class="blueText pt-16 font-normal font-w-600">
-                    More Information
-                </h5>
-                <table>
-                    <thead>
-                    <th>Sr No.</th>
-                    <th>Observation</th>
-                    <th>Recommendation</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="text-align-center">1</td>
-                        <td>Possible surface preparation</td>
-                        <td th:text="${areaDetail.possibleSurfacePreparation}"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center">2</td>
-                        <td>Area affected</td>
-                        <td>XXXXXXXXX</td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center" rowspan="5">3</td>
-                        <td>
-                            Expectation<br>
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Recoating interval</td>
-                        <td th:text="${areaDetail.recoatingInterval}"></td>
-                    </tr>
-                    <tr>
-                        <td>Service life</td>
-                        <td th:text="${areaDetail.serviceLife}"></td>
-                    </tr>
-                    <tr>
-                        <td>Shade</td>
-                        <td th:text="${areaDetail.shade}"></td>
-                    </tr>
-                    <tr>
-                        <td>Aesthetic</td>
-                        <td th:text="${areaDetail.aesthetic}"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center">4</td>
-                        <td>Existing Painting system</td>
-                        <td th:text="${areaDetail.existingPaintingSystem}"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-align-center">5</td>
-                        <td>DFT of Existing system</td>
-                        <td th:text="${areaDetail.dftExistingSystem}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <img src="./assets/logo.svg" alt="Asian Paint">
+            <h5 class="blueText pt-16 font-normal font-w-600">
+                More Information
+            </h5>
+            <table>
+                <thead>
+                <th>Sr No.</th>
+                <th>Observation</th>
+                <th>Recommendation</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-align-center">1</td>
+                    <td>Possible surface preparation</td>
+                    <td th:text="${areaDetail.possibleSurfacePreparation}"></td>
+                </tr>
+                <tr>
+                    <td class="text-align-center">2</td>
+                    <td>Area affected</td>
+                    <td>XXXXXXXXX</td>
+                </tr>
+                <tr>
+                    <td class="text-align-center" rowspan="5">3</td>
+                    <td>
+                        Expectation<br>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Recoating interval</td>
+                    <td th:text="${areaDetail.recoatingInterval}"></td>
+                </tr>
+                <tr>
+                    <td>Service life</td>
+                    <td th:text="${areaDetail.serviceLife}"></td>
+                </tr>
+                <tr>
+                    <td>Shade</td>
+                    <td th:text="${areaDetail.shade}"></td>
+                </tr>
+                <tr>
+                    <td>Aesthetic</td>
+                    <td th:text="${areaDetail.aesthetic}"></td>
+                </tr>
+                <tr>
+                    <td class="text-align-center">4</td>
+                    <td>Existing Painting system</td>
+                    <td th:text="${areaDetail.existingPaintingSystem}"></td>
+                </tr>
+                <tr>
+                    <td class="text-align-center">5</td>
+                    <td>DFT of Existing system</td>
+                    <td th:text="${areaDetail.dftExistingSystem}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="GeneralPracticeCoatingSystem">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img class="appg-logo" width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <p class="blueText font-normal pt-8 font-w-600" style="margin-bottom: 4px;">General Practice for the Recommended
             coating system</p>
         <p class="blueText font-normal">After considering the conditions like degree of rusting, degree
@@ -688,11 +724,14 @@
         <ul>
             <li>Ensure Relative humidity close to job structure less than 80%.</li>
             <li>Temporary weld supports, weld spatter etc., should be removed prior to surface preparation. These are
-                weak areas for corrosion to start.</li>
+                weak areas for corrosion to start.
+            </li>
             <li>To remove all oil, Grease, fine powder due to chalking by Solvent Cleaning as per SSPC SP-1. It is
-                recommended to use Thinner - T131 or thinner 90-53.</li>
+                recommended to use Thinner - T131 or thinner 90-53.
+            </li>
             <li>Impact Tools like Hammer to be used to remove heavy scaling prior to proceed with further surface
-                preparations.</li>
+                preparations.
+            </li>
             <li>All loose paint, rusted part, Blister & delimitation are removed up to surface by using power tool.</li>
             <li>Hand tool cleaning permissible for limited areas due to poor access or safety factor.</li>
             <li>Low pressure water jetting shall be performed to remove invisible salt contaminants from the surface.
@@ -718,8 +757,8 @@
             most of the coating Failures are observed to start from these Areas. (Use the good quality 2’’ – 3’’
             industrial brush).</p>
         <div class="d-flex gap-8 pt-8 pb-8">
-            <img src="./assets/image 4.png" />
-            <img src="./assets/image 3.png" />
+            <img src="./assets/image 4.png"/>
+            <img src="./assets/image 3.png"/>
         </div>
         <div class="d-flex gap-8">
             <p class="blueText font-normal pt-8"><span class="font-w-600">Brush (Quality): </span>Use of round
@@ -729,17 +768,18 @@
                 build. Long Handle, Flat and Round briushes recommended. Non synthetic and pure Bristle or Poly bristle
                 to
                 be used.</p>
-            <img src="./assets/image 3.png" />
+            <img src="./assets/image 3.png"/>
         </div>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="CoatingSystemRecommendation" th:each="system, iterStat: ${coatingSystems}">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <p class="orangeText pt-16 font-med font-w-600">
-        <th th:text="'3.' + ${iterStat.index+1}"></th>
+            <th th:text="'3.' + ${iterStat.index+1}"></th>
             Coating <span class="voiletText">System Recommendation</span>
         </p>
         <table>
@@ -767,10 +807,10 @@
                 <td>Spot Repair for areas with bare metal</td>
                 <td th:text="${system.srfaBareMetal}"></td>
             </tr>
-<!--            <tr>-->
-<!--                <td>Total DFT</td>-->
-<!--                <td th:text="${system.totalDFT}"></td>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td>Total DFT</td>-->
+            <!--                <td th:text="${system.totalDFT}"></td>-->
+            <!--            </tr>-->
         </table>
 
         <table>
@@ -793,26 +833,29 @@
                 <td th:text="${product.overCoatingInterval}"></td>
             </tr>
         </table>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="CorrectFieldPrecaution">
     <div class="pdf-style">
-        <img src="./assets/logo.svg" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <p class="orangeText font-med font-w-600 pt-8 pb-8 text-align-center">Paint with Safety and
             </span> &nbsp;<span class="voiletText">correct field precaution</span>
         </p>
-        <img th:src="@{classpath:static/assets/precaution.png}" style="width: 100%;" />
+        <img th:src="@{classpath:static/assets/precaution.png}" style="width: 100%;"/>
         <p class="blueText font-normal pt-16 font-w-600 text-align-center">General Safety Information given and kindly
             Follow detail
             guideline at respective plant</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="Disclaimer">
     <div class="pdf-style">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <h1 class="blueText pt-16 font-w-600 text-align-center">Disclaimer</h1>
         <p class="pt-16 blueText font-normal">This “APCOPLAN – Corrosion Audit report” provides direction only to
             refer Safety Data Sheet (SDS) of Asian Paints PPG Pvt. Ltd., paint
@@ -826,7 +869,8 @@
             maintenance work. It is the responsibility of the interested parties/users
             to establish appropriate occupational health and safety practices in their
             working area/zone.</p>
-        <div class="page-number" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 </body>

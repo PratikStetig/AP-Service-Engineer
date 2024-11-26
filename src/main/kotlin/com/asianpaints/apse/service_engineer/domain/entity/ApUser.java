@@ -27,7 +27,7 @@ public class ApUser {
     private String email;
     @ManyToOne()
     @JoinColumn(name = "designation_id")
-    private UserDesignation userDesignation;
+    public UserDesignation userDesignation;
     @Column(name = "is_active")
     private boolean isActive;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

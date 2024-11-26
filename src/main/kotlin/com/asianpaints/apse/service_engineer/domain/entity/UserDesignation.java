@@ -19,5 +19,5 @@ public class UserDesignation {
     @Id
     @Column(name = "ID")
     private Long id;
-    private String designation;
+    public String designation;
 }
