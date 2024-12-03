@@ -194,7 +194,8 @@
             font-weight: regular;
             font-style: normal;
             margin-bottom: 10px;
-        }
+            line-height: 1.5; /* Adjust this value to increase/decrease spacing */
+         }
 
         .blueText600 {
            color: #19577C;
@@ -228,6 +229,10 @@
             color: #1EC600;
         }
 
+         .table-of-content{
+             margin-top: 30px;
+         }
+
         .pt-8 {
             padding-top: 1rem;
         }
@@ -245,7 +250,7 @@
         }
 
         .mt-20 {
-            margin-top: 40px;
+            margin-top: 30px;
         }
 
         .d-flex {
@@ -725,6 +730,58 @@
                 background-position-x: left, right, left, right;
                 z-index: -1;
             }
+        }
+
+        .container {
+           width: 100%;
+           max-width: 100%;
+           margin: 0 auto;
+        }
+
+
+        .evaluation-table {
+                 width: 100%;
+                 border-collapse: collapse;
+                 font-family: FiraSans;
+                 table-layout: fixed;
+             }
+
+             .evaluation-table th {
+                 background-color: #D3D3D3;
+                 padding: 6px;
+                 text-align: center;
+                 border: 1px solid black;
+                 font-size: 14px;
+                 color: navy;
+             }
+
+             .evaluation-table td {
+                 padding: 6px;
+                 border: 1px solid black;
+                 text-align: center;
+                 font-size: 12px;
+             }
+
+                  .rating-cell {
+                         width: 10%;
+                     }
+
+         .description-cell {
+             width: 23%;
+         }
+        .green-rating { background-color: #90EE90; }
+        .yellow-rating { background-color: #FFD700; }
+        .red-rating { background-color: #FF6B6B; }
+        .pink-rating { background-color: #FFB6C1; }
+
+        .table-header {
+                 background-color: #D3D3D3;
+                 text-align: center;
+                 padding: 8px;
+                 font-weight: bold;
+                 border: 1px solid black;
+                 margin-bottom: 5px;
+                 font-size: 16px;
         }
         .COATINGEVALUATION{
             width: 50%;

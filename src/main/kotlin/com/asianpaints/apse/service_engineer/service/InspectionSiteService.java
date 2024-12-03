@@ -89,7 +89,7 @@ public class InspectionSiteService {
         }
         inspectionSite.setStatus(InspectionSiteStatus.Pending);
         inspectionSiteRepository.save(inspectionSite);
-        pdfGenerationService.generatePdfAsync(14);
+        pdfGenerationService.generatePdfAsync(inspectionSiteId);
         return inspectionSiteMapper.toDto(inspectionSite);
     }
 

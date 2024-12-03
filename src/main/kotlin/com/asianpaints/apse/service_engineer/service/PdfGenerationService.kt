@@ -126,7 +126,7 @@ class PdfGenerationService @Autowired constructor(
                     /*----------------------MainPage----------------------*/
                     setVariable("reportName", inspectionSite.get().reportName)
                     setVariable("conductedAt", inspectionSite.get().conductedAt)
-                    setVariable("certificateNo", "1231244323")
+                    setVariable("certificateNo", "1231244")
                     setVariable("inspectionDate", inspectionSite.get().inspectionDate)
                     setVariable("siteImage", inspectionSite.get().imageUrl)
                     setVariable("conductedBy", inspectionSite.get().conductedBy.name)

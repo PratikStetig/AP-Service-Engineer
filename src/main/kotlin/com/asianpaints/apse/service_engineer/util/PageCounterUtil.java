@@ -16,7 +16,7 @@ public class PageCounterUtil {
         return totalPages;
     }
 
-    public void addToTotal(int increment) {
-        totalPages += increment;
+    public void addToTotal(int add) {
+        totalPages += add;
     }
 }

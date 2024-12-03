@@ -14,7 +14,8 @@
         <div class="d-flex-col fill-available">
             <div style="flex:1;">
                 <div style="margin-top: 20px;">
-                    <img style="margin-top: 20px !important;" width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+                    <img style="margin-top: 20px !important;" width="120"
+                         th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
                 </div>
                 <div class="d-flex-col-center">
                     <h1 class="main-page-heading pt-16 text-align-center" th:text="${reportName}"></h1>
@@ -36,7 +37,7 @@
             <h5 class="blueText600 font-w-500" th:text="${conductedBy}"></h5>
             <h5 class="blueText600 font-w-500" th:text="${designation}"></h5>
             <p class="blueText" th:text="'(Cert. ' + ${certificateNo} + ')'"></p>
-            <p class="blueText" th:text="'Created At: ' + ${inspectionDate}"></p>
+            <p class="blueText" th:text="'Visited On: ' + ${inspectionDate}"></p>
         </div>
 
         <div
@@ -74,7 +75,7 @@
 
         <!-- List of persons dynamically generated -->
         <ul>
-            <li th:each="item : ${items}" th:text="${item}"></li>
+            <li class="blueText font-w-600" th:each="item : ${items}" th:text="${item}"></li>
         </ul>
 
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
@@ -85,10 +86,10 @@
 <div class="TableOfContent">
     <div class="pdf-style">
         <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        <h1 class="orangeText pt-16">Table Of <span class="voiletText">Content</span></h1>
+        <h1 class="orangeText pt-16 mt-20">Table Of <span class="voiletText">Content</span></h1>
 
         <!-- Table structure with headings -->
-        <table class="content-background w-90p ml-auto pt-8">
+        <table class="table-of-content">
             <thead>
             <tr>
                 <th class="blueText">S.No</th>
@@ -235,20 +236,19 @@
         <p class="pt-8 blueText font-normal">Paints and varnishes Evaluation of degradation of paint
             coatings Designation of quantity and size of defects, and of intensity of uniform changes in appearance</p>
         <div class="d-flex gap-8 pt-8">
-            <div>
-
+            <div style="margin-right:12px;">
                 <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
-            <div>
+            <div style="margin-right:12px;">
                 <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
-            <div>
+            <div style="margin-right:12px;">
                 <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
-            <div>
+            <div style="margin-right:12px;">
                 <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
-            <div>
+            <div style="margin-right:12px;">
                 <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
             <div>
@@ -440,68 +440,7 @@
             joints etc. In some of the areas under film corrosion also observed, which apparently indicates the severity
             of the corrosion and premature failure of the existing coating system. The major causes for this premature
             coating failure and corrosion in this plant are due to the following conditions:</p>
-        <div class="mt-8">
-            <h5 class="blueText font-normal pt-16 fojt--w-600" align="center">
-                COATING CONDITION EVALUATION
-            </h5>
-            <table class="COATINGEVALUATION">
-                <thead>
-                <tr>
-                    <th colspan="2">COATING CONDITION EVALUATION KEY</th>
-                </tr>
-                <tr>
-                    <th>Rating</th>
-                    <th>Corrosion Level</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>0</td>
-                    <td>> 50%</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>> 33.0% and ≤ 50.0%</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>> 16.0% and ≤ 33.0%</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>> 10.0% and ≤ 16.0%</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>> 3.0% and ≤ 10.0%</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>> 1.0% and ≤ 3.0%</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>> 0.3% and ≤ 1.0%</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>> 0.1% and ≤ 0.3%</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>> 0.03% and ≤ 0.1% 4</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>> 0.01% and ≤ 0.03%</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>< 0.01%</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
              th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
@@ -510,6 +449,73 @@
 <div class="ListOfAreas">
     <div class="pdf-style">
         <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+
+        <div class="mt-8">
+
+<!--            <h5 class="blueText font-normal pt-16 fojt&#45;&#45;w-600" align="center"> -->
+<!--            </h5>-->
+
+            <div class="container">
+                <div class="table-header">Corrosion Levels are as per ISO 4628</div>
+                <table class="evaluation-table">
+                    <tr>
+                        <th class="rating-cell">Rating</th>
+                        <th class="description-cell">Corrosion Level</th>
+                        <th class="rating-cell">Rating</th>
+                        <th class="description-cell">Corrosion Level</th>
+                        <th class="rating-cell">Rating</th>
+                        <th class="description-cell">Corrosion Level</th>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">10</td>
+                        <td class="description-cell green-rating">&lt; 0.01%</td>
+                        <td class="rating-cell yellow-rating">6</td>
+                        <td class="description-cell yellow-rating">&gt; 0.3% and ≤ 1.0%</td>
+                        <td class="rating-cell red-rating">3</td>
+                        <td class="description-cell red-rating">&gt; 10.0% and ≤ 16.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">9</td>
+                        <td class="description-cell green-rating">&gt; 0.01% and ≤ 0.03%</td>
+                        <td class="rating-cell yellow-rating">5</td>
+                        <td class="description-cell yellow-rating">&gt; 1.0% and ≤ 3.0%</td>
+                        <td class="rating-cell red-rating">2</td>
+                        <td class="description-cell red-rating">&gt; 16.0% and ≤ 33.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">8</td>
+                        <td class="description-cell green-rating">&gt; 0.03% and ≤ 0.1%</td>
+                        <td class="rating-cell yellow-rating">4</td>
+                        <td class="description-cell yellow-rating">&gt; 3.0% and ≤ 10.0%</td>
+                        <td class="rating-cell red-rating">1</td>
+                        <td class="description-cell red-rating">&gt; 33.0% and ≤ 50.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">7</td>
+                        <td class="description-cell green-rating">&gt; 0.1% and ≤ 0.3%</td>
+                        <td class="rating-cell"></td>
+                        <td class="description-cell"></td>
+                        <td class="rating-cell red-rating">0</td>
+                        <td class="description-cell red-rating">&gt; 50%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell pink-rating">L</td>
+                        <td class="description-cell pink-rating">Localized</td>
+                        <td class="rating-cell"></td>
+                        <td class="description-cell"></td>
+                        <td class="rating-cell pink-rating">S</td>
+                        <td class="description-cell pink-rating">Scattered</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
         <h5 class="blueText pt-16 font-normal font-w-600">
             1.2 List of Areas Inspected
         </h5>
@@ -517,9 +523,9 @@
             <thead>
             <tr>
                 <th>Sr No.</th>
-                <th>Locations</th>
+                <th>Area</th>
                 <th>Coating Condition</th>
-                <th>Risk Level</th>
+                <th>Maintainance Priority</th>
             </tr>
             </thead>
             <tbody>

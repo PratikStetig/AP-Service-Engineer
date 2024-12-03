@@ -7,7 +7,7 @@ import com.asianpaints.apse.service_engineer.dto.SiteAreaResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SiteAreaMapperImpl implements SiteAreaMapper{
+public class SiteAreaMapperImpl implements SiteAreaMapper {
     @Override
     public SiteArea toEntity(SiteAreaDto siteAreaDto, InspectionSite inspectionSite) {
         return SiteArea.builder()
@@ -16,6 +16,7 @@ public class SiteAreaMapperImpl implements SiteAreaMapper{
                 .corrosionType(siteAreaDto.getCorrosionType())
                 .rating(siteAreaDto.getRating())
                 .area(siteAreaDto.getArea())
+                .structureType(siteAreaDto.getStructureType())
                 .build();
     }
 
@@ -29,6 +30,7 @@ public class SiteAreaMapperImpl implements SiteAreaMapper{
                 .rating(siteArea.getRating())
                 .area(siteArea.getArea())
                 .images(siteArea.getImages())
+                .structureType(siteArea.getStructureType())
                 .build();
     }
 
@@ -41,6 +43,7 @@ public class SiteAreaMapperImpl implements SiteAreaMapper{
                 .corrosionType(siteAreaDto.getCorrosionType())
                 .rating(siteAreaDto.getRating())
                 .area(siteAreaDto.getArea())
+                .structureType(siteAreaDto.getStructureType())
                 .build();
     }
 
@@ -53,6 +56,7 @@ public class SiteAreaMapperImpl implements SiteAreaMapper{
                 .corrosionType(siteArea.getCorrosionType())
                 .rating(siteArea.getRating())
                 .area(siteArea.getArea())
+                .structureType(siteArea.getStructureType())
                 .build();
     }
 }

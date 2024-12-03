@@ -27,6 +27,8 @@ public class SiteArea {
     public String area;
     @Column(name = "coating_condition")
     public String coatingCondition;
+    @Column(name = "structure_type")
+    public String structureType;
     @Column(name = "corrosion_type")
     @Enumerated(EnumType.STRING)
     public CorrosionType corrosionType;

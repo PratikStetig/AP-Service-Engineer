@@ -21,6 +21,7 @@ public class SiteAreaResponse {
     private String area;
     private Long inspectionSiteId;
     private String coatingCondition;
+    private String structureType;
     private String corrosionType;
     private Integer rating;
     private List<SiteAreaImages> images;
