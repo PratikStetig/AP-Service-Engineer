@@ -36,7 +36,7 @@ public class ServiceEngineerApplication implements CommandLineRunner {
     private ApUserService apUserService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String...args) throws Exception {
 //        Zone zone1 = new Zone();
 //        zone1.setName("East");
 //        Zone zone2 = new Zone();

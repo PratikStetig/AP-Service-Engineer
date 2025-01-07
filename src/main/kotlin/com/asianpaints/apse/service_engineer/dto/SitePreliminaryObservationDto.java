@@ -24,5 +24,5 @@ public class SitePreliminaryObservationDto {
     private boolean salineAtmosphere;
     private double averageHumidity;
     private String description;
-
+    private String environmentClassification;
 }

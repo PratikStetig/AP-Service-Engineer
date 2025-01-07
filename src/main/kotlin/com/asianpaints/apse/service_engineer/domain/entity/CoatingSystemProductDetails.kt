@@ -35,5 +35,8 @@ data class CoatingSystemProductDetails(
     val spray: Boolean,
 
     @Column(name = "layer_order")
-    val layerOrder: Int
+    val layerOrder: Int,
+
+    @Column(name = "application_category")
+    val applicationCategory: String
 )

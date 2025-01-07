@@ -32,7 +32,7 @@ public class SecurityConfig {
     private final LogoutHandler logoutHandler;
 
     @Bean
-    public AuthTokenFilter authenticationJwtTokenFilter(){
+    public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
     }
 
@@ -42,7 +42,8 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers(WHITELIST).permitAll()
-                .anyRequest().authenticated() // Other requests require authentication
+                .anyRequest()
+                .authenticated() // Other requests require authentication
                 .and()
                 .csrf().disable();
         http.sessionManagement(session
@@ -82,5 +83,5 @@ public class SecurityConfig {
             "/v2/api-docs/**",
             "/swagger-resources/**",
             "/**"
-        };
+    };
 }

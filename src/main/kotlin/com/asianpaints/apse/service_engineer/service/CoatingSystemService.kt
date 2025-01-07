@@ -101,7 +101,8 @@ class CoatingSystemService(
             dft = 75.0,
             paint = true,
             spray = true,
-            layerOrder = 1
+            layerOrder = 1,
+            applicationCategory = "Primer"
         )
         coatingSystemRepository.save(coatingSystem)
 //        } else {
@@ -141,7 +142,8 @@ class CoatingSystemService(
                 dft = productDetailDTO.dft,
                 layerOrder = productDetailDTO.layerOrder,
                 paint = productDetailDTO.paint,
-                spray = productDetailDTO.spray
+                spray = productDetailDTO.spray,
+                applicationCategory = productDetailDTO.applicationCategory
             )
         }
 
@@ -196,7 +198,8 @@ class CoatingSystemService(
                 dft = productDetailDTO.dft,
                 layerOrder = productDetailDTO.layerOrder,
                 paint = productDetailDTO.paint,
-                spray = productDetailDTO.spray
+                spray = productDetailDTO.spray,
+                applicationCategory = productDetailDTO.applicationCategory
             )
         }
 

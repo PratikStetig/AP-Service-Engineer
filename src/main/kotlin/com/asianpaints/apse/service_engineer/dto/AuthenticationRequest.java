@@ -12,5 +12,4 @@ public class AuthenticationRequest {
     private String email;
     @NotBlank(message = "otp field can't be blank")
     private String otp;
-
 }

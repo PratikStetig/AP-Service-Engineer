@@ -110,14 +110,11 @@ public class AuthenticationService {
 
     private String createAuthenticationToken(AuthenticationRequest authenticationRequest) throws Exception {
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), "")
-            );
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), ""));
         } catch (BadCredentialsException e) {
             throw new Exception("Incorrect email or OTP", e);
         }
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getEmail());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
         return jwtTokenUtil.generateTokenFromUserName(userDetails);
     }
 

@@ -69,7 +69,7 @@ class PdfGenerationService @Autowired constructor(
             setVariable("reportName", inspectionSite.get().reportName)
             setVariable("conductedAt", inspectionSite.get().conductedAt)
             setVariable("siteImage", inspectionSite.get().imageUrl)
-            setVariable("certificateNo", "STATIC")
+//            setVariable("certificateNo", "STATIC")
             setVariable("inspectionDate", inspectionSite.get().inspectionDate)
             setVariable("conductedBy", inspectionSite.get().conductedBy.name)
 
@@ -181,7 +181,7 @@ class PdfGenerationService @Autowired constructor(
                 // Convert the rendered HTML to PDF
                 val pdfBytes = convertHtmlToPdfBytes(htmlContent)
 
-//                saveInspectionPdf(inspectionId, pdfBytes)
+                saveInspectionPdf(inspectionId, pdfBytes)
 
                 deferredResult.setResult(
                     ResponseEntity.ok()

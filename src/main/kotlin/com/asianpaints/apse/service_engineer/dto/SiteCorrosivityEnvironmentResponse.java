@@ -37,6 +37,7 @@ public class SiteCorrosivityEnvironmentResponse {
     /*------------------ ADD MORE INFORMATION MERGE------------------------*/
     private String possibleSurfacePreparation;
     private String recoatingInterval;
+    private String recoatingIntervalOther;
     private String serviceLife;
     private String shade;
     private String aesthetic;

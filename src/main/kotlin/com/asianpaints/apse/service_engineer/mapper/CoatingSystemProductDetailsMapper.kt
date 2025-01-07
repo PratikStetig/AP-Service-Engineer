@@ -24,7 +24,8 @@ class CoatingSystemProductDetailsMapper {
             dft = request.dft,
             spray = request.spray,
             paint = request.paint,
-            layerOrder = request.layerOrder
+            layerOrder = request.layerOrder,
+            applicationCategory = request.applicationCategory
         )
     }
 
@@ -42,7 +43,8 @@ class CoatingSystemProductDetailsMapper {
             productSpec = entity.product.productSpec,
             volumeSolids = entity.product.volumeSolids,
             mixingRatio = entity.product.mixingRatio,
-            overCoatingInterval = entity.product.overCoatingInterval
+            overCoatingInterval = entity.product.overCoatingInterval,
+            applicationCategory = entity.applicationCategory
         )
     }
 

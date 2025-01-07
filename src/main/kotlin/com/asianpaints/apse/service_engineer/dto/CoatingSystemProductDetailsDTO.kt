@@ -18,6 +18,8 @@ data class CoatingSystemProductDetailsDTO(
     var paint: Boolean,
     @field:NotNull(message = "Spray field cannot be null")
     var spray: Boolean,
+    @field:NotNull(message = "Application Category cannot be null")
+    var applicationCategory: String,
 ) {
     @AssertTrue(message = "WFT max must be greater than WFT min")
     fun isWftMaxGreaterThanMin(): Boolean {

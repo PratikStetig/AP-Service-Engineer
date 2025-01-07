@@ -19,6 +19,7 @@ public class SitePreliminaryObservationMapperImpl implements SitePreliminaryObse
                 .salineAtmosphere(sitePreliminaryObservationDto.isSalineAtmosphere())
                 .averageHumidity(sitePreliminaryObservationDto.getAverageHumidity())
                 .description(sitePreliminaryObservationDto.getDescription())
+                .environmentClassification(sitePreliminaryObservationDto.getEnvironmentClassification())
                 .build();
     }
 
@@ -37,6 +38,7 @@ public class SitePreliminaryObservationMapperImpl implements SitePreliminaryObse
                 .salineAtmosphere(sitePreliminaryObservationDto.isSalineAtmosphere())
                 .averageHumidity(sitePreliminaryObservationDto.getAverageHumidity())
                 .description(sitePreliminaryObservationDto.getDescription())
+                .environmentClassification(sitePreliminaryObservationDto.getEnvironmentClassification())
                 .build();
     }
 
@@ -53,6 +55,7 @@ public class SitePreliminaryObservationMapperImpl implements SitePreliminaryObse
                 .salineAtmosphere(sitePreliminaryObservation.isSalineAtmosphere())
                 .averageHumidity(sitePreliminaryObservation.getAverageHumidity())
                 .description(sitePreliminaryObservation.getDescription())
+                .environmentClassification(sitePreliminaryObservation.getEnvironmentClassification())
                 .build();
     }
 }

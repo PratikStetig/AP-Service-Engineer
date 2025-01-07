@@ -125,7 +125,6 @@ public class ApUserController {
         }
         List<ApUser> users = apUserService.getAllUserUsers();
         return ResponseEntity.ok(users);
-
     }
 
     @GetMapping("/designation")

@@ -43,9 +43,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String email = jwtUtils.getUserNameFromJwtToken(jwt);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
                 boolean isTokenValid = tokenRepository.findByToken(jwt)
-                        .map(t->!t.isExpired() && !t.isRevoked())
+                        .map(t -> !t.isExpired() && !t.isRevoked())
                         .orElse(false);
-                if(isTokenValid){
+                if (isTokenValid) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails,
                                     null,
@@ -57,13 +57,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 }
 
             }
-        }catch (Exception e){
-            logger.error("Cannot set user authentication: {}",e);
+        } catch (Exception e) {
+            logger.error("Cannot set user authentication: {}", e);
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
-    private String parseJwt(HttpServletRequest request){
+    private String parseJwt(HttpServletRequest request) {
         String jwt = jwtUtils.getJwtFromHeader(request);
         logger.info("AuthTokenFilter : {}", jwt);
         return jwt;

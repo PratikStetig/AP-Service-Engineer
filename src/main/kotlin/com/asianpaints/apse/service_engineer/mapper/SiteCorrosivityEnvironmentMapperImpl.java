@@ -38,6 +38,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 /*------------------ ADD MORE INFORMATION MERGE------------------------*/
                 .possibleSurfacePreparation(siteCorrosivityEnvironmentDto.getPossibleSurfacePreparation())
                 .recoatingInterval(siteCorrosivityEnvironmentDto.getRecoatingInterval())
+                .recoatingIntervalOther(siteCorrosivityEnvironmentDto.getRecoatingIntervalOther())
                 .serviceLife(siteCorrosivityEnvironmentDto.getServiceLife())
                 .shade(siteCorrosivityEnvironmentDto.getShade())
                 .aesthetic(siteCorrosivityEnvironmentDto.getAesthetic())
@@ -71,6 +72,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 /*------------------ ADD MORE INFORMATION MERGE------------------------*/
                 .possibleSurfacePreparation(siteCorrosivityEnvironmentDto.getPossibleSurfacePreparation())
                 .recoatingInterval(siteCorrosivityEnvironmentDto.getRecoatingInterval())
+                .recoatingIntervalOther(siteCorrosivityEnvironmentDto.getRecoatingIntervalOther())
                 .serviceLife(siteCorrosivityEnvironmentDto.getServiceLife())
                 .shade(siteCorrosivityEnvironmentDto.getShade())
                 .aesthetic(siteCorrosivityEnvironmentDto.getAesthetic())
@@ -102,6 +104,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 /*------------------ ADD MORE INFORMATION MERGE------------------------*/
                 .possibleSurfacePreparation(siteCorrosivityEnvironment.getPossibleSurfacePreparation())
                 .recoatingInterval(siteCorrosivityEnvironment.getRecoatingInterval())
+                .recoatingIntervalOther(siteCorrosivityEnvironment.getRecoatingIntervalOther())
                 .serviceLife(siteCorrosivityEnvironment.getServiceLife())
                 .shade(siteCorrosivityEnvironment.getShade())
                 .aesthetic(siteCorrosivityEnvironment.getAesthetic())

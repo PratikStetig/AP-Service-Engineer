@@ -60,7 +60,7 @@ data class CoatingSystem(
     ) var siteAreas: MutableSet<SiteArea> = mutableSetOf()
 ) {
 
-    fun addProduct(product: ProductMaster, wftMin: Int, wftMax: Int, dft: Double, layerOrder: Int, paint: Boolean, spray: Boolean) {
+    fun addProduct(product: ProductMaster, wftMin: Int, wftMax: Int, dft: Double, layerOrder: Int, paint: Boolean, spray: Boolean, applicationCategory: String) {
         val details = CoatingSystemProductDetails(
             coatingSystem = this,
             product = product,
@@ -69,7 +69,8 @@ data class CoatingSystem(
             dft = dft,
             paint = paint,
             spray = spray,
-            layerOrder = layerOrder
+            layerOrder = layerOrder,
+            applicationCategory = applicationCategory
         )
         productDetails.add(details)
     }

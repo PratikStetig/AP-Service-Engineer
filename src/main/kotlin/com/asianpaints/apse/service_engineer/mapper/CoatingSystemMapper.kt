@@ -44,6 +44,7 @@ object CoatingSystemMapper {
                     layerOrder = it.layerOrder,
                     paint = it.paint,
                     spray = it.spray,
+                    applicationCategory = it.applicationCategory,
                 )
             },
             siteAreas = getAreas(entity.siteAreas)

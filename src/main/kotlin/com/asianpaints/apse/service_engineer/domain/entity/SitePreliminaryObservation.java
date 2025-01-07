@@ -29,4 +29,5 @@ public class SitePreliminaryObservation {
     public boolean salineAtmosphere;
     public double averageHumidity;
     public String description;
+    public String environmentClassification;
 }

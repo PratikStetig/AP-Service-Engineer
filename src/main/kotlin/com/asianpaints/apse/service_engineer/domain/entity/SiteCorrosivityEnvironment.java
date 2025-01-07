@@ -49,6 +49,8 @@ public class SiteCorrosivityEnvironment {
     private String possibleSurfacePreparation;
     @Column(name = "recoating_interval")
     private String recoatingInterval;
+    @Column(name = "recoating_interval_other")
+    private String recoatingIntervalOther;
     @Column(name = "service_life")
     private String serviceLife;
     private String shade;
