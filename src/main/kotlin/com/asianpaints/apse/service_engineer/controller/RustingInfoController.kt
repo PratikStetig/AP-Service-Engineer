@@ -16,6 +16,9 @@ class RustingInfoController(
     @GetMapping("/{categoryName}")
     fun getById(@PathVariable categoryName: String): Any = service.getAllByCategory(categoryName)
 
+    @GetMapping("/coating-condition-evaluation-key")
+    fun coatingConditionEvaluationKey(): Any = service.getEvaluationKey()
+
 //    @PostMapping
 //    @ResponseStatus(HttpStatus.CREATED)
 //    fun create(@RequestBody dto: RustingInfoResponseDTO): RustingInfoResponseDTO = service.create(dto)

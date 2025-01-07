@@ -3,10 +3,7 @@ package com.asianpaints.apse.service_engineer.service
 import com.asianpaints.apse.service_engineer.constants.ToolTipCategoryEnum
 import com.asianpaints.apse.service_engineer.domain.entity.ToolTipCategory
 import com.asianpaints.apse.service_engineer.domain.entity.ToolTipInfo
-import com.asianpaints.apse.service_engineer.dto.BlisteringInformationDTO
-import com.asianpaints.apse.service_engineer.dto.CrackingGradingDistributionInformationDTO
-import com.asianpaints.apse.service_engineer.dto.FlakingInformationDTO
-import com.asianpaints.apse.service_engineer.dto.RustingDegreeDTO
+import com.asianpaints.apse.service_engineer.dto.*
 import com.asianpaints.apse.service_engineer.repository.ToolTipCategoryRepository
 import com.asianpaints.apse.service_engineer.repository.ToolTipInfoRepository
 import org.springframework.stereotype.Service
@@ -27,6 +24,24 @@ class RustingInfoService(
             ToolTipCategoryEnum.CRACKING_GRADING_AND_DISTRIBUTION -> repository.findAllByCategoryId(categoryId).map { it.toCrackingGradingDistribution() }
             else -> throw IllegalArgumentException("Invalid category")
         }
+    }
+
+    fun getEvaluationKey(): List<Any> {
+        return arrayListOf(
+            CorrosionLevelKeyEvaluation("10", "< 0.01%"),
+            CorrosionLevelKeyEvaluation("9", "> 0.01% and ≤ 0.03%"),
+            CorrosionLevelKeyEvaluation("8", "> 0.03% and ≤ 0.1%"),
+            CorrosionLevelKeyEvaluation("7", "> 0.1% and ≤ 0.3%"),
+            CorrosionLevelKeyEvaluation("L", "Localized"),
+            CorrosionLevelKeyEvaluation("6", "> 0.3% and ≤ 1.0%"),
+            CorrosionLevelKeyEvaluation("5", "> 1.0% and ≤ 3.0%"),
+            CorrosionLevelKeyEvaluation("4", "> 3.0% and ≤ 10.0%"),
+            CorrosionLevelKeyEvaluation("3", "> 10.0% and ≤ 16.0%"),
+            CorrosionLevelKeyEvaluation("2", "> 16.0% and ≤ 33.0%"),
+            CorrosionLevelKeyEvaluation("1", "> 33.0% and ≤ 50.0%"),
+            CorrosionLevelKeyEvaluation("0", "> 50%"),
+            CorrosionLevelKeyEvaluation("S", "Scattered"),
+        )
     }
 
     private fun ToolTipInfo.toRustingDegreeDto() = RustingDegreeDTO(
