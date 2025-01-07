@@ -60,22 +60,43 @@ class PdfGenerationService @Autowired constructor(
         val acknowledgmentInfo = acknowledgmentRepository.findByInspectionSiteId(inspectionId)
         val acknowledgmentPersons = acknowledgmentInfo.map { "${it.personName} ${it.designation}" }.toList()
         val preObservation = sitePreliminaryObservationRepository.findByInspectionSiteId(inspectionId).get()
+        val areas = siteAreaRepository.findByInspectionSiteId(inspectionId).toList()
+        val siteCorrosivityEnvironments = siteCorrosivityEnvironmentRepository.findByInspectionSiteId(inspectionId)
+        val listOfAreaDetails = siteCorrosivityEnvironments.map { siteCorrosivityEnvironmentMapper.toDto(it) }
         val coatingSystem = coatingSystemRepository.getCoatingSystemByInspectionId(inspectionId)
         val coatingSystemResponse = coatingSystem.map { CoatingSystemMapper.toDto(it) }
+        val productDataSheets = emptyList<String>()
+        val pageCounterUtil = PageCounterUtil()
 
-        print("Image is ${inspectionSite.get().imageUrl}")
+
         val context = Context().apply {
+
+
             /*----------------------MainPage----------------------*/
             setVariable("reportName", inspectionSite.get().reportName)
             setVariable("conductedAt", inspectionSite.get().conductedAt)
-            setVariable("siteImage", inspectionSite.get().imageUrl)
-//            setVariable("certificateNo", "STATIC")
+            setVariable("certificateNo", "1231244")
             setVariable("inspectionDate", inspectionSite.get().inspectionDate)
+            setVariable("siteImage", inspectionSite.get().imageUrl)
             setVariable("conductedBy", inspectionSite.get().conductedBy.name)
+            setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
+            pageCounterUtil.addToTotal(1)
 
 
             /*----------------------AcknowledgementPage----------------------*/
             setVariable("items", acknowledgmentPersons)
+            pageCounterUtil.addToTotal(1)
+
+
+            /*----------------------TableOfContent----------------------*/
+            val inspectionDetailsStartingPageNo = 9
+            val coatingSystemStartPageNo = inspectionDetailsStartingPageNo + listOfAreaDetails.size
+            val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
+            val generalPracticeForTheRecommendedCoatingSystem = productDataSheetStartPage + productDataSheets.size
+            setVariable("coatingSystemStartPage", coatingSystemStartPageNo)
+            setVariable("productDataSheetStartPage", productDataSheetStartPage)
+            setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
+            pageCounterUtil.addToTotal(1)
 
 
             /*----------------------PreliminaryObservation----------------------*/
@@ -86,17 +107,124 @@ class PdfGenerationService @Autowired constructor(
             setVariable("chemicalExposed", preObservation.chemicalsExposed)
             setVariable("avgHumidity", preObservation.averageHumidity)
             setVariable("salineAtmosphere", preObservation.salineAtmosphere)
-
+            pageCounterUtil.addToTotal(1)
 
             /*----------------------Coating System Recommendation----------------------*/
             setVariable("coatingSystems", coatingSystemResponse)
+            pageCounterUtil.addToTotal(coatingSystemResponse.size)
 
+            /*----------------------List Of Areas----------------------*/
+            setVariable("siteAreas", areas)
+            pageCounterUtil.addToTotal(areas.size)
+
+            /*----------------------Corrosive Environment----------------------*/
+            setVariable("areaDetails", listOfAreaDetails)
+            pageCounterUtil.addToTotal(listOfAreaDetails.size)
+
+            setVariable("pageCounterUtil", pageCounterUtil)
         }
 
         // Render the HTML content using Thymeleaf
-        val htmlContent = templateEngine.process("pdf_template_preview.html", context)
+        val htmlContent = templateEngine.process("pdf_template_preview_bkp_01.html", context)
 
         return htmlContent
+    }
+
+
+    fun generatePdfAsyncBytes(inspectionId: Long): ResponseEntity<ByteArray> {
+
+        try {
+            val inspectionSite = inspectionSiteRepository.findById(inspectionId)
+            val acknowledgmentInfo = acknowledgmentRepository.findByInspectionSiteId(inspectionId)
+            val acknowledgmentPersons = acknowledgmentInfo.map { "${it.personName} ${it.designation}" }.toList()
+            val preObservation = sitePreliminaryObservationRepository.findByInspectionSiteId(inspectionId).get()
+            val areas = siteAreaRepository.findByInspectionSiteId(inspectionId).toList()
+            val siteCorrosivityEnvironments = siteCorrosivityEnvironmentRepository.findByInspectionSiteId(inspectionId)
+            val listOfAreaDetails = siteCorrosivityEnvironments.map { siteCorrosivityEnvironmentMapper.toDto(it) }
+            val coatingSystem = coatingSystemRepository.getCoatingSystemByInspectionId(inspectionId)
+            val coatingSystemResponse = coatingSystem.map { CoatingSystemMapper.toDto(it) }
+            val productDataSheets = coatingSystem.flatMap { coating -> coating.productDetails.map { it.product.productSheetLink }}
+                .distinct()
+            val pageCounterUtil = PageCounterUtil()
+
+
+            val context = Context().apply {
+
+
+                /*----------------------MainPage----------------------*/
+                setVariable("reportName", inspectionSite.get().reportName)
+                setVariable("conductedAt", inspectionSite.get().conductedAt)
+                setVariable("certificateNo", "1231244")
+                setVariable("inspectionDate", inspectionSite.get().inspectionDate)
+                setVariable("siteImage", inspectionSite.get().imageUrl)
+                setVariable("conductedBy", inspectionSite.get().conductedBy.name)
+                setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
+                pageCounterUtil.addToTotal(1)
+
+
+                /*----------------------AcknowledgementPage----------------------*/
+                setVariable("items", acknowledgmentPersons)
+                pageCounterUtil.addToTotal(1)
+
+
+                /*----------------------TableOfContent----------------------*/
+                val inspectionDetailsStartingPageNo = 9
+                val coatingSystemStartPageNo = inspectionDetailsStartingPageNo + listOfAreaDetails.size
+                val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
+                val generalPracticeForTheRecommendedCoatingSystem = productDataSheetStartPage + productDataSheets.size
+                setVariable("coatingSystemStartPage", coatingSystemStartPageNo)
+                setVariable("productDataSheetStartPage", productDataSheetStartPage)
+                setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
+                pageCounterUtil.addToTotal(1)
+
+
+                /*----------------------PreliminaryObservation----------------------*/
+                setVariable("ruralArea", getYesNo(preObservation.ruralArea))
+                setVariable("urbanArea", getYesNo(preObservation.urbanArea))
+                setVariable("coastalArea", getYesNo(preObservation.coastalArea))
+                setVariable("industrialPollutedArea", getYesNo(preObservation.industrialPollutedArea))
+                setVariable("chemicalExposed", preObservation.chemicalsExposed)
+                setVariable("avgHumidity", preObservation.averageHumidity)
+                setVariable("salineAtmosphere", preObservation.salineAtmosphere)
+                pageCounterUtil.addToTotal(1)
+
+                /*----------------------Coating System Recommendation----------------------*/
+                setVariable("coatingSystems", coatingSystemResponse)
+                pageCounterUtil.addToTotal(coatingSystemResponse.size)
+
+                /*----------------------Add Product sheets----------------------*/
+                setVariable("productSheets", productDataSheets)
+                pageCounterUtil.addToTotal(productDataSheets.size)
+
+                /*----------------------List Of Areas----------------------*/
+                setVariable("siteAreas", areas)
+                pageCounterUtil.addToTotal(areas.size)
+
+                /*----------------------Corrosive Environment----------------------*/
+                setVariable("areaDetails", listOfAreaDetails)
+                pageCounterUtil.addToTotal(listOfAreaDetails.size)
+
+                setVariable("pageCounterUtil", pageCounterUtil)
+            }
+
+            // Render the HTML content using Thymeleaf
+            val htmlContent = templateEngine.process("pdf_template_preview.html", context)
+
+            // Convert the rendered HTML to PDF
+            val pdfBytes = convertHtmlToPdfBytes(htmlContent)
+
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generated.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
+        } catch (ex: Exception) {
+            // Log the error and store it in the database
+            logger.error("Failed to generate PDF for inspectionId $inspectionId", ex)
+            saveFailureLog(inspectionId, ex.message ?: "Unknown error")
+
+            return ResponseEntity.status(500).body("Failed to generate PDF".toByteArray());
+        }
+        return ResponseEntity.status(500).body("Failed to generate PDF".toByteArray());
     }
 
 

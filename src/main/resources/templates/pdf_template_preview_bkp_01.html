@@ -4,7 +4,772 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asian Paint</title>
     <!--    <link rel="stylesheet" href="/css/styles.css">-->
-    <link rel="stylesheet" th:href="@{classpath:static/css/style_preview.css}"/>
+<!--    <link rel="stylesheet" th:href="@{classpath:static/css/style.css}"/>-->
+    <style>
+        ht: bold;
+             font-style: italic;
+         }
+        .image-container {
+             margin-top: 4mm;
+             margin-bottom: -10mm;
+             display: flex;
+             flex-wrap: nowrap; /* Forces images to stay in a single row */
+             gap: 10px; /* Adjust space between images */
+             overflow-x: auto; /* Allows horizontal scrolling if needed */
+        }
+        .MoreInformation {
+            margin-Top: -4mm;
+        }
+        .image-margin-left{
+                  margin-right: 4mm;
+        }
+        .image-container img {
+             width: 150px;
+             height: 150px;
+             object-fit: cover;
+             background: #EFEBF9;
+        }
+        .pdf-style {
+            padding: 2.5rem 2.5rem;
+            margin-bottom: 0px;
+            background-image: url('classpath:static/assets/Img/Group35614.png');
+            background-size: none;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-position: bottom right; /* Position the image in the bottom-right corner */
+            padding: 20px; /* Optional padding to avoid overlap with content */
+            box-sizing: border-box;
+            max-width: 100%; /* Ensure it doesn’t exceed the page width */
+            position: relative;
+            width: 100%;
+            height: 297mm;
+            page-break-after: always;
+        }
+        .site-image {
+            width: 85%;
+            display: block;
+            margin: 0 auto; /* Centers the image horizontally */
+        }
+
+        .Last-Page-pdf-style {
+            padding: 2.5rem 2.5rem;
+            page-break-after: inherit;
+            height: 305mm;
+            width: 210mm;
+        }
+        body {
+            font-family: 'FiraSans', sans-serif;
+            margin: 0;
+            padding: 0px;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            padding: 0px;
+            margin: 0px;
+            font-weight: 600;
+        }
+        p {
+            padding: 0px;
+            margin: 0px;
+            font-weight: 400;
+            font-size: 1.25rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            border-radius: 8px;
+        }
+
+        th {
+            color: #332269;
+            font-weight: 600;
+            text-align: center;
+            padding: 12px 8px;
+            font-size: 0.85rem;
+            background: #EFEBF9;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 8px 8px;
+            color: #6A6A6A;
+            font-size: 14px;
+            line-height: 18.5px;
+        }
+
+        th,
+        td {
+            border: 1px solid #c2aff1;
+        }
+
+        ul {
+            margin-top: 4px;
+        }
+
+        li {
+            color: #19577C;
+            font-size: 1rem;
+        }
+
+        td>ul {
+            margin: 0px;
+            padding-left: 20px;
+        }
+
+        td>ul>li {
+            font-size: 0.75rem;
+            color: #6A6A6A;
+        }
+
+
+        .orangeText {
+            color: #FC8413;
+            font-weight: 800;
+        }
+        .orangeText-margin {
+            color: #FC8413;
+            font-weight: 800;
+            margin-top: -10mm
+        }
+
+        .main-page-heading {
+            color: #FC8413;
+            width: 70%;
+            font-weight: semiBold;
+            font-style: normal;
+        }
+
+        .voiletText {
+            color: #1d2f91;
+            font-weight: 700
+        }
+
+        .blueText {
+            color: #19577C;
+            font-size: 1.3rem;
+            font-weight: regular;
+            font-style: normal;
+            margin-bottom: 10px;
+            line-height: 1.5; /* Adjust this value to increase/decrease spacing */
+         }
+
+        .blueText600 {
+           color: #19577C;
+           font-size: 1.3rem;
+           font-weight: regular;
+           font-style: normal;
+           margin-bottom: 10px;
+           font-weight: 600;
+       }
+
+        .blueText32px {
+            color: #19577C;
+            font-size: 32px;
+           margin-bottom: 20px;
+
+        }
+        .blueText18px {
+            color: #19577C;
+            font-size: 18px;
+        }
+
+        .redText {
+            color: #FF0000;
+        }
+
+        .orangeTextNormal {
+            color: #FC8413;
+        }
+
+        .greenText {
+            color: #1EC600;
+        }
+
+         .table-of-content{
+             margin-top: 30px;
+         }
+
+        .pt-8 {
+            padding-top: 1rem;
+        }
+
+        .pt-16 {
+            padding-top: 2rem;
+        }
+
+        .pb-8 {
+            padding-bottom: 1rem;
+        }
+
+        .mt-8 {
+            margin-top: 8px;
+        }
+
+        .mt-20 {
+            margin-top: 30px;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .gap-8 {
+            gap: 16px;
+        }
+
+        .text-align-end {
+            align-items: right;
+            text-align: end;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .text-align-center {
+            text-align: center;
+        }
+
+        .d-flex-col {
+            display: flex;
+            flex-direction: column;
+/*            display: flex;
+            flex-direction: column;
+            align-items: center; *//* Centers content horizontally *//*
+            justify-content: center; *//* Centers content vertically *//*
+            height: 100vh; *//* Makes the container take the full viewport height */
+        }
+
+        .d-flex-col-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 70%;
+            margin: 0 auto; /* Centers the container within its parent */
+        }
+
+        .d-flex-col-right {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: right;
+                    justify-content: right;
+                    margin: 0 auto; /* Centers the container within its parent */
+        }
+
+
+        .fill-available {
+            height: -webkit-fill-available;
+        }
+
+        .w-90p {
+            width: 90%;
+        }
+
+        .w-50p {
+            width: 50%;
+        }
+
+        .ml-auto {
+            margin-left: auto;
+        }
+
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        .font-normal {
+            font-size: 1rem;
+        }
+
+        .font-w-600 {
+            font-weight: 600;
+        }
+
+        .note-container {
+            background: #EFEBF9;
+            padding: 4px;
+        }
+
+        .note-container>p {
+            font-size: 12px;
+            color: #6A6A6A;
+        }
+
+        .table-with-left-header>tbody>tr>th {
+            text-align: start;
+        }
+        .backImg{
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+            background-repeat: no-repeat;
+            background-size: auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, right bottom, left bottom;
+            background-position-x: left, right, left;
+        }
+        @media print {
+            .backImg {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('classpath:static/assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+                background-repeat: no-repeat;
+                background-size: auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, right bottom, left bottom;
+                background-position-x: left, right, left;
+            }
+
+            .page-content {
+                    page-break-after: always;
+                }
+
+            /* Footer to display page numbers */
+            .page-footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 12px;
+            }
+
+            /* Counter for page numbers */
+            body {
+                counter-reset: page;
+            }
+            .appg-logo {
+                margin-top: 4mm;
+                width: 50px;
+            }
+            .page-number {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                left:700px
+                font-size: 18px;
+                color: #000;
+                float: right;
+            }
+        }
+        .backImg0{
+          width: 100%;
+            max-width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 20px; /* Adjust padding to ensure no overflow */
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, right bottom, left bottom;
+            background-position-x: left, right, left;
+        }
+        @media print {
+            .backImg0 {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/Group35614.png'),url('./assets/Img/asset3.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, right bottom, left bottom;
+                background-position-x: left, right, left;
+                overflow:hidden;
+            }
+        }
+
+        .backImg1{
+            background-image: url('./assets/Img/APLogoBack.png'),url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-origin: content-box;
+            background-position: center center, right bottom;
+            background-position-x: center ,right;
+
+        }
+        @media print {
+            .backImg1 {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/APLogoBack.png'),  url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-origin: content-box;
+                background-position: center center, right bottom;
+                background-position-x: center, right;
+
+            }
+        }
+
+        .content-background {
+            background-image: url('@{classpath:static/assets/Img/content.png}'); /* adjust the path if necessary */
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: left;
+            margin-left: 0;
+
+        }
+        .backImg11{
+            background-image: url('./assets/Img/CONTENT.png');
+            background-repeat: no-repeat;
+            background-size: auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-origin: content-box;
+            background-position: left top;
+            background-position-x: left;
+
+        }
+        @media print {
+            .backImg11 {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/CONTENT.png');
+                background-repeat: no-repeat;
+                background-size: auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-origin: content-box;
+                background-position: left top;
+                background-position-x: left;
+
+            }
+        }
+        .backImg2{
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset4.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, right top, right bottom;
+            background-position-x: left, right, right;
+        }
+        @media print {
+            .backImg2 {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset4.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, right top, right bottom;
+                background-position-x: left, right, right;
+            }
+        }
+        .backImg3{
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset5.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, left bottom, right bottom;
+            background-position-x: left, left, right;
+        }
+        @media print {
+            .backImg3 {
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset5.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, left bottom, right bottom;
+                background-position-x: left, left, right;
+            }
+        }
+        .backImg4{
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset6.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, left bottom, right bottom;
+            background-position-x: left, left, right;
+        }
+        @media print {
+            .backImg4{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset6.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, left bottom, right bottom;
+                background-position-x: left, left, right;
+            }
+        }
+        .backImg5{
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset7.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, left bottom, right bottom;
+            background-position-x: left, left, right;
+        }
+        @media print {
+            .backImg5{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset7.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, left bottom, right bottom;
+                background-position-x: left, left, right;
+            }
+        }
+        .backImg6{
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset8.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, left bottom, right bottom;
+            background-position-x: left, left, right;
+        }
+        @media print {
+            .backImg6{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset8.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, left bottom, right bottom;
+                background-position-x: left, left, right;
+            }
+        }
+        .backImg7{
+            background-image: url('./assets/Img/Vector.png'),url('./assets/Img/asset9.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top, left bottom, right bottom;
+            background-position-x: left, left, right;
+        }
+        @media print {
+            .backImg7{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset9.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top, left bottom, right bottom;
+                background-position-x: left, left, right;
+            }
+        }
+        .backImg8{
+            background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset11.png'), url('./assets/Img/asset10.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top,right top, left bottom, right bottom;
+            background-position-x: left, right, left, right;
+        }
+        @media print {
+            .backImg8{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset11.png'), url('./assets/Img/asset10.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top,right top, left bottom, right bottom;
+                background-position-x: left, right, left, right;
+                z-index: -1;
+            }
+        }
+        .backImg9{
+            background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset16.png'), url('./assets/Img/asset14.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top,right top, left bottom, right bottom;
+            background-position-x: left, right, left, right;
+        }
+        @media print {
+            .backImg9{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset16.png'), url('./assets/Img/asset14.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top,right top, left bottom, right bottom;
+                background-position-x: left, right, left, right;
+                z-index: -1;
+            }
+        }
+        .backImg10{
+            background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset19.png'), url('./assets/Img/asset20.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top,right top, left bottom, right bottom;
+            background-position-x: left, right, left, right;
+        }
+        @media print {
+            .backImg10{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset19.png'), url('./assets/Img/asset20.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top,right top, left bottom, right bottom;
+                background-position-x: left, right, left, right;
+                z-index: -1;
+            }
+        }
+        .backImg11{
+            background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset24.png'), url('./assets/Img/asset23.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top,right top, left bottom, right bottom;
+            background-position-x: left, right, left, right;
+        }
+        @media print {
+            .backImg11{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset24.png'), url('./assets/Img/asset23.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top,right top, left bottom, right bottom;
+                background-position-x: left, right, left, right;
+                z-index: -1;
+            }
+        }
+        .backImg12{
+            background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset26.png'), url('./assets/Img/asset25.png'), url('./assets/Img/Group35614.png');
+            background-repeat: no-repeat;
+            background-size: 340px 400px, auto, auto, auto;
+            background-origin: padding-box;
+            background-attachment: scroll;
+            background-position: left top,right top, left bottom, right bottom;
+            background-position-x: left, right, left, right;
+        }
+        @media print {
+            .backImg12{
+                -webkit-print-color-adjust: exact; /* Chrome, Safari */
+                print-color-adjust: exact;         /* Firefox */
+                background-image: url('./assets/Img/Vector.png'), url('./assets/Img/asset26.png'), url('./assets/Img/asset25.png'), url('./assets/Img/Group35614.png');
+                background-repeat: no-repeat;
+                background-size: 340px 400px, auto, auto, auto;
+                background-origin: padding-box;
+                background-attachment: scroll;
+                background-position: left top,right top, left bottom, right bottom;
+                background-position-x: left, right, left, right;
+                z-index: -1;
+            }
+        }
+
+        .container {
+           width: 100%;
+           max-width: 100%;
+           margin: 0 auto;
+        }
+
+
+        .evaluation-table {
+                 width: 100%;
+                 border-collapse: collapse;
+                 font-family: FiraSans;
+                 table-layout: fixed;
+             }
+
+             .evaluation-table th {
+                 background-color: #D3D3D3;
+                 padding: 6px;
+                 text-align: center;
+                 border: 1px solid black;
+                 font-size: 14px;
+                 color: navy;
+             }
+
+             .evaluation-table td {
+                 padding: 6px;
+                 border: 1px solid black;
+                 text-align: center;
+                 font-size: 12px;
+             }
+
+                  .rating-cell {
+                         width: 10%;
+                     }
+
+         .description-cell {
+             width: 23%;
+         }
+        .green-rating { background-color: #90EE90; }
+        .yellow-rating { background-color: #FFD700; }
+        .red-rating { background-color: #FF6B6B; }
+        .pink-rating { background-color: #FFB6C1; }
+
+        .table-header {
+                 background-color: #D3D3D3;
+                 text-align: center;
+                 padding: 8px;
+                 font-weight: bold;
+                 border: 1px solid black;
+                 margin-bottom: 5px;
+                 font-size: 16px;
+        }
+        .COATINGEVALUATION{
+            width: 50%;
+            margin: 1% 25%;
+            border-collapse: collapse;
+        }
+        .COATINGEVALUATION thead tr th{
+            text-align: center;
+        }
+        .COATINGEVALUATION tbody tr td{
+            text-align: center;
+            color:#fff;
+        }
+        .COATINGEVALUATION tbody{
+            background: linear-gradient(180deg, #FF0000 16.12%, rgba(255, 157, 0, 0.73) 47.35%, rgba(255, 157, 0, 0.73) 65%, rgba(30, 198, 0, 0.5) 100%);
+
+        }
+        .COATINGEVALUATION {
+            border: 1.5px solid rgba(51, 34, 105, 1);
+            border-radius: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,7 +801,7 @@
                     gap: 12px;">
             <h5 class="blueText600 font-w-500" th:text="${conductedBy}"></h5>
             <h5 class="blueText600 font-w-500" th:text="${designation}"></h5>
-<!--            <p class="blueText" th:text="'(Cert. ' + ${certificateNo} + ')'"></p>-->
+            <!--            <p class="blueText" th:text="'(Cert. ' + ${certificateNo} + ')'"></p>-->
             <p class="blueText" th:text="'Visited On: ' + ${inspectionDate}"></p>
         </div>
 
@@ -452,8 +1217,8 @@
 
         <div class="mt-8">
 
-<!--            <h5 class="blueText font-normal pt-16 fojt&#45;&#45;w-600" align="center"> -->
-<!--            </h5>-->
+            <!--            <h5 class="blueText font-normal pt-16 fojt&#45;&#45;w-600" align="center"> -->
+            <!--            </h5>-->
 
             <div class="container">
                 <div class="table-header">Corrosion Levels are as per ISO 4628</div>
@@ -839,22 +1604,6 @@
                 <td th:text="${product.overCoatingInterval}"></td>
             </tr>
         </table>
-        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
-             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
-    </div>
-</div>
-
-<div class="ProductSheetPage" th:each="productSheet, iterStat : ${productSheets}">
-    <div class="pdf-style">
-        <!-- Logo -->
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-
-        <!-- Product Image -->
-        <div class="product-image-container text-align-center pt-16">
-            <img th:src="${productSheet}" alt="Product Sheet Image" style="max-width: 100%; height: auto;">
-        </div>
-
-        <!-- Footer -->
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
              th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>

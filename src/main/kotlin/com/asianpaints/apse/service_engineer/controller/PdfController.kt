@@ -27,8 +27,8 @@ class PdfController @Autowired constructor(
 ) {
 
     @GetMapping("/preview/{inspectionId}")
-    fun getPdfPreview(@PathVariable inspectionId: Long, model: Model): String {
-        return pdfGenService.getPdfPreview(inspectionId, model)
+    fun getPdfPreview(@PathVariable inspectionId: Long): ResponseEntity<ByteArray> {
+        return pdfGenService.generatePdfAsyncBytes(inspectionId)
     }
 
     @GetMapping("/generate/{inspectionId}")

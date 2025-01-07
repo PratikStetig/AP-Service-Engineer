@@ -19,5 +19,7 @@ data class ProductMaster(
     val mixingRatio:String,
     @Column(name = "over_coating_interval")
     val overCoatingInterval: String,
+    @Column(name = "product_sheet_link")
+    val productSheetLink: String,
 )
 
