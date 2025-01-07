@@ -1,7 +1,9 @@
 package com.asianpaints.apse.service_engineer.specification;
 
+import com.asianpaints.apse.service_engineer.constants.UserRole;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSite;
 import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteFilter;
+import com.asianpaints.apse.service_engineer.domain.entity.InspectionSiteStatus;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
@@ -51,6 +53,26 @@ public class InspectionSiteSpecification {
 
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
             logger.info("Added deleted = false predicate");
+
+
+            // Role-based filters
+            String userRole = filter.getRoleName();
+            if (UserRole.ADMIN.equalsIgnoreCase(userRole)) {
+                // Admin: Can see all inspections in all statuses
+                logger.info("Admin role: No additional predicates added for status");
+            } else if (UserRole.APPROVER.equalsIgnoreCase(userRole)) {
+                // Approver: Can see inspections in status (pending, approved, rejected)
+                predicates.add(root.get("status").in(
+                        InspectionSiteStatus.Pending,
+                        InspectionSiteStatus.Approved,
+                        InspectionSiteStatus.Rejected
+                ));
+                logger.info("Approver role: Added status predicates for pending, approved, and rejected");
+            } else if (UserRole.SERVICE_ENGINEER.equalsIgnoreCase(userRole)) {
+                // Site-Engineer: Can see inspections created by self and in all statuses
+                predicates.add(criteriaBuilder.equal(root.get("conductedBy"), filter.getConductedBy()));
+                logger.info("Site-Engineer role: Added predicate for conductedBy = {}", filter.getConductedBy());
+            }
 
             logger.info("Total predicates: {}", predicates.size());
 

@@ -18,6 +18,7 @@ public class InspectionSiteFilter {
     private InspectionSiteStatus status;
     private String reportName;
     private Boolean admin = false;
+    private String roleName;
 
     public InspectionSiteFilter(Long conductedBy, LocalDate fromDate, LocalDate toDate, String siteId, InspectionSiteStatus status, String reportName) {
         this.conductedBy = conductedBy;

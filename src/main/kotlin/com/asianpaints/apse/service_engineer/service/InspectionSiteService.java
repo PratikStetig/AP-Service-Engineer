@@ -73,6 +73,7 @@ public class InspectionSiteService {
             throw new UserNotFoundException(errMsg);
         }
 
+        filter.setRoleName(apUser.getUserType().getUserType());
         filter.setAdmin(apUser.getUserType().getUserType().equals(UserRole.ADMIN));
 
         Specification<InspectionSite> spec = InspectionSiteSpecification.getFilteredInspectionSites(filter);
