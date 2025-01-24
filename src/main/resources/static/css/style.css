@@ -64,21 +64,21 @@
              background: #EFEBF9;
         }
         .pdf-style {
-            padding: 2.5rem 2.5rem;
-            margin-bottom: 0px;
-            background-image: url('classpath:static/assets/Img/Group35614.png');
-            background-size: none;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-position: bottom right; /* Position the image in the bottom-right corner */
-            padding: 20px; /* Optional padding to avoid overlap with content */
-            box-sizing: border-box;
-            max-width: 100%; /* Ensure it doesn’t exceed the page width */
-            position: relative;
-            width: 100%;
-            height: 297mm;
-            page-break-after: always;
-        }
+               padding: 2.5rem 2.5rem;
+               margin-bottom: 0px;
+               background-image: url('classpath:static/assets/Img/Group35614.png');
+               background-size: none;
+               background-repeat: no-repeat;
+               background-position: center;
+               background-position: center; /* Position the image in the bottom-right corner */
+               padding: 20px; /* Optional padding to avoid overlap with content */
+               box-sizing: border-box;
+               max-width: 100%; /* Ensure it doesn’t exceed the page width */
+               position: relative;
+               width: 100%;
+               height: 297mm;
+               page-break-after: always;
+           }
         .site-image {
             width: 85%;
             display: block;

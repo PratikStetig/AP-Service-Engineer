@@ -156,7 +156,7 @@ class PdfGenerationService @Autowired constructor(
     }
 
 
-    fun generatePdfAsyncBytes(inspectionId: Long): ResponseEntity<ByteArray> {
+    fun previewPdfBytes(inspectionId: Long): ResponseEntity<ByteArray> {
 
         try {
             val startTime = System.currentTimeMillis()
@@ -168,7 +168,6 @@ class PdfGenerationService @Autowired constructor(
 
             val acknowledgmentInfoStart = System.currentTimeMillis()
             val acknowledgmentInfo = acknowledgmentRepository.findByInspectionSiteId(inspectionId)
-            val acknowledgmentPersons = acknowledgmentInfo.map { "${it.personName} ${it.designation}" }.toList()
             logger.info("Step 2: Retrieved acknowledgment info. Time taken: ${calculateTimeTaken(acknowledgmentInfoStart)}")
 
             val preObservationStart = System.currentTimeMillis()
@@ -190,8 +189,7 @@ class PdfGenerationService @Autowired constructor(
             logger.info("Step 6: Retrieved coating system. Time taken: ${calculateTimeTaken(coatingSystemStart)}")
 
             val productDataSheetsStart = System.currentTimeMillis()
-            val productDataSheets = coatingSystem.flatMap { coating -> coating.productDetails.map { it.product.productSheetLink } }
-                .distinct()
+            val productDataSheets = coatingSystem.flatMap { coating -> coating.productDetails.map { it.product.productSheetLink } }.distinct()
             logger.info("Step 7: Retrieved product data sheets. Time taken: ${calculateTimeTaken(productDataSheetsStart)}")
 
             val contextStart = System.currentTimeMillis()
@@ -202,8 +200,7 @@ class PdfGenerationService @Autowired constructor(
                 /*----------------------MainPage----------------------*/
                 setVariable("reportName", inspectionSite.get().reportName)
                 setVariable("conductedAt", inspectionSite.get().conductedAt)
-                setVariable("certificateNo", "1231244")
-                setVariable("inspectionDate", inspectionSite.get().inspectionDate)
+                setVariable("inspectionDate", formatter.format(inspectionSite.get().inspectionDate))
                 setVariable("siteImage", inspectionSite.get().imageUrl)
                 setVariable("conductedBy", inspectionSite.get().conductedBy.name)
                 setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
@@ -211,7 +208,7 @@ class PdfGenerationService @Autowired constructor(
 
 
                 /*----------------------AcknowledgementPage----------------------*/
-                setVariable("items", acknowledgmentPersons)
+                setVariable("ackPersons", acknowledgmentInfo)
                 pageCounterUtil.addToTotal(1)
 
 
@@ -264,6 +261,7 @@ class PdfGenerationService @Autowired constructor(
             val pdfBytesStart = System.currentTimeMillis()
             val pdfBytes = convertHtmlToPdfBytes(htmlContent)
 //            val pdfBytes = generatePdf(htmlContent, context)
+            val compressedPdfBytes = compressPdf(pdfBytes)
             logger.info("Step 10: Converted HTML to PDF. Time taken: ${calculateTimeTaken(pdfBytesStart)}")
 
             logger.info("PDF generation completed for inspectionId $inspectionId. Total time taken: ${calculateTimeTaken(startTime)}")
@@ -271,7 +269,7 @@ class PdfGenerationService @Autowired constructor(
             return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generated.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfBytes)
+                .body(compressedPdfBytes)
         } catch (ex: Exception) {
             logger.error("Failed to generate PDF for inspectionId $inspectionId", ex)
             saveFailureLog(inspectionId, ex.stackTraceToString() ?: "Unknown error")
@@ -416,16 +414,14 @@ class PdfGenerationService @Autowired constructor(
                 // Convert the rendered HTML to PDF
                 val pdfBytes = convertHtmlToPdfBytes(htmlContent)
 //                val pdfBytes = generatePdf(htmlContent, context)
-                val compressedPdfBytes = compressPdf(pdfBytes)
 
-
-//                saveInspectionPdf(inspectionId, pdfBytes)
+                saveInspectionPdf(inspectionId, pdfBytes)
 
                 deferredResult.setResult(
                     ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generated.pdf")
                         .contentType(MediaType.APPLICATION_PDF)
-                        .body(compressedPdfBytes)
+                        .body(pdfBytes)
                 )
             } catch (ex: Exception) {
                 // Log the error and store it in the database

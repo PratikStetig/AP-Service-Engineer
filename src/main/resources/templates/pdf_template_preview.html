@@ -1,7 +1,7 @@
-<html lang="en" dir="ltr" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8"> </meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> </meta>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asian Paint</title>
     <!--    <link rel="stylesheet" href="/css/styles.css">-->
     <link rel="stylesheet" th:href="@{classpath:static/css/style_preview.css}"/>
@@ -11,179 +11,399 @@
 
 <div class="mainPage">
     <div class="pdf-style">
-        <!-- Logo aligned to the right -->
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img" />
-        </div>
-        <div class="content">
-            <div class="heading-container">
-                <h1 class="main-page-heading" th:text="${reportName}"></h1>
-                <p class="blueText18px">Conducted At</p>
-                <h2 class="blueText32px" th:text="${conductedAt}"></h2>
+        <div class="d-flex-col fill-available">
+            <div style="flex:1;">
+                <div style="margin-top: 20px;">
+                    <img style="margin-top: 20px !important;" width="120"
+                         th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+                </div>
+                <div class="d-flex-col-center">
+                    <h1 class="main-page-heading pt-16 text-align-center" th:text="${reportName}"></h1>
+                </div>
+                </h1>
+                <p class="blueText pt-16 text-align-center">Conducted At</p>
+                <h2 class="blueText32px pb-8 text-align-center" th:text="${conductedAt}"></h2>
+
+                <img class="site-image" th:src="${siteImage}" alt="Asian Paint"
+                     style="width: 70%; height: 65%; object-fit: cover; aspect-ratio: 1; display: block; margin: 0 auto;">
+
             </div>
-            <img
-                    class="site-image"
-                    th:src="${siteImage}"
-                    alt="Asian Paint"
-            />
         </div>
-        <div class="footer-info">
-            <h5 class="blueText600" th:text="${conductedBy}"></h5>
-            <h5 class="blueText600" th:text="${designation}"></h5>
+        <div style="display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    margin-top: 200px;
+                    margin-right: 50px;
+                    gap: 12px;">
+            <h5 class="blueText600 font-w-500" th:text="${conductedBy}"></h5>
+            <h5 class="blueText600 font-w-500" th:text="${designation}"></h5>
             <p class="blueText" th:text="'Visited On: ' + ${inspectionDate}"></p>
         </div>
+
     </div>
 </div>
 
 <div class="Acknowledgement">
     <div class="pdf-style">
-        <!-- Logo aligned to the right -->
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
-        </div>
+        <!-- Load logo from static assets using Thymeleaf path resolution -->
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
 
         <!-- Heading with dynamic content -->
-        <h1 class="acknowledgement-heading">
-            Acknow<span class="highlight-voilet">ledgement</span>
-        </h1>
+        <h1 class="orangeText pt-16">Acknow<span class="voiletText">ledgement</span></h1>
 
-        <!-- Main content -->
-        <p class="blue-text">
+        <!-- Main content paragraph with dynamic variables -->
+        <p class="blueText pt-16">
             In plant inspection was carried out at
-            <span class="bold-text" th:text="${conductedAt} + ' on ' + ${inspectionDate}"></span>
+            <span class="font-w-600" th:text="${conductedAt} + ' on ' + ${inspectionDate}"></span>
             for assessment of existing coating condition before recommendation of any system coat.
         </p>
 
-        <p class="blue-text">
+        <p class="blueText pt-8">
             We give our sincere thanks to the persons present during the inspection who coordinated all the inspection
-            plans. We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we
-            discussed regarding
-            <span class="bold-text" th:text="${conductedAt}"></span>. All the concerned areas were discussed in the
+            plans.
+            We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we discussed
+            regarding
+            <span class="font-w-600" th:text="${conductedAt}"></span>. All the concerned areas were discussed in the
             Kick-off meeting.
         </p>
 
-        <p class="blue-text">Following persons were present during the inspection:</p>
+        <p class="pt-16 blueText">Following persons were present during the inspection:</p>
 
-        <!-- List of attendees -->
-        <ul class="attendee-list">
-            <li th:each="item : ${items}" th:text="${item}"></li>
+        <!-- List of persons dynamically generated -->
+        <ul>
+            <li class="blueText" th:each="person : ${ackPersons}">
+                <span style="font-weight: bold;" th:text="${person.personName}"></span>
+                <span th:text="' (' + ${person.designation} + ')'"></span>
+            </li>
         </ul>
 
-        <!-- Page counter -->
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="TableOfContent">
     <div class="pdf-style">
-        <!-- Logo aligned to the right -->
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
-        </div>
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <h1 class="orangeText pt-16 mt-20">Table Of <span class="voiletText">Content</span></h1>
 
-        <!-- Heading -->
-        <h1 class="heading">
-            Table Of <span class="highlight-voilet">Content</span>
-        </h1>
-
-        <!-- Table structure -->
+        <!-- Table structure with headings -->
         <table class="table-of-content">
             <thead>
             <tr>
-                <th>S.No</th>
-                <th>Description</th>
-                <th>Page Number</th>
+                <th class="blueText">S.No</th>
+                <th class="blueText">Description</th>
+                <th class="blueText">Page Number</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="row, stat : ${rows}">
-                <td class="text-center" th:text="${stat.index + 1}"></td>
-                <td class="text-left" th:text="${row.description}"></td>
-                <td class="text-center" th:text="${row.pageNumber}"></td>
+            <tr class="pt-16">
+                <td class="blueText text-center">01</td>
+                <td class="blueText">Abstract on Environmental Classification</td>
+                <td class="blueText text-center">4</td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">02</td>
+                <td class="blueText">Designation of degree of rusting</td>
+                <td class="blueText text-center">4</td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">03</td>
+                <td class="blueText">Surface Preparation Standard</td>
+                <td class="blueText text-center">5</td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">04</td>
+                <td class="blueText">Pressure Categorization for water washing</td>
+                <td class="blueText text-center">6</td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">05</td>
+                <td class="blueText">Preliminary Observations</td>
+                <td class="blueText text-center">7</td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">06</td>
+                <td class="blueText">List of Areas Inspected</td>
+                <td class="blueText text-center">8</td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">07</td>
+                <td class="blueText">Inspection details and observations overall</td>
+                <td class="blueText text-center">9</td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">08</td>
+                <td class="blueText">Coating System Recommendation</td>
+                <td class="blueText text-center" th:text="${coatingSystemStartPage}"></td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">09</td>
+                <td class="blueText">Product Datasheets</td>
+                <td class="blueText text-center" th:text="${productDataSheetStartPage}"></td>
+            </tr>
+            <tr class="pt-16">
+                <td class="blueText text-center">10</td>
+                <td class="blueText">General Practice for the Recommended coating system</td>
+                <td class="blueText text-center" th:text="${generalPracticeForTheRecommendedCoatingSystem}"></td>
             </tr>
             </tbody>
         </table>
 
         <!-- Footer with page number -->
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
-
-<!-- Classification of ISO -->
 <div class="ClassificationOfIso">
-    <h2 class="section-heading">Classification <span class="highlight-voilet"> - ISO 12944 - 2 Rev-2018</span></h2>
-    <p class="blue-text">This standard provides tables of corrosion classes with typical environments for both atmospheric and immersion conditions.</p>
-    <table class="corrosion-table">
-        <thead>
-        <tr>
+    <div class="pdf-style">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <h2 class="orangeText pt-16 text-uppercase pb-8 font-w-600">Classification <span class="voiletText"> -
+                    ISO 12944 - 2
+                    Rev-2018</span>
+        </h2>
+        <span class="blueText font-normal">This standard provides tables of corrosion classes with typical environments
+                for both
+                atmospheric and
+                immersion conditions.</span>
+        <table class="pt-8">
+            <thead>
             <th>Corrosivity Category</th>
             <th>Typical Exterior Environments</th>
             <th>Typical Interior Environments</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr><td>C1 Very Low</td><td>N/A</td><td>Heated buildings (e.g., offices, schools)</td></tr>
-        <tr><td>C2 Low</td><td>Low pollution (mostly rural areas)</td><td>Unheated buildings (e.g., warehouses)</td></tr>
-        <tr><td>C3 Medium</td><td>Urban/industrial atmospheres, low salinity</td><td>High humidity areas (e.g., food processing)</td></tr>
-        <tr><td>C4 High</td><td>Industrial/coastal areas (moderate salinity)</td><td>Chemical plants, shipyards</td></tr>
-        <tr><td>C5 Very High</td><td>High humidity/aggressive atmospheres</td><td>Areas with condensation/high pollution</td></tr>
-        <tr><td>CX Extreme</td><td>Offshore/high salinity areas</td><td>Industrial areas with extreme humidity</td></tr>
-        </tbody>
-    </table>
-    <h5 class="blue-text">Designation of degree of rusting - ISO 4628 - 3 - 1982</h5>
-    <p class="blue-text">Evaluation of paint coatings' degradation, focusing on defects and uniform changes.</p>
-    <div class="image-gallery">
-        <img th:src="@{classpath:static/assets/test.jpg}" alt="Image 1">
-        <img th:src="@{classpath:static/assets/test.jpg}" alt="Image 2">
-        <img th:src="@{classpath:static/assets/test.jpg}" alt="Image 3">
-        <img th:src="@{classpath:static/assets/test.jpg}" alt="Image 4">
-        <img th:src="@{classpath:static/assets/test.jpg}" alt="Image 5">
+            </thead>
+            <tbody>
+            <tr>
+                <td>C1 Very Low</td>
+                <td>N/A</td>
+                <td>Heated buildings with clean atmospheres. eg. Offices, schools, shops, hotels</td>
+            </tr>
+            <tr>
+                <td>C2 Low</td>
+                <td>Atmospheres with low level of pollution. Mostly rural areas.</td>
+                <td>Unheated buildings where condensation may occur. eg. depots, warehouses, sports halls</td>
+            </tr>
+            <tr>
+                <td>C3 Medium</td>
+                <td>Urban and industrial atmospheres,
+                    moderate sulfur dioxide pollution. Coastal
+                    areas with low salinity.
+                </td>
+                <td>Production rooms with high humidity
+                    and some air pollution. eg. food
+                    processing plants, laundries, breweries,
+                    dairies
+                </td>
+            </tr>
+            <tr>
+                <td>C4 High</td>
+                <td>Industrial areas and coastal areas with
+                    moderate salinity.
+                </td>
+                <td>Chemical plants, swimming pools,
+                    coastal ship and boatyards
+                </td>
+            </tr>
+            <tr>
+                <td>C5 Very High</td>
+                <td>Industrial areas with high humidity and
+                    aggressive atmosphere. Coastal and
+                    offshore areas with high salinity.
+                </td>
+                <td>Buildings or areas with almost
+                    permanent condensation and high
+                    pollution.
+                </td>
+            </tr>
+            <tr>
+                <td>CX Extreme</td>
+                <td>Offshore areas with high salinity and
+                    industrial areas with extreme humidity
+                    and aggressive atmosphere and sub-
+                    tropical and tropical atmospheres.
+                </td>
+                <td>Industrial areas with extreme humidity
+                    and aggressive atmosphere.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <h5 class="blueText pt-16">
+            Designation of degree of rusting - ISO 4628 - 3 - 1982
+        </h5>
+        <p class="pt-8 blueText font-normal">Paints and varnishes Evaluation of degradation of paint
+            coatings Designation of quantity and size of defects, and of intensity of uniform changes in appearance</p>
+        <div class="d-flex gap-8 pt-8">
+            <div style="margin-right:12px;">
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
+            </div>
+            <div style="margin-right:12px;">
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
+            </div>
+            <div style="margin-right:12px;">
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
+            </div>
+            <div style="margin-right:12px;">
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
+            </div>
+            <div style="margin-right:12px;">
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
+            </div>
+            <div>
+                <img th:src="@{classpath:static/assets/test.jpg}"/>
+            </div>
+        </div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
-<!-- Surface Preparation Standard -->
 <div class="SurfacePreparationStandard">
-    <h5 class="blue-text">Surface Preparation Standard</h5>
-    <p class="blue-text">Procedures issued by SSPC and NACE International. Swedish Standards correlate with some of these standards.</p>
-    <p class="blue-text text-center">Table 6: Cross Reference Guide to Surface Preparation Specifications</p>
-    <table class="corrosion-table">
-        <thead>
-        <tr><th>SSPC Standard</th><th>NACE Standard</th><th>Swedish Standard</th><th>Name of Standard</th></tr>
-        </thead>
-        <tbody>
-        <tr><td>SP 1</td><td>-</td><td>-</td><td>Solvent Cleaning</td></tr>
-        <tr><td>SP 2</td><td>-</td><td>ST 2 or ST 3</td><td>Hand Tool Cleaning</td></tr>
-        <tr><td>SP 3</td><td>-</td><td>ST 2 or ST 3</td><td>Power Tool Cleaning</td></tr>
-        <tr><td>SP 5</td><td>No. 1</td><td>Sa 3</td><td>White Metal Blast Cleaning</td></tr>
-        <tr><td>SP 6</td><td>No. 3</td><td>Sa 2</td><td>Commercial Blast Cleaning</td></tr>
-        </tbody>
-    </table>
-    <p class="blue-text">For more details, visit <a href="https://www.sspc.org">SSPC</a>.</p>
+    <div class="pdf-style">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <h5 class="blueText pt-16" style="font-weight: 400;">
+            Surface Preparation Standard
+        </h5>
+        <p class="blueText font-normal">Procedures that are jointly issued by SSPC and NACE Internation. The
+            Swedish Standards (used primarily internationally) correlate with several of these standards.</p>
+        <p class="blueText font-normal pt-16 text-align-center">Table 6: Cross Reference Guide to Surface Preparation
+            Specifications</p>
+        <table class="pt-8 text-align-center">
+            <thead>
+            <th>SSPC Standard</th>
+            <th>NACE Standard</th>
+            <th>Swedish Standard</th>
+            <th>Name of Standard</th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>SP 1</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Solvent Cleaning</td>
+            </tr>
+            <tr>
+                <td>SP 2</td>
+                <td>-</td>
+                <td>ST 2 or ST 3</td>
+                <td>Hand Tool Cleaning</td>
+            </tr>
+            <tr>
+                <td>SP 3</td>
+                <td>-</td>
+                <td>ST 2 or ST 3</td>
+                <td>Power Tool Cleaning</td>
+            </tr>
+            <tr>
+                <td>SP 5</td>
+                <td>No. 1</td>
+                <td>Sa 3</td>
+                <td>White Metal Blast Cleaning</td>
+            </tr>
+            <tr>
+                <td>SP 6</td>
+                <td>No. 3</td>
+                <td>Sa 2</td>
+                <td>Commercial Blast Cleaning</td>
+            </tr>
+            <tr>
+                <td>SP 7</td>
+                <td>No. 4</td>
+                <td>Sa 1</td>
+                <td>Brush Off Blast Cleaning</td>
+            </tr>
+            <tr>
+                <td>SP 8</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Pickling</td>
+            </tr>
+            <tr>
+                <td>SP 10</td>
+                <td>No. 2</td>
+                <td>Sa 2 (1/2)</td>
+                <td>Near White Blast Cleaning</td>
+            </tr>
+            <tr>
+                <td>SP 11</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Power Tool Clean to Bare Metal</td>
+            </tr>
+            <tr>
+                <td>SP 12</td>
+                <td>No. 5</td>
+                <td>-</td>
+                <td>Surface Preparation & Cleaning By High & UHP Water Jetting</td>
+            </tr>
+            <tr>
+                <td>SP 13</td>
+                <td>No. 6</td>
+                <td>-</td>
+                <td>Surface Preparation of Concrete</td>
+            </tr>
+            <tr>
+                <td>SP 14</td>
+                <td>No. 8</td>
+                <td>-</td>
+                <td>Industrial Blast Cleaning</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="blueText font-normal pt-8">Note: The Swedish Standards are not an exact crossover to the SSPC / NACE
+            standards. To
+            obtain a complete set
+            of “Surface Preparation Specifications” contact SSPC: The Society for Protective Coatings, 40 24th Street
+            6th Florr, Pittsburgh, pennsylvania 115222-4656 US. (www.sspc.org)</p>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+    </div>
 </div>
 
-<!-- Pressure Categorization -->
 <div class="PressureCategorization">
-    <h5 class="blue-text">Pressure Categorization for Water Washing</h5>
-    <table class="corrosion-table">
-        <thead>
-        <tr><th>Washing Category</th><th>Pressure</th></tr>
-        </thead>
-        <tbody>
-        <tr><td>Low Pressure Cleaning</td><td>&lt;350 Bar OR &lt;5,000 psi</td></tr>
-        <tr><td>High-Pressure Cleaning</td><td>350-700 Bar (5,000 to 10,000 psi)</td></tr>
-        <tr><td>High-Pressure Jetting</td><td>700-1700 Bar (10,000 to 25,000 psi)</td></tr>
-        <tr><td>Ultra High-Pressure Jetting</td><td>&gt;1700 Bar (25,000 psi)</td></tr>
-        </tbody>
-    </table>
-    <p class="blue-text">Refer to hydrojetting standards for more details.</p>
+    <div class="pdf-style">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <h5 class="blueText pt-16" style="font-weight: 400;">
+            Pressure Categorization for water washing
+        </h5>
+        <table>
+            <thead>
+            <th>Washing category</th>
+            <th>Pressure</th>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Low pressure water Cleaning (LPWC)</td>
+                <td>
+                    <350 Bar OR <5,000 psi
+                </td>
+            </tr>
+            <tr>
+                <td>High-Pressure Water Cleaning (HPWC)</td>
+                <td>350-700 Bar (5,000 to 10,000 psi)</td>
+            </tr>
+            <tr>
+                <td>High-Pressure Water Jetting (HPWJ)</td>
+                <td>700 to 1700 Bar (10,000 to 25,000 psi)</td>
+            </tr>
+            <tr>
+                <td>Ultrahigh-Pressure Water Jetting (UHP WJ)</td>
+                <td>>1700 Bar (25,000 psi)</td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="blueText font-normal pt-8">Refer 1498-Hydrojetting Information sheets and actual standards for
+            reference</p>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+    </div>
 </div>
 
 <div class="PreliminaryObservation">
     <div class="pdf-style">
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
-        </div>
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
         <p class="orangeText pt-16 font-med font-w-600">1. Preliminary <span class="voiletText">Observations:</span>
         </p>
         <p class="blueText font-normal pt-8">As per ISO 12944-2 – Classification of environments, location of “
@@ -228,70 +448,132 @@
 
 <div class="ListOfAreas">
     <div class="pdf-style">
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+
+        <div class="mt-8">
+
+            <!--            <h5 class="blueText font-normal pt-16 fojt&#45;&#45;w-600" align="center"> -->
+            <!--            </h5>-->
+
+            <div class="container">
+                <div class="table-header">Corrosion Levels are as per ISO 4628</div>
+                <table class="evaluation-table">
+                    <tr>
+                        <th class="rating-cell">Rating</th>
+                        <th class="description-cell">Corrosion Level</th>
+                        <th class="rating-cell">Rating</th>
+                        <th class="description-cell">Corrosion Level</th>
+                        <th class="rating-cell">Rating</th>
+                        <th class="description-cell">Corrosion Level</th>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">10</td>
+                        <td class="description-cell green-rating">&lt; 0.01%</td>
+                        <td class="rating-cell yellow-rating">6</td>
+                        <td class="description-cell yellow-rating">&gt; 0.3% and ≤ 1.0%</td>
+                        <td class="rating-cell red-rating">3</td>
+                        <td class="description-cell red-rating">&gt; 10.0% and ≤ 16.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">9</td>
+                        <td class="description-cell green-rating">&gt; 0.01% and ≤ 0.03%</td>
+                        <td class="rating-cell yellow-rating">5</td>
+                        <td class="description-cell yellow-rating">&gt; 1.0% and ≤ 3.0%</td>
+                        <td class="rating-cell red-rating">2</td>
+                        <td class="description-cell red-rating">&gt; 16.0% and ≤ 33.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">8</td>
+                        <td class="description-cell green-rating">&gt; 0.03% and ≤ 0.1%</td>
+                        <td class="rating-cell yellow-rating">4</td>
+                        <td class="description-cell yellow-rating">&gt; 3.0% and ≤ 10.0%</td>
+                        <td class="rating-cell red-rating">1</td>
+                        <td class="description-cell red-rating">&gt; 33.0% and ≤ 50.0%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell green-rating">7</td>
+                        <td class="description-cell green-rating">&gt; 0.1% and ≤ 0.3%</td>
+                        <td class="rating-cell"></td>
+                        <td class="description-cell"></td>
+                        <td class="rating-cell red-rating">0</td>
+                        <td class="description-cell red-rating">&gt; 50%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="rating-cell pink-rating">L</td>
+                        <td class="description-cell pink-rating">Localized</td>
+                        <td class="rating-cell"></td>
+                        <td class="description-cell"></td>
+                        <td class="rating-cell pink-rating">S</td>
+                        <td class="description-cell pink-rating">Scattered</td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
-        <h5 class="blue-text pt-16 font-normal font-w-600">Corrosion Levels are as per ISO 4628</h5>
-        <table class="evaluation-table">
-            <thead>
-            <tr>
-                <th>Rating</th>
-                <th>Corrosion Level</th>
-                <th>Rating</th>
-                <th>Corrosion Level</th>
-                <th>Rating</th>
-                <th>Corrosion Level</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="green-rating">10</td>
-                <td>&lt; 0.01%</td>
-                <td class="yellow-rating">6</td>
-                <td>&gt; 0.3% and ≤ 1.0%</td>
-                <td class="red-rating">3</td>
-                <td>&gt; 10.0% and ≤ 16.0%</td>
-            </tr>
-            <!-- Additional rows as needed -->
-            </tbody>
-        </table>
-        <h5 class="blue-text pt-16 font-normal font-w-600">1.2 List of Areas Inspected</h5>
+
+        <h5 class="blueText pt-16 font-normal font-w-600">
+            1.2 List of Areas Inspected
+        </h5>
         <table>
             <thead>
             <tr>
                 <th>Sr No.</th>
                 <th>Area</th>
                 <th>Coating Condition</th>
-                <th>Maintenance Priority</th>
+                <th>Maintainance Priority</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="siteArea, iterStat : ${siteAreas}">
-                <td th:text="${iterStat.count}">1</td>
-                <td th:text="${siteArea.area}"></td>
-                <td th:text="'Structure - ' + ${siteArea.coatingCondition}"></td>
-<!--                <td class="text-align-center font-w-600" th:classappend="${siteArea.rating}">-->
-<!--                    <span th:text="${siteArea.priority}"></span>-->
-<!--                </td>-->
+                <td class="text-align-center" th:text="${iterStat.count}">1</td>
+                <td th:text="${siteArea.area}">ZLD (Zero Liquid Discharge)</td>
+                <td th:text="'Structure - ' + ${siteArea.coatingCondition}">Structure - 0S, Pipe line - 0S</td>
+                <td th:classappend="${siteArea.rating == 1} ? 'redText' : (${siteArea.rating == 2} ? 'orangeTextNormal' : 'greenText')"
+                    class="text-align-center font-w-600"
+                    th:text="${siteArea.rating == 1} ? 'High' : (${siteArea.rating == 2} ? 'Medium' : 'Low')">High
+                </td>
             </tr>
+
             </tbody>
         </table>
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
-<div class="ListOfAreaDetails" th:each="areaDetail : ${areaDetails}">
+<div class="ListOfAreaDetails" th:each="areaDetail, iterStat : ${areaDetails}">
     <div class="pdf-style">
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <p class="orangeText-margin pt-16 font-med font-w-600">
+            2. INSPECTION <span class="voiletText">DETAILS AND OBSERVATIONS OVERALL</span>
+        </p>
+        <p class="blueText font-normal pt-8">
+            <span class="font-w-600">AREA </span>-
+            <span th:text="${areaDetail.siteAreaNamesCSV()}">ZLD, SRS, Production Block B,C,E,G,K,M,ETP,WTP, Cooling Tower (STRUCTURE & PIPES)</span>
+        </p>
+
+        <div class="image-container">
+            <img class="image-margin-left" th:each="areaImage : ${areaDetail.siteAreaImagesUrl()}"
+                 th:src="${areaImage}" alt="Asian Paint">
         </div>
-        <h5 class="orange-text pt-16 font-med font-w-600">2. INSPECTION <span class="highlight-voilet">DETAILS AND OBSERVATIONS OVERALL</span></h5>
-        <p class="blue-text">AREA - <span th:text="${areaDetail.siteAreaNamesCSV()}"></span></p>
-        <div class="image-gallery">
-            <img th:each="areaImage : ${areaDetail.siteAreaImagesUrl()}" th:src="${areaImage}" alt="Area Image">
+
+        <div class="d-flex pt-16 gap-8">
+            <div class="w-50p text-align-center">
+                <img src="./assets/Image 1.png" style="width: 100%"/>
+            </div>
+            <div class="w-50p text-align-center">
+                <img src="./assets/Image 2.png" style="width: 100%"/>
+            </div>
         </div>
-        <h5 class="blue-text pt-16 font-normal font-w-600 text-uppercase">Extent of Paint Defect</h5>
-        <table class="evaluation-table">
+        <h5 class="blueText pt-16 font-normal font-w-600 text-uppercase">
+            Extent of paint defect
+        </h5>
+        <table>
             <thead>
             <tr>
                 <th>Category</th>
@@ -302,65 +584,242 @@
             </tr>
             </thead>
             <tbody>
-<!--            <tr th:each="defect : ${areaDetail.defects}">-->
-<!--                <td th:text="${defect.category}"></td>-->
-<!--                <td th:text="${defect.property}"></td>-->
-<!--                <td th:text="${defect.value}"></td>-->
-<!--                <td th:text="${defect.description}"></td>-->
-<!--                <td th:text="${defect.remark}"></td>-->
-<!--            </tr>-->
+            <!-- Rusting Row -->
+            <tr>
+                <td>ISO 4628</td>
+                <td>Rusting</td>
+                <td th:text="${areaDetail.rustingDegree}">Degree: > Ri5 (S)</td>
+                <td>Corrosion > 50%</td>
+                <td></td>
+            </tr>
+            <!-- Cracking Row -->
+            <tr>
+                <td></td>
+                <td>Cracking</td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size &
+                    Qty: 5 & 5
+                </td>
+                <td>Cracks penetrating the whole coating system</td>
+                <td></td>
+            </tr>
+            <!-- Pattern Row -->
+            <tr>
+                <td></td>
+                <td>Pattern</td>
+                <td th:text="${areaDetail.pattern}">Pattern: Mosaic</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- Blistering Row -->
+            <tr>
+                <td></td>
+                <td>Blistering</td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size &
+                    Qty: 5 & 5
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- Flaking Row -->
+            <tr>
+                <td></td>
+                <td>Flaking</td>
+                <td th:text="'Area: ' + ${areaDetail.flakingSize} + ' & ' + ${areaDetail.flakingQty}">Area: 5 & 5</td>
+                <td>More than 15% flaking (exposed up to 30mm)</td>
+                <td th:text="${areaDetail.remarks}">Last Painted 6 Months Before</td>
+            </tr>
+            <!-- X Cut Adhesion -->
+            <tr>
+                <td>X Cut Adhesion</td>
+                <td>Dft (µm)</td>
+                <td>XXXXXXXX</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- Color Row -->
+            <tr>
+                <td>Color</td>
+                <td>Smoke Grey</td>
+                <td th:text="${areaDetail.color}">Smoke Grey, Chalked</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- Overall Appearance Row -->
+            <tr>
+                <td>Overall Appearance</td>
+                <td>Rating</td>
+                <td th:text="${areaDetail.overallAppearance}">Fair</td>
+                <td></td>
+                <td></td>
+            </tr>
             </tbody>
         </table>
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+
+        <div class="MoreInformation">
+            <img src="./assets/logo.svg" alt="Asian Paint">
+            <h5 class="blueText pt-16 font-normal font-w-600">
+                More Information
+            </h5>
+            <table>
+                <thead>
+                <th>Sr No.</th>
+                <th>Observation</th>
+                <th>Recommendation</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-align-center">1</td>
+                    <td>Possible surface preparation</td>
+                    <td th:text="${areaDetail.possibleSurfacePreparation}"></td>
+                </tr>
+                <tr>
+                    <td class="text-align-center">2</td>
+                    <td>Area affected</td>
+                    <td>XXXXXXXXX</td>
+                </tr>
+                <tr>
+                    <td class="text-align-center" rowspan="5">3</td>
+                    <td>
+                        Expectation<br>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Recoating interval</td>
+                    <td th:text="${areaDetail.recoatingInterval}"></td>
+                </tr>
+                <tr>
+                    <td>Service life</td>
+                    <td th:text="${areaDetail.serviceLife}"></td>
+                </tr>
+                <tr>
+                    <td>Shade</td>
+                    <td th:text="${areaDetail.shade}"></td>
+                </tr>
+                <tr>
+                    <td>Aesthetic</td>
+                    <td th:text="${areaDetail.aesthetic}"></td>
+                </tr>
+                <tr>
+                    <td class="text-align-center">4</td>
+                    <td>Existing Painting system</td>
+                    <td th:text="${areaDetail.existingPaintingSystem}"></td>
+                </tr>
+                <tr>
+                    <td class="text-align-center">5</td>
+                    <td>DFT of Existing system</td>
+                    <td th:text="${areaDetail.dftExistingSystem}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="GeneralPracticeCoatingSystem">
     <div class="pdf-style">
-        <img class="logo-img" width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        <h5 class="blue-text pt-8 font-w-600">General Practice for the Recommended Coating System</h5>
-        <p class="blue-text">After assessing rusting, blistering, and other coating failures, the following recommendations are made:</p>
-        <h6 class="blue-text pt-8 font-w-600">9.1 General Surface Preparation*</h6>
+        <img class="appg-logo" width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <p class="blueText font-normal pt-8 font-w-600" style="margin-bottom: 4px;">General Practice for the Recommended
+            coating system</p>
+        <p class="blueText font-normal">After considering the conditions like degree of rusting, degree
+            of blistering and other
+            coating failures the following coating system proposal is recommended:</p>
+        <p class="blueText font-normal pt-8 font-w-600">9.1 General Surface Preparation*</p>
         <ul>
-            <li>Ensure relative humidity near the job structure is below 80%.</li>
-            <li>Remove temporary weld supports and spatter before preparation.</li>
-            <li>Perform solvent cleaning (SSPC SP-1) using Thinner - T131.</li>
-            <li>Remove loose paint and rust using power tools.</li>
-            <li>Hand tool cleaning is permissible in areas with limited access.</li>
-            <li>Use low-pressure water jetting to remove contaminants.</li>
+            <li>Ensure Relative humidity close to job structure less than 80%.</li>
+            <li>Temporary weld supports, weld spatter etc., should be removed prior to surface preparation. These are
+                weak areas for corrosion to start.
+            </li>
+            <li>To remove all oil, Grease, fine powder due to chalking by Solvent Cleaning as per SSPC SP-1. It is
+                recommended to use Thinner - T131 or thinner 90-53.
+            </li>
+            <li>Impact Tools like Hammer to be used to remove heavy scaling prior to proceed with further surface
+                preparations.
+            </li>
+            <li>All loose paint, rusted part, Blister & delimitation are removed up to surface by using power tool.</li>
+            <li>Hand tool cleaning permissible for limited areas due to poor access or safety factor.</li>
+            <li>Low pressure water jetting shall be performed to remove invisible salt contaminants from the surface.
+            </li>
+            <li>Existing coating DFT to be recorded in all areas for record prior to primer application.</li>
+            <li>Ensure the painting should be carried out in less than 3 Hrs. from the surface preparation</li>
         </ul>
-        <p class="blue-text">Refer to the technical data sheet for more detailed instructions.</p>
-        <div class="d-flex image-section">
-            <img src="./assets/image1.png" alt="Image 1">
-            <img src="./assets/image2.png" alt="Image 2">
+        <p class="blueText font-normal">This is the general guidelines to prepare the surface before painting for
+            specific and detailed surface preparation guidelines refer technical data sheet of the product specified.
+        </p>
+        <p class="blueText font-normal pt-8 font-w-600">Refer Technical data sheet/Product data sheet(TDS/PDS) of the
+            above products for all queries related to product characteristics, Surface preparation, direction for use,
+            coating application, Overcoating interval data and safety informations. It is strongly recommended to read
+            through the entire TDS/PDS before maintenance work.</p>
+        <p class="blueText font-normal pt-8 font-w-600">Refer Safety Data Sheet (SDS) of the above products for all
+            queries related to GHS labling, Product hazard,
+            First aid measures, Fire – fighting measures, accidential release measures, handling and storage, PPE,
+            Exposure control and ecological informations.</p>
+        <p class="blueText font-normal pt-8"><span class="font-w-600">Stripe Coats:</span> Stripe coat (A thin coat
+            before full coat
+            application) should be given to all potentially weak
+            areas like: - Profiles, Inside Edges, Nuts, Bolts, Welding joints ,Holes, Notches, Corners, Angles etc. As
+            most of the coating Failures are observed to start from these Areas. (Use the good quality 2’’ – 3’’
+            industrial brush).</p>
+        <div class="d-flex gap-8 pt-8 pb-8">
+            <img src="./assets/image 4.png"/>
+            <img src="./assets/image 3.png"/>
         </div>
-        <p class="blue-text font-w-600">Stripe Coats:</p>
-        <p class="blue-text">Apply a stripe coat to weak areas like edges, bolts, and corners using high-quality brushes.</p>
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div class="d-flex gap-8">
+            <p class="blueText font-normal pt-8"><span class="font-w-600">Brush (Quality): </span>Use of round
+                long handle & normal brush recommended high quality natural bristle brush and/or solvent resistance.
+                Ensure
+                brush is well loaded to avoid air entrapment. CRISS CROSS application necessary to achieve adequate film
+                build. Long Handle, Flat and Round briushes recommended. Non synthetic and pure Bristle or Poly bristle
+                to
+                be used.</p>
+            <img src="./assets/image 3.png"/>
+        </div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
-<div class="CoatingSystemRecommendation" th:each="system, iterStat : ${coatingSystems}">
+<div class="CoatingSystemRecommendation" th:each="system, iterStat: ${coatingSystems}">
     <div class="pdf-style">
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
-        </div>
-        <h5 class="orange-text pt-16 font-w-600">
-            3.<span th:text="${iterStat.index + 1}"></span> Coating <span class="highlight-voilet">System Recommendation</span>
-        </h5>
-        <table class="coating-details-table">
-            <tbody>
-            <tr><td>Painting System</td><td th:text="${system.coatingSystemName}"></td></tr>
-            <tr><td>Corrosive Level</td><td th:text="${system.corrosivityLevel}"></td></tr>
-            <tr><td>Areas</td><td th:text="${system.areaCsv()}"></td></tr>
-            <tr><td>Type of Structures</td><td th:text="${system.typeOfStructures}"></td></tr>
-            <tr><td>Surface Preparation</td><td th:text="${system.surfacePreparation}"></td></tr>
-            <tr><td>Spot Repair for Areas with Bare Metal</td><td th:text="${system.srfaBareMetal}"></td></tr>
-            </tbody>
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <p class="orangeText pt-16 font-med font-w-600">
+            <th th:text="'3.' + ${iterStat.index+1}"></th>
+            Coating <span class="voiletText">System Recommendation</span>
+        </p>
+        <table>
+            <tr>
+                <th>Painting System</th>
+                <th th:text="${system.coatingSystemName}"></th>
+            </tr>
+            <tr>
+                <td>Corrosive Level</td>
+                <td th:text="${system.corrosivityLevel}"></td>
+            </tr>
+            <tr>
+                <td>Areas</td>
+                <td th:text="${system.areaCsv()}"></td>
+            </tr>
+            <tr>
+                <td>Type of Structures</td>
+                <td th:text="${system.typeOfStructures}"></td>
+            </tr>
+            <tr>
+                <td>Surface preparation</td>
+                <td th:text="${system.surfacePreparation}"></td>
+            </tr>
+            <tr>
+                <td>Spot Repair for areas with bare metal</td>
+                <td th:text="${system.srfaBareMetal}"></td>
+            </tr>
+            <!--            <tr>-->
+            <!--                <td>Total DFT</td>-->
+            <!--                <td th:text="${system.totalDFT}"></td>-->
+            <!--            </tr>-->
         </table>
 
-        <table class="product-details-table">
-            <thead>
+        <table>
             <tr>
                 <th>Product Name</th>
                 <th>Spec</th>
@@ -370,8 +829,6 @@
                 <th>DFT</th>
                 <th>Over Coating Interval</th>
             </tr>
-            </thead>
-            <tbody>
             <tr th:each="product : ${system.products}">
                 <td th:text="${product.productName}"></td>
                 <td th:text="${product.productSpec}"></td>
@@ -381,65 +838,52 @@
                 <td th:text="${product.dft}"></td>
                 <td th:text="${product.overCoatingInterval}"></td>
             </tr>
-            </tbody>
         </table>
-
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
-    </div>
-</div>
-
-<div class="ProductSheetPage" th:each="productSheet : ${productSheets}">
-    <div class="pdf-style">
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
-        </div>
-        <div class="product-image-container text-align-center">
-            <img th:src="${productSheet}" alt="Product Sheet" class="product-image">
-        </div>
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="CorrectFieldPrecaution">
     <div class="pdf-style">
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
-        </div>
-        <h5 class="orange-text text-align-center font-w-600 pt-8 pb-8">
-            Paint with Safety and <span class="highlight-voilet">Correct Field Precaution</span>
-        </h5>
-        <img th:src="@{classpath:static/assets/precaution.png}" class="precaution-image" alt="Precaution">
-        <p class="blue-text text-align-center pt-16 font-w-600">
-            General Safety Information is provided. Kindly follow detailed guidelines at the respective plant.
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <p class="orangeText font-med font-w-600 pt-8 pb-8 text-align-center">Paint with Safety and
+            </span> <span class="voiletText">correct field precaution</span>
         </p>
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <img th:src="@{classpath:static/assets/precaution.png}" style="width: 100%;"/>
+        <p class="blueText font-normal pt-16 font-w-600 text-align-center">General Safety Information given and kindly
+            Follow detail
+            guideline at respective plant</p>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 
 <div class="Disclaimer">
     <div class="pdf-style">
-        <!-- Logo -->
-        <div class="logo-container">
-            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        </div>
-
-        <!-- Disclaimer Heading -->
-        <h1 class="blue-text text-align-center pt-16 font-w-600">Disclaimer</h1>
-
-        <!-- Disclaimer Text -->
-        <p class="blue-text pt-16 font-normal">
-            This “APCOPLAN – Corrosion Audit report” provides direction only to refer Safety Data Sheet (SDS) of Asian Paints
-            PPG Pvt. Ltd., paint products which is recommended in this document for safe handling of paint, but does not provide any directions
-            to users on occupational health and safety while involving/handling - supporting structures/aids (scaffolding, rope etc.), sharp objects,
-            electrical components, work at heights and other risks at maintenance work. It is strongly recommended to interested parties/users to go through
-            and adopt the regional/state and national Health and safety regulatory norms before starting up the maintenance work. It is the responsibility
-            of the interested parties/users to establish appropriate occupational health and safety practices in their working area/zone.
-        </p>
-
-        <!-- Footer -->
-        <div class="page-counter" th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <h1 class="blueText pt-16 font-w-600 text-align-center">Disclaimer</h1>
+        <p class="pt-16 blueText font-normal">This “APCOPLAN – Corrosion Audit report” provides direction only to
+            refer Safety Data Sheet (SDS) of Asian Paints PPG Pvt. Ltd., paint
+            products which is recommended in this document for safe handling of
+            paint, but does not provide any directions to users on occupational
+            health and safety while involving/handling - supporting structures/aids
+            (scaffolding, rope etc.), sharp objects, electrical components, work at
+            heights and other risks at maintenance work. It is strongly recommended
+            to interested parties/users to go through and adopt the regional/state
+            and national Health and safety regulatory norms before starting up the
+            maintenance work. It is the responsibility of the interested parties/users
+            to establish appropriate occupational health and safety practices in their
+            working area/zone.</p>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
 </div>
 </body>
 
 </html>
+
+<!--css line no 28-->
+<!--page-break-after: avoid;-->
+<!--page-break-inside: avoid;-->
+<!--background-image: url('classpath:static/assets/background_sample.png');-->
