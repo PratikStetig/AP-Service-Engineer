@@ -13,8 +13,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.itextpdf.html2pdf.HtmlConverter
 import com.itextpdf.styledxmlparser.jsoup.Jsoup
 import com.itextpdf.styledxmlparser.jsoup.nodes.Document
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
+import lombok.NoArgsConstructor
+import org.apache.pdfbox.pdmodel.PDDocument
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.Resource
+import org.springframework.core.io.ResourceLoader
 import org.springframework.core.task.TaskExecutor
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -28,15 +34,24 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.context.request.async.DeferredResult
 import org.thymeleaf.context.Context
 import org.thymeleaf.spring5.SpringTemplateEngine
+import java.awt.Color
+import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
+import java.io.IOException
 import java.net.URL
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.imageio.ImageIO
 import javax.transaction.Transactional
 
 
 @Service
+@NoArgsConstructor
 class PdfGenerationService @Autowired constructor(
     private val templateEngine: SpringTemplateEngine,
     private val inspectionSiteRepository: InspectionSiteRepository,
@@ -53,7 +68,14 @@ class PdfGenerationService @Autowired constructor(
 ) {
 
     private val logger = LoggerFactory.getLogger(PdfGenerationService::class.java)
+    private val formatter = DateTimeFormatter.ofPattern("dd-MMM-yy")
+    private lateinit var resourceLoader: ResourceLoader
 
+    @Throws(IOException::class)
+    fun loadTemplate(templateName: String): String {
+        val resource: Resource = resourceLoader.getResource("file:/path/to/templates/$templateName")
+        return String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8)
+    }
 
     fun getPdfPreview(@PathVariable inspectionId: Long, model: Model): String {
         val inspectionSite = inspectionSiteRepository.findById(inspectionId)
@@ -125,7 +147,10 @@ class PdfGenerationService @Autowired constructor(
         }
 
         // Render the HTML content using Thymeleaf
-        val htmlContent = templateEngine.process("pdf_template_preview_bkp_01.html", context)
+        val templateContent = loadTemplate("pdf_template_preview.html")
+        val htmlContent: String = templateEngine.process(templateContent, context)
+
+//        val htmlContent = templateEngine.process("pdf_template_preview_bkp_01.html", context)
 
         return htmlContent
     }
@@ -134,20 +159,43 @@ class PdfGenerationService @Autowired constructor(
     fun generatePdfAsyncBytes(inspectionId: Long): ResponseEntity<ByteArray> {
 
         try {
+            val startTime = System.currentTimeMillis()
+            logger.info("Starting PDF generation for inspectionId $inspectionId")
+
+            val inspectionSiteStart = System.currentTimeMillis()
             val inspectionSite = inspectionSiteRepository.findById(inspectionId)
+            logger.info("Step 1: Retrieved inspection site. Time taken: ${calculateTimeTaken(inspectionSiteStart)}")
+
+            val acknowledgmentInfoStart = System.currentTimeMillis()
             val acknowledgmentInfo = acknowledgmentRepository.findByInspectionSiteId(inspectionId)
             val acknowledgmentPersons = acknowledgmentInfo.map { "${it.personName} ${it.designation}" }.toList()
+            logger.info("Step 2: Retrieved acknowledgment info. Time taken: ${calculateTimeTaken(acknowledgmentInfoStart)}")
+
+            val preObservationStart = System.currentTimeMillis()
             val preObservation = sitePreliminaryObservationRepository.findByInspectionSiteId(inspectionId).get()
+            logger.info("Step 3: Retrieved preliminary observation. Time taken: ${calculateTimeTaken(preObservationStart)}")
+
+            val areasStart = System.currentTimeMillis()
             val areas = siteAreaRepository.findByInspectionSiteId(inspectionId).toList()
+            logger.info("Step 4: Retrieved site areas. Time taken: ${calculateTimeTaken(areasStart)}")
+
+            val corrosivityEnvironmentsStart = System.currentTimeMillis()
             val siteCorrosivityEnvironments = siteCorrosivityEnvironmentRepository.findByInspectionSiteId(inspectionId)
             val listOfAreaDetails = siteCorrosivityEnvironments.map { siteCorrosivityEnvironmentMapper.toDto(it) }
+            logger.info("Step 5: Retrieved corrosivity environments. Time taken: ${calculateTimeTaken(corrosivityEnvironmentsStart)}")
+
+            val coatingSystemStart = System.currentTimeMillis()
             val coatingSystem = coatingSystemRepository.getCoatingSystemByInspectionId(inspectionId)
             val coatingSystemResponse = coatingSystem.map { CoatingSystemMapper.toDto(it) }
-            val productDataSheets = coatingSystem.flatMap { coating -> coating.productDetails.map { it.product.productSheetLink }}
+            logger.info("Step 6: Retrieved coating system. Time taken: ${calculateTimeTaken(coatingSystemStart)}")
+
+            val productDataSheetsStart = System.currentTimeMillis()
+            val productDataSheets = coatingSystem.flatMap { coating -> coating.productDetails.map { it.product.productSheetLink } }
                 .distinct()
+            logger.info("Step 7: Retrieved product data sheets. Time taken: ${calculateTimeTaken(productDataSheetsStart)}")
+
+            val contextStart = System.currentTimeMillis()
             val pageCounterUtil = PageCounterUtil()
-
-
             val context = Context().apply {
 
 
@@ -205,26 +253,86 @@ class PdfGenerationService @Autowired constructor(
                 pageCounterUtil.addToTotal(listOfAreaDetails.size)
 
                 setVariable("pageCounterUtil", pageCounterUtil)
+
             }
+            logger.info("Step 8: Prepared Thymeleaf context. Time taken: ${calculateTimeTaken(contextStart)}")
 
-            // Render the HTML content using Thymeleaf
+            val htmlContentStart = System.currentTimeMillis()
             val htmlContent = templateEngine.process("pdf_template_preview.html", context)
+            logger.info("Step 9: Rendered HTML content. Time taken: ${calculateTimeTaken(htmlContentStart)}")
 
-            // Convert the rendered HTML to PDF
+            val pdfBytesStart = System.currentTimeMillis()
             val pdfBytes = convertHtmlToPdfBytes(htmlContent)
+//            val pdfBytes = generatePdf(htmlContent, context)
+            logger.info("Step 10: Converted HTML to PDF. Time taken: ${calculateTimeTaken(pdfBytesStart)}")
+
+            logger.info("PDF generation completed for inspectionId $inspectionId. Total time taken: ${calculateTimeTaken(startTime)}")
 
             return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generated.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfBytes);
+                .body(pdfBytes)
         } catch (ex: Exception) {
-            // Log the error and store it in the database
             logger.error("Failed to generate PDF for inspectionId $inspectionId", ex)
-            saveFailureLog(inspectionId, ex.message ?: "Unknown error")
-
-            return ResponseEntity.status(500).body("Failed to generate PDF".toByteArray());
+            saveFailureLog(inspectionId, ex.stackTraceToString() ?: "Unknown error")
+            return ResponseEntity.status(500).body("Failed to generate PDF".toByteArray())
         }
-        return ResponseEntity.status(500).body("Failed to generate PDF".toByteArray());
+    }
+
+    private fun calculateTimeTaken(startTime: Long): String {
+        val elapsedMillis = System.currentTimeMillis() - startTime
+        val minutes = (elapsedMillis / 1000) / 60
+        val seconds = (elapsedMillis / 1000) % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
+
+    fun fixHtmlContent(content: String?): String {
+        if (content.isNullOrBlank()) {
+            throw IllegalArgumentException("HTML content cannot be null or empty")
+        }
+        val document = Jsoup.parse(content) // Parse the HTML
+        document.outputSettings().syntax(Document.OutputSettings.Syntax.xml) // Force XHTML syntax
+        return document.html() // Return the cleaned XHTML
+    }
+
+    fun wrapInXhtml(content: String): String {
+        return content.trimIndent()
+    }
+
+
+    fun prepareHtmlForPdf(content: String?): String {
+        val fixedContent = fixHtmlContent(content)
+        return wrapInXhtml(fixedContent)
+    }
+
+    fun generatePdf(content: String?, context: Context?): ByteArray {
+        val startTime = System.currentTimeMillis() // Start timing
+        logger.info("Starting PDF generation process...")
+
+        if (content.isNullOrBlank()) {
+            logger.error("HTML content cannot be null or empty")
+            throw IllegalArgumentException("HTML content cannot be null or empty")
+        }
+
+        val cleanHtml = prepareHtmlForPdf(content)
+        try {
+            ByteArrayOutputStream().use { baos ->
+                val builder = PdfRendererBuilder()
+                builder.useFastMode()
+                builder.withHtmlContent(cleanHtml, null)
+                builder.toStream(baos)
+                builder.run()
+
+                val totalTime = calculateTimeTaken(startTime) // Calculate total time
+                logger.info("PDF generation completed. Total time taken: $totalTime")
+
+                return baos.toByteArray()
+            }
+        } catch (e: Exception) {
+            logger.error("Error while generating PDF", e)
+            throw RuntimeException("Error while generating PDF", e)
+        }
     }
 
 
@@ -247,7 +355,6 @@ class PdfGenerationService @Autowired constructor(
                 val productDataSheets = emptyList<String>()
                 val pageCounterUtil = PageCounterUtil()
 
-
                 val context = Context().apply {
 
 
@@ -255,7 +362,7 @@ class PdfGenerationService @Autowired constructor(
                     setVariable("reportName", inspectionSite.get().reportName)
                     setVariable("conductedAt", inspectionSite.get().conductedAt)
                     setVariable("certificateNo", "1231244")
-                    setVariable("inspectionDate", inspectionSite.get().inspectionDate)
+                    setVariable("inspectionDate", formatter.format(inspectionSite.get().inspectionDate))
                     setVariable("siteImage", inspectionSite.get().imageUrl)
                     setVariable("conductedBy", inspectionSite.get().conductedBy.name)
                     setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
@@ -308,25 +415,91 @@ class PdfGenerationService @Autowired constructor(
 
                 // Convert the rendered HTML to PDF
                 val pdfBytes = convertHtmlToPdfBytes(htmlContent)
+//                val pdfBytes = generatePdf(htmlContent, context)
+                val compressedPdfBytes = compressPdf(pdfBytes)
 
-                saveInspectionPdf(inspectionId, pdfBytes)
+
+//                saveInspectionPdf(inspectionId, pdfBytes)
 
                 deferredResult.setResult(
                     ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generated.pdf")
                         .contentType(MediaType.APPLICATION_PDF)
-                        .body(pdfBytes)
+                        .body(compressedPdfBytes)
                 )
             } catch (ex: Exception) {
                 // Log the error and store it in the database
                 logger.error("Failed to generate PDF for inspectionId $inspectionId", ex)
-                saveFailureLog(inspectionId, ex.message ?: "Unknown error")
+                saveFailureLog(inspectionId, ex.stackTraceToString())
 
                 deferredResult.setErrorResult(ResponseEntity.status(500).body("Failed to generate PDF".toByteArray()))
             }
         }
         return deferredResult
     }
+
+
+    @Throws(java.lang.Exception::class)
+    fun compressPdf(pdfBytes: ByteArray?): ByteArray {
+        // Load the input PDF
+        val document = PDDocument.load(ByteArrayInputStream(pdfBytes))
+        for (page in document.pages) {
+            val resources = page.resources
+            for (xObjectName in resources.xObjectNames) {
+                val xObject = resources.getXObject(xObjectName)
+                if (xObject is PDImageXObject) {
+
+                    // Convert image to RGB if necessary
+                    val bufferedImage = ensureRGB(xObject.image)
+
+                    // Compress the image (convert to JPEG)
+                    val imageOutputStream = ByteArrayOutputStream()
+                    ImageIO.write(bufferedImage, "JPEG", imageOutputStream)
+
+                    // Replace the existing image in the PDF
+                    val compressedImage = PDImageXObject.createFromByteArray(
+                        document,
+                        imageOutputStream.toByteArray(),
+                        "compressed_image"
+                    )
+                    resources.put(xObjectName, compressedImage)
+                }
+            }
+        }
+
+        // Save the compressed PDF to a ByteArrayOutputStream
+        val compressedOutput = ByteArrayOutputStream()
+        document.save(compressedOutput)
+        document.close()
+        return compressedOutput.toByteArray()
+    }
+
+    // Utility method to ensure the image is in RGB format
+    private fun ensureRGB(image: BufferedImage): BufferedImage? {
+        if (image.type == BufferedImage.TYPE_INT_RGB) {
+            // Image is already in RGB format
+            return image
+        }
+
+        // Handle images with an alpha channel (transparency)
+        val rgbImage = BufferedImage(
+            image.width,
+            image.height,
+            BufferedImage.TYPE_INT_RGB
+        )
+        val g = rgbImage.createGraphics()
+
+        // Set the background color to white for transparent images
+        g.color = Color.WHITE
+        g.fillRect(0, 0, image.width, image.height)
+
+        // Draw the original image on top of the white background
+        g.drawImage(image, 0, 0, null)
+        g.dispose()
+        return rgbImage
+    }
+
+    private fun getYesNo(value: Boolean?): String = if (value == true) "Yes" else "No"
 
     private fun saveInspectionPdf(inspectionId: Long, pdfBytes: ByteArray) {
         val fileName = "inspectionReport_${inspectionId}_${System.currentTimeMillis()}.pdf"
@@ -375,17 +548,21 @@ class PdfGenerationService @Autowired constructor(
         }
     }
 
-
     fun encodeImageToBase64(imageUrl: String): String {
+        val startTime = System.currentTimeMillis()
         return try {
             val imageBytes = URL(imageUrl).readBytes()
-            "data:image/png;base64," + Base64.getEncoder().encodeToString(imageBytes)
+            val base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(imageBytes)
+            logger.info("Encoded image to Base64. URL: $imageUrl, Time taken: ${calculateTimeTaken(startTime)}")
+            base64Image
         } catch (e: Exception) {
+            logger.warn("Failed to encode image to Base64. URL: $imageUrl, Time taken: ${calculateTimeTaken(startTime)}", e)
             imageUrl // return the original URL if fetching fails
         }
     }
 
     fun convertImagesToBase64(htmlContent: String): String {
+        val startTime = System.currentTimeMillis()
         val document: Document = Jsoup.parse(htmlContent)
         document.select("img[src]").forEach { img ->
             val src = img.attr("src")
@@ -394,14 +571,24 @@ class PdfGenerationService @Autowired constructor(
                 img.attr("src", base64Image)
             }
         }
+        logger.info("Converted images to Base64. Time taken: ${calculateTimeTaken(startTime)}")
         return document.html()
     }
 
     fun convertHtmlToPdfBytes(htmlContent: String): ByteArray {
-        val processedHtml = convertImagesToBase64(htmlContent) // Convert all images to Base64
+        val startTime = System.currentTimeMillis()
+        val processedHtmlStart = System.currentTimeMillis()
+//        val processedHtml = convertImagesToBase64(htmlContent) // Convert all images to Base64
+        logger.info("Processed HTML for PDF conversion. Time taken: ${calculateTimeTaken(processedHtmlStart)}")
+
+        val pdfConversionStart = System.currentTimeMillis()
         val byteArrayOutputStream = ByteArrayOutputStream()
-        HtmlConverter.convertToPdf(processedHtml.byteInputStream(), byteArrayOutputStream)
-        return byteArrayOutputStream.toByteArray()
+        HtmlConverter.convertToPdf(htmlContent.byteInputStream(), byteArrayOutputStream)
+        val pdfBytes = byteArrayOutputStream.toByteArray()
+        logger.info("Converted HTML to PDF bytes. Time taken: ${calculateTimeTaken(pdfConversionStart)}")
+
+        logger.info("Total time taken for PDF generation (including image conversion): ${calculateTimeTaken(startTime)}")
+        return pdfBytes
     }
 
     fun getYesNo(value: Boolean): String {

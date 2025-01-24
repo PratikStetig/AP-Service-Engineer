@@ -20,7 +20,11 @@ public class SiteAreaImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+//    @JsonBackReference
+//    @JoinColumn(name = "site_area_id", nullable = false)
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JsonBackReference
     @JoinColumn(name = "site_area_id", nullable = false)
     public SiteArea siteArea;

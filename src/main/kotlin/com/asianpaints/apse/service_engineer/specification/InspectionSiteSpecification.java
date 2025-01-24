@@ -21,11 +21,6 @@ public class InspectionSiteSpecification {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (Boolean.TRUE.equals(!filter.getAdmin()) && filter.getConductedBy() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("conductedBy"), filter.getConductedBy()));
-                logger.info("Added fromDate predicate: {}", filter.getFromDate());
-            }
-
             if (filter.getFromDate() != null) {
                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("inspectionDate"), filter.getFromDate()));
                 logger.info("Added fromDate predicate: {}", filter.getFromDate());
@@ -55,8 +50,7 @@ public class InspectionSiteSpecification {
             logger.info("Added deleted = false predicate");
 
 
-            // Role-based filters
-            String userRole = filter.getRoleName();
+            String userRole = filter.getRoleName().trim();
             if (UserRole.ADMIN.equalsIgnoreCase(userRole)) {
                 // Admin: Can see all inspections in all statuses
                 logger.info("Admin role: No additional predicates added for status");
@@ -69,9 +63,22 @@ public class InspectionSiteSpecification {
                 ));
                 logger.info("Approver role: Added status predicates for pending, approved, and rejected");
             } else if (UserRole.SERVICE_ENGINEER.equalsIgnoreCase(userRole)) {
-                // Site-Engineer: Can see inspections created by self and in all statuses
-                predicates.add(criteriaBuilder.equal(root.get("conductedBy"), filter.getConductedBy()));
-                logger.info("Site-Engineer role: Added predicate for conductedBy = {}", filter.getConductedBy());
+                // Service Engineer: Can see all approved reports
+                Predicate approvedReports = criteriaBuilder.equal(root.get("status"), InspectionSiteStatus.Approved);
+
+                // Service Engineer: Can see rejected, pending, draft, and approved reports if conducted by self
+                Predicate selfReports = criteriaBuilder.and(
+                        criteriaBuilder.equal(root.get("conductedBy"), filter.getConductedBy()),
+                        root.get("status").in(
+                                InspectionSiteStatus.Rejected,
+                                InspectionSiteStatus.Pending,
+                                InspectionSiteStatus.Draft,
+                                InspectionSiteStatus.Approved
+                        )
+                );
+
+                predicates.add(criteriaBuilder.or(approvedReports, selfReports));
+                logger.info("Service-Engineer role: Added predicates for approved status and self-conducted pending/rejected statuses");
             }
 
             logger.info("Total predicates: {}", predicates.size());

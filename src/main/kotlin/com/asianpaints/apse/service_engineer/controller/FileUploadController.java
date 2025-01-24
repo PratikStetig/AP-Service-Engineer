@@ -1,6 +1,8 @@
 package com.asianpaints.apse.service_engineer.controller;
 
 import com.asianpaints.apse.service_engineer.client.FileUploadClient;
+import com.asianpaints.apse.service_engineer.dto.AzureFileUploadResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +21,11 @@ public class FileUploadController {
     private final FileUploadClient fileUploadClient;
 
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> fileUpload(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<AzureFileUploadResponse> fileUpload(@RequestParam("file") MultipartFile file) throws IOException {
         byte[] bytes = file.getBytes();
-        return fileUploadClient.addFile(file.getOriginalFilename(), bytes);
+        ResponseEntity<String> response = fileUploadClient.addFile(file.getOriginalFilename(), bytes);
+        ObjectMapper mapper = new ObjectMapper();
+        AzureFileUploadResponse azureFileResponse = mapper.readValue(response.getBody(), AzureFileUploadResponse.class);
+        return ResponseEntity.ok(azureFileResponse);
     }
 }

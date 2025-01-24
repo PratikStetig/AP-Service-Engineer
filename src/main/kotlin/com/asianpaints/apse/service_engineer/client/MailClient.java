@@ -30,6 +30,7 @@ public class MailClient {
 
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(formData, headers);
 
+        baseUrl = "https://api.asianpaints.com";
         String serverUrl = String.format("%s/v2/triggerEmail",baseUrl);
 
         try {

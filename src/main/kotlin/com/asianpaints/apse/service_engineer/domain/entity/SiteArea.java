@@ -33,8 +33,13 @@ public class SiteArea {
     @Enumerated(EnumType.STRING)
     public CorrosionType corrosionType;
     public Integer rating;
-    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @OneToMany(mappedBy = "siteArea", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonManagedReference
+//    public List<SiteAreaImages> images = new ArrayList<>();
+
+    @OneToMany(mappedBy = "siteArea", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JsonManagedReference
     public List<SiteAreaImages> images = new ArrayList<>();
+
 }

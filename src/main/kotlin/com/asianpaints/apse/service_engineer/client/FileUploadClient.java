@@ -1,52 +1,59 @@
 package com.asianpaints.apse.service_engineer.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
+import okhttp3.*;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
 public class FileUploadClient {
 
     private String url = "https://apidev.asianpaints.com/v1/contentstorage?apikey=jJs5QR9LY5YJcMej3TjnMdXDZ8Air1Zz";
-    private final RestTemplate restTemplate;
+
+    private final OkHttpClient httpClient = new OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build();
 
     public ResponseEntity<String> addFile(String fileName, byte[] fileBytesArray) {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        MultiValueMap<String, String> fileMap = new LinkedMultiValueMap<>();
-        ContentDisposition contentDisposition = ContentDisposition
-                .builder("form-data")
-                .name("fileData")
-                .filename(fileName)
-                .build();
-        fileMap.add(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString());
-        HttpEntity<byte[]> fileEntity = new HttpEntity<>(fileBytesArray, fileMap);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDateTime = LocalDateTime.now().format(formatter);
         long currentTimeMillis = System.currentTimeMillis();
 
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("fileData", fileEntity);
-        body.add("fileContainer", "aplms");
-        body.add("fileLocation", "LK2001/" + formattedDateTime + "/"+currentTimeMillis);
+        MultipartBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("fileData", fileName,
+                        RequestBody.create(fileBytesArray, MediaType.parse("application/octet-stream")))
+                .addFormDataPart("fileContainer", "aplms")
+                .addFormDataPart("fileLocation", "LK2001/" + formattedDateTime + "/" + currentTimeMillis)
+                .build();
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-        try {
-            return restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
-        } catch (HttpClientErrorException e) {
-            return new ResponseEntity<>(e.getResponseBodyAsString(), e.getStatusCode());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                return ResponseEntity.status(response.code()).body(response.body() != null ? response.body().string() : "Unknown error");
+            } else {
+                throw new FileUploadException("File upload failed: " + response.message());
+            }
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String responseBody = response.body() != null ? response.body().string() : "{}";
+//            Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
         } catch (Exception e) {
-            throw e;
+            throw new RuntimeException("File upload failed: " + e.getMessage(), e);
         }
     }
 }

@@ -111,7 +111,6 @@ public class InspectionSiteController {
             @RequestParam(required = false) InspectionSiteStatus status,
             @RequestParam(required = false) String reportName,
             @RequestParam(required = true) Long conductedBy) {
-
         try {
             InspectionSiteFilter filter = new InspectionSiteFilter(conductedBy, fromDate, toDate, siteId, status, reportName);
             List<InspectionSiteResponse> filteredSites = inspectionSiteService.getFilteredInspectionSites(filter);

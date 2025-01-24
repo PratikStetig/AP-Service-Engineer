@@ -63,6 +63,9 @@
              object-fit: cover;
              background: #EFEBF9;
         }
+        .text-align-left {
+            text-align: left;
+        }
         .pdf-style {
             padding: 2.5rem 2.5rem;
             margin-bottom: 0px;
@@ -165,26 +168,37 @@
             color: #6A6A6A;
         }
 
+        .logo-container {
+            text-align: right; /* Align the logo to the right */
+            margin-bottom: 20px; /* Add spacing below the logo */
+        }
+
+        .logo-img {
+            display: inline-block; /* Prevent unnecessary spacing */
+            width: 120px; /* Ensure the logo size remains consistent */
+        }
+
+
 
         .orangeText {
-            color: #FC8413;
+            color:  #DC5753;
             font-weight: 800;
         }
         .orangeText-margin {
-            color: #FC8413;
+            color:  #DC5753;
             font-weight: 800;
             margin-top: -10mm
         }
 
         .main-page-heading {
-            color: #FC8413;
+            color:  #DC5753;
             width: 70%;
             font-weight: semiBold;
             font-style: normal;
         }
 
         .voiletText {
-            color: #1d2f91;
+            color: #377DA8;
             font-weight: 700
         }
 
@@ -222,7 +236,7 @@
         }
 
         .orangeTextNormal {
-            color: #FC8413;
+            color:  #DC5753;
         }
 
         .greenText {
