@@ -14,8 +14,8 @@
         <div class="d-flex-col fill-available">
             <div style="flex:1;">
                 <div style="margin-top: 20px;">
-                    <img style="margin-top: 20px !important;" width="120"
-                         th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+                    <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+                         style="position: absolute; top: 20px; right: 20px;">
                 </div>
                 <div class="d-flex-col-center">
                     <h1 class="main-page-heading pt-16 text-align-center" th:text="${reportName}"></h1>
@@ -45,9 +45,8 @@
 
 <div class="Acknowledgement">
     <div class="pdf-style">
-        <!-- Load logo from static assets using Thymeleaf path resolution -->
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
         <!-- Heading with dynamic content -->
         <h1 class="orangeText pt-16">Acknow<span class="voiletText">ledgement</span></h1>
 
@@ -77,7 +76,6 @@
             </li>
         </ul>
 
-
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
              th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
@@ -85,7 +83,8 @@
 
 <div class="TableOfContent">
     <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
         <h1 class="orangeText pt-16 mt-20">Table Of <span class="voiletText">Content</span></h1>
 
         <!-- Table structure with headings -->
@@ -158,16 +157,24 @@
 </div>
 
 <div class="ClassificationOfIso">
-    <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        <h2 class="orangeText pt-16 text-uppercase pb-8 font-w-600">Classification <span class="voiletText"> -
-                    ISO 12944 - 2
-                    Rev-2018</span>
-        </h2>
-        <span class="blueText font-normal">This standard provides tables of corrosion classes with typical environments
+    <div class="pdf-style" style="position: relative;">
+        <!-- Load logo from static assets and align it to the right -->
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
+
+        <!-- Heading with dynamic content -->
+        <h1 class="orangeText pt-16" style = "margin-top: -20px;">Classifi<span class="voiletText">cation</span></h1>
+        <div>
+            <span class="blueText600 font-normal font-w-500" >As part of ISO 12944 2 Rev-2018</span>
+        </div>
+        <div style = "margin-top: 10px;">
+            <span class="blueText font-normal"  >This standard provides tables of corrosion classes with typical environments
                 for both
                 atmospheric and
                 immersion conditions.</span>
+        </div>
+
+
         <table class="pt-8">
             <thead>
             <th>Corrosivity Category</th>
@@ -176,66 +183,66 @@
             </thead>
             <tbody>
             <tr>
-                <td>C1 Very Low</td>
-                <td>N/A</td>
-                <td>Heated buildings with clean atmospheres. eg. Offices, schools, shops, hotels</td>
+                <td class="blueText font-normal">C1 Very Low</td>
+                <td class="blueText font-normal">N/A</td>
+                <td class="blueText font-normal">Heated buildings with clean atmospheres. eg. Offices, schools, shops, hotels</td>
             </tr>
             <tr>
-                <td>C2 Low</td>
-                <td>Atmospheres with low level of pollution. Mostly rural areas.</td>
-                <td>Unheated buildings where condensation may occur. eg. depots, warehouses, sports halls</td>
+                <td class="blueText font-normal">C2 Low</td>
+                <td class="blueText font-normal">Atmospheres with low level of pollution. Mostly rural areas.</td>
+                <td class="blueText font-normal">Unheated buildings where condensation may occur. eg. depots, warehouses, sports halls</td>
             </tr>
             <tr>
-                <td>C3 Medium</td>
-                <td>Urban and industrial atmospheres,
+                <td class="blueText font-normal">C3 Medium</td>
+                <td class="blueText font-normal">Urban and industrial atmospheres,
                     moderate sulfur dioxide pollution. Coastal
                     areas with low salinity.
                 </td>
-                <td>Production rooms with high humidity
+                <td class="blueText font-normal">Production rooms with high humidity
                     and some air pollution. eg. food
                     processing plants, laundries, breweries,
                     dairies
                 </td>
             </tr>
             <tr>
-                <td>C4 High</td>
-                <td>Industrial areas and coastal areas with
+                <td class="blueText font-normal">C4 High</td>
+                <td class="blueText font-normal">Industrial areas and coastal areas with
                     moderate salinity.
                 </td>
-                <td>Chemical plants, swimming pools,
+                <td class="blueText font-normal">Chemical plants, swimming pools,
                     coastal ship and boatyards
                 </td>
             </tr>
             <tr>
-                <td>C5 Very High</td>
-                <td>Industrial areas with high humidity and
+                <td class="blueText font-normal">C5 Very High</td>
+                <td class="blueText font-normal">Industrial areas with high humidity and
                     aggressive atmosphere. Coastal and
                     offshore areas with high salinity.
                 </td>
-                <td>Buildings or areas with almost
+                <td class="blueText font-normal">Buildings or areas with almost
                     permanent condensation and high
                     pollution.
                 </td>
             </tr>
             <tr>
-                <td>CX Extreme</td>
-                <td>Offshore areas with high salinity and
+                <td class="blueText font-normal">CX Extreme</td>
+                <td class="blueText font-normal">Offshore areas with high salinity and
                     industrial areas with extreme humidity
                     and aggressive atmosphere and sub-
                     tropical and tropical atmospheres.
                 </td>
-                <td>Industrial areas with extreme humidity
+                <td class="blueText font-normal">Industrial areas with extreme humidity
                     and aggressive atmosphere.
                 </td>
             </tr>
             </tbody>
         </table>
-        <h5 class="blueText pt-16">
+        <h5 class="blueText600 font-w-500" style = "margin-top: 20px;">
             Designation of degree of rusting - ISO 4628 - 3 - 1982
         </h5>
-        <p class="pt-8 blueText font-normal">Paints and varnishes Evaluation of degradation of paint
+        <p class="blueText font-normal" style = "margin-top: -2px;">Paints and varnishes Evaluation of degradation of paint
             coatings Designation of quantity and size of defects, and of intensity of uniform changes in appearance</p>
-        <div class="d-flex gap-8 pt-8">
+        <div class="d-flex gap-8 ">
             <div style="margin-right:12px;">
                 <img th:src="@{classpath:static/assets/test.jpg}"/>
             </div>
@@ -261,16 +268,19 @@
 </div>
 
 <div class="SurfacePreparationStandard">
-    <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        <h5 class="blueText pt-16" style="font-weight: 400;">
-            Surface Preparation Standard
-        </h5>
+    <div class="pdf-style"  style="position: relative;">
+        <!-- Load logo from static assets and align it to the right -->
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
+
+        <!-- Heading with dynamic content -->
+        <h1 class="orangeText pt-16" style = "margin-top: -20px;">Surface <span class="voiletText">Preparation Standard</span></h1>
+
         <p class="blueText font-normal">Procedures that are jointly issued by SSPC and NACE Internation. The
             Swedish Standards (used primarily internationally) correlate with several of these standards.</p>
         <p class="blueText font-normal pt-16 text-align-center">Table 6: Cross Reference Guide to Surface Preparation
             Specifications</p>
-        <table class="pt-8 text-align-center">
+        <table class="text-align-center" style = "margin-top: -2px;">
             <thead>
             <th>SSPC Standard</th>
             <th>NACE Standard</th>
@@ -357,17 +367,8 @@
             obtain a complete set
             of “Surface Preparation Specifications” contact SSPC: The Society for Protective Coatings, 40 24th Street
             6th Florr, Pittsburgh, pennsylvania 115222-4656 US. (www.sspc.org)</p>
-        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
-             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
-    </div>
-</div>
 
-<div class="PressureCategorization">
-    <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        <h5 class="blueText pt-16" style="font-weight: 400;">
-            Pressure Categorization for water washing
-        </h5>
+        <h5 class="blueText600 font-w-500" style = "margin-top: 20px;">Pressure categorization for water washing</h5>
         <table>
             <thead>
             <th>Washing category</th>
@@ -396,6 +397,7 @@
         </table>
         <p class="blueText font-normal pt-8">Refer 1498-Hydrojetting Information sheets and actual standards for
             reference</p>
+
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
              th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
@@ -403,9 +405,13 @@
 
 <div class="PreliminaryObservation">
     <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        <p class="orangeText pt-16 font-med font-w-600">1. Preliminary <span class="voiletText">Observations:</span>
-        </p>
+             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
+
+        <!-- Heading with dynamic content -->
+        <h1 class="orangeText pt-16" style = "margin-top: -20px;">1. Preliminary <span class="voiletText">Observations</span></h1>
+
+
         <p class="blueText font-normal pt-8">As per ISO 12944-2 – Classification of environments, location of “
             <span class="voiletText" th:text="${conductedAt}"></span> “
             shall be classified under <span class="voiletText">C4 High Corrosive category</span>.
@@ -448,7 +454,13 @@
 
 <div class="ListOfAreas">
     <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
+
+        <!-- Heading with dynamic content -->
+        <h1 class="orangeText pt-16" style = "margin-top: -20px;">Corrosion <span class="voiletText">Levels</span></h1>
+
+
 
         <div class="mt-8">
 
@@ -516,9 +528,9 @@
 
         </div>
 
-        <h5 class="blueText pt-16 font-normal font-w-600">
-            1.2 List of Areas Inspected
-        </h5>
+        <!-- Heading with dynamic content -->
+        <h1 class="orangeText pt-16" style = "margin-top: 20px;">1.2 Areas <span class="voiletText">Inspected</span></h1>
+
         <table>
             <thead>
             <tr>
@@ -548,7 +560,8 @@
 
 <div class="ListOfAreaDetails" th:each="areaDetail, iterStat : ${areaDetails}">
     <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
         <p class="orangeText-margin pt-16 font-med font-w-600">
             2. INSPECTION <span class="voiletText">DETAILS AND OBSERVATIONS OVERALL</span>
         </p>
@@ -783,7 +796,8 @@
 
 <div class="CoatingSystemRecommendation" th:each="system, iterStat: ${coatingSystems}">
     <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
         <p class="orangeText pt-16 font-med font-w-600">
             <th th:text="'3.' + ${iterStat.index+1}"></th>
             Coating <span class="voiletText">System Recommendation</span>
@@ -846,7 +860,8 @@
 
 <div class="CorrectFieldPrecaution">
     <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
         <p class="orangeText font-med font-w-600 pt-8 pb-8 text-align-center">Paint with Safety and
             </span> <span class="voiletText">correct field precaution</span>
         </p>
@@ -861,7 +876,8 @@
 
 <div class="Disclaimer">
     <div class="pdf-style">
-        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
+             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
         <h1 class="blueText pt-16 font-w-600 text-align-center">Disclaimer</h1>
         <p class="pt-16 blueText font-normal">This “APCOPLAN – Corrosion Audit report” provides direction only to
             refer Safety Data Sheet (SDS) of Asian Paints PPG Pvt. Ltd., paint

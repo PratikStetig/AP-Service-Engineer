@@ -183,6 +183,7 @@
         .orangeText {
             color:  #DC5753;
             font-weight: 800;
+            font-size: 1.8rem; /* Adjust size between h1 and h2 */
         }
         .orangeText-margin {
             color:  #DC5753;
@@ -821,3 +822,12 @@
             border: 1.5px solid rgba(51, 34, 105, 1);
             border-radius: 20px;
         }
+
+
+        .ppg-heading {
+            font-size: 2rem; /* Adjust size between h1 and h2 */
+            font-weight: bold; /* Optionally, add weight for emphasis */
+            text-align: center;
+            margin-top: 20px; /* Adjust spacing */
+        }
+
