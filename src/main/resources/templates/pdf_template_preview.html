@@ -841,7 +841,17 @@
                 <td th:text="${product.productName}"></td>
                 <td th:text="${product.productSpec}"></td>
                 <td th:text="${product.mixingRatio}"></td>
-                <td th:text="${product.modeOfApplication()}"></td>
+                <td style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div th:if="${product.paint}" style="display: flex; align-items: center; gap: 8px;">
+                        <img th:src="@{classpath:static/assets/paint-brush.png}" style="width: 24px;" alt="Paint Brush">
+                        <span>Paint</span>
+                    </div>
+                    <div th:if="${product.spray}" style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                        <img th:src="@{classpath:static/assets/spray-gun.png}" style="width: 44px;" alt="Spray Gun">
+                        <span>Spray</span>
+                    </div>
+                </td>
+
                 <td th:text="${product.wftMin}"></td>
                 <td th:text="${product.dft}"></td>
                 <td th:text="${product.overCoatingInterval}"></td>
