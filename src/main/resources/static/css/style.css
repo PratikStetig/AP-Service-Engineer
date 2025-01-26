@@ -59,26 +59,28 @@
         }
         .image-container img {
              width: 150px;
-             height: 150px;
-             object-fit: cover;
-             background: #EFEBF9;
+             margin-Top: -10px;
+             background: #FFFFFF;
+        }
+        .text-align-left {
+            text-align: left;
         }
         .pdf-style {
-               padding: 2.5rem 2.5rem;
-               margin-bottom: 0px;
-               background-image: url('classpath:static/assets/Img/Group35614.png');
-               background-size: none;
-               background-repeat: no-repeat;
-               background-position: center;
-               background-position: center; /* Position the image in the bottom-right corner */
-               padding: 20px; /* Optional padding to avoid overlap with content */
-               box-sizing: border-box;
-               max-width: 100%; /* Ensure it doesn’t exceed the page width */
-               position: relative;
-               width: 100%;
-               height: 297mm;
-               page-break-after: always;
-           }
+            padding: 2.5rem 2.5rem;
+            margin-bottom: 0px;
+            background-image: url('classpath:static/assets/Img/Group35614.png');
+            background-size: none;
+            background-repeat: no-repeat;
+            background-position: right bottom; /* Positions the image in the bottom-right corner */
+            padding: 20px; /* Optional padding to avoid overlap with content */
+            box-sizing: border-box;
+            max-width: 100%; /* Ensure it doesn’t exceed the page width */
+            position: relative;
+            width: 100%;
+            height: 297mm;
+            page-break-after: always;
+        }
+
         .site-image {
             width: 85%;
             display: block;
@@ -165,26 +167,38 @@
             color: #6A6A6A;
         }
 
+        .logo-container {
+            text-align: right; /* Align the logo to the right */
+            margin-bottom: 20px; /* Add spacing below the logo */
+        }
+
+        .logo-img {
+            display: inline-block; /* Prevent unnecessary spacing */
+            width: 120px; /* Ensure the logo size remains consistent */
+        }
+
+
 
         .orangeText {
-            color: #FC8413;
+            color:  #DC5753;
             font-weight: 800;
+            font-size: 1.6rem; /* Adjust size between h1 and h2 */
         }
         .orangeText-margin {
-            color: #FC8413;
+            color:  #DC5753;
             font-weight: 800;
             margin-top: -10mm
         }
 
         .main-page-heading {
-            color: #FC8413;
+            color:  #DC5753;
             width: 70%;
             font-weight: semiBold;
             font-style: normal;
         }
 
         .voiletText {
-            color: #1d2f91;
+            color: #377DA8;
             font-weight: 700
         }
 
@@ -222,7 +236,7 @@
         }
 
         .orangeTextNormal {
-            color: #FC8413;
+            color:  #DC5753;
         }
 
         .greenText {
@@ -266,6 +280,10 @@
             text-align: end;
             display: flex;
             flex-direction: column;
+        }
+
+        .text-center {
+             text-align: center;
         }
 
         .text-align-center {
@@ -759,7 +777,7 @@
                  padding: 6px;
                  border: 1px solid black;
                  text-align: center;
-                 font-size: 12px;
+                 font-size: 14px;
              }
 
                   .rating-cell {
@@ -803,3 +821,12 @@
             border: 1.5px solid rgba(51, 34, 105, 1);
             border-radius: 20px;
         }
+
+
+        .ppg-heading {
+            font-size: 2rem; /* Adjust size between h1 and h2 */
+            font-weight: bold; /* Optionally, add weight for emphasis */
+            text-align: center;
+            margin-top: 20px; /* Adjust spacing */
+        }
+
