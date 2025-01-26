@@ -51,6 +51,12 @@ public class SiteCorrosivityEnvironmentResponse {
                 .collect(Collectors.joining(", "));
     }
 
+    public String siteAreaStructureTypesCSV() {
+        return siteAreas.stream()
+                .map(SiteAreaDto::getStructureType)
+                .collect(Collectors.joining(", "));
+    }
+
     public List<String> siteAreaImagesUrl() {
         return siteAreas.stream()
                 .flatMap(siteArea -> siteArea.getImages().stream())  // Flatten each list of SiteAreaImageDto objects

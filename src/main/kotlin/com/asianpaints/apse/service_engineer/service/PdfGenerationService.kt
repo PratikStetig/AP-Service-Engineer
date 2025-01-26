@@ -46,6 +46,7 @@ import java.nio.file.Files
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.imageio.IIOImage
 import javax.imageio.ImageIO
 import javax.transaction.Transactional
 
@@ -448,9 +449,21 @@ class PdfGenerationService @Autowired constructor(
                     // Convert image to RGB if necessary
                     val bufferedImage = ensureRGB(xObject.image)
 
-                    // Compress the image (convert to JPEG)
+                    // Downscale the image to reduce resolution
+                    val downscaledImage = downscaleImage(bufferedImage, 0.5) // Scale factor: 50%
+
+                    // Compress the image with a reduced quality
                     val imageOutputStream = ByteArrayOutputStream()
-                    ImageIO.write(bufferedImage, "JPEG", imageOutputStream)
+                    val jpegWriter = ImageIO.getImageWritersByFormatName("JPEG").next()
+                    val jpegParams = jpegWriter.defaultWriteParam
+                    jpegParams.compressionMode = javax.imageio.ImageWriteParam.MODE_EXPLICIT
+                    jpegParams.compressionQuality = 0.7f // Set compression quality (0.7 = 70%)
+
+                    val jpegOutput = ImageIO.createImageOutputStream(imageOutputStream)
+                    jpegWriter.output = jpegOutput
+                    jpegWriter.write(null, IIOImage(downscaledImage, null, null), jpegParams)
+                    jpegWriter.dispose()
+                    jpegOutput.close()
 
                     // Replace the existing image in the PDF
                     val compressedImage = PDImageXObject.createFromByteArray(
@@ -471,29 +484,30 @@ class PdfGenerationService @Autowired constructor(
     }
 
     // Utility method to ensure the image is in RGB format
-    private fun ensureRGB(image: BufferedImage): BufferedImage? {
+    private fun ensureRGB(image: BufferedImage): BufferedImage {
         if (image.type == BufferedImage.TYPE_INT_RGB) {
-            // Image is already in RGB format
-            return image
+            return image // Image is already in RGB format
         }
-
-        // Handle images with an alpha channel (transparency)
-        val rgbImage = BufferedImage(
-            image.width,
-            image.height,
-            BufferedImage.TYPE_INT_RGB
-        )
+        val rgbImage = BufferedImage(image.width, image.height, BufferedImage.TYPE_INT_RGB)
         val g = rgbImage.createGraphics()
-
-        // Set the background color to white for transparent images
         g.color = Color.WHITE
         g.fillRect(0, 0, image.width, image.height)
-
-        // Draw the original image on top of the white background
         g.drawImage(image, 0, 0, null)
         g.dispose()
         return rgbImage
     }
+
+    // Utility method to downscale an image
+    private fun downscaleImage(image: BufferedImage, scaleFactor: Double): BufferedImage {
+        val width = (image.width * scaleFactor).toInt()
+        val height = (image.height * scaleFactor).toInt()
+        val scaledImage = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+        val g = scaledImage.createGraphics()
+        g.drawImage(image, 0, 0, width, height, null)
+        g.dispose()
+        return scaledImage
+    }
+
 
     private fun getYesNo(value: Boolean?): String = if (value == true) "Yes" else "No"
 

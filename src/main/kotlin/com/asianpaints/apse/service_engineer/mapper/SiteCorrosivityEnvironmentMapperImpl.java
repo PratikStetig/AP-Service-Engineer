@@ -119,13 +119,14 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
         return siteAreas.stream()
                 .map(siteArea ->
                         SiteAreaDto.builder()
-                        .id(siteArea.getId())
-                        .coatingCondition(siteArea.getCoatingCondition())
-                        .corrosionType(siteArea.getCorrosionType())
-                        .rating(siteArea.getRating())
-                        .area(siteArea.getArea())
-                        .images(getAreaImageDto(siteArea.getImages()))
-                        .build()
+                                .id(siteArea.getId())
+                                .coatingCondition(siteArea.getCoatingCondition())
+                                .corrosionType(siteArea.getCorrosionType())
+                                .rating(siteArea.getRating())
+                                .area(siteArea.getArea())
+                                .images(getAreaImageDto(siteArea.getImages()))
+                                .structureType(siteArea.getStructureType())
+                                .build()
                 ).collect(Collectors.toSet());
     }
 

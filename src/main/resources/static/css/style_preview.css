@@ -59,9 +59,8 @@
         }
         .image-container img {
              width: 150px;
-             height: 150px;
-             object-fit: cover;
-             background: #EFEBF9;
+             margin-Top: -10px;
+             background: #FFFFFF;
         }
         .text-align-left {
             text-align: left;
@@ -72,8 +71,7 @@
             background-image: url('classpath:static/assets/Img/Group35614.png');
             background-size: none;
             background-repeat: no-repeat;
-            background-position: center;
-            background-position: center; /* Position the image in the bottom-right corner */
+            background-position: right bottom; /* Positions the image in the bottom-right corner */
             padding: 20px; /* Optional padding to avoid overlap with content */
             box-sizing: border-box;
             max-width: 100%; /* Ensure it doesn’t exceed the page width */
@@ -82,6 +80,7 @@
             height: 297mm;
             page-break-after: always;
         }
+
         .site-image {
             width: 85%;
             display: block;
@@ -183,7 +182,7 @@
         .orangeText {
             color:  #DC5753;
             font-weight: 800;
-            font-size: 1.8rem; /* Adjust size between h1 and h2 */
+            font-size: 1.6rem; /* Adjust size between h1 and h2 */
         }
         .orangeText-margin {
             color:  #DC5753;

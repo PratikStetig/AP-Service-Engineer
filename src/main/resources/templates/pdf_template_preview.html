@@ -26,7 +26,6 @@
 
                 <img class="site-image" th:src="${siteImage}" alt="Asian Paint"
                      style="width: 70%; height: 65%; object-fit: cover; aspect-ratio: 1; display: block; margin: 0 auto;">
-
             </div>
         </div>
         <div style="display: flex;
@@ -163,12 +162,12 @@
              style="position: absolute; top: 20px; right: 20px;">
 
         <!-- Heading with dynamic content -->
-        <h1 class="orangeText pt-16" style = "margin-top: -20px;">Classifi<span class="voiletText">cation</span></h1>
+        <h1 class="orangeText pt-16" style="margin-top: -20px;">Classifi<span class="voiletText">cation</span></h1>
         <div>
-            <span class="blueText600 font-normal font-w-500" >As part of ISO 12944 2 Rev-2018</span>
+            <span class="blueText600 font-normal font-w-500">As part of ISO 12944 2 Rev-2018</span>
         </div>
-        <div style = "margin-top: 10px;">
-            <span class="blueText font-normal"  >This standard provides tables of corrosion classes with typical environments
+        <div style="margin-top: 10px;">
+            <span class="blueText font-normal">This standard provides tables of corrosion classes with typical environments
                 for both
                 atmospheric and
                 immersion conditions.</span>
@@ -185,12 +184,16 @@
             <tr>
                 <td class="blueText font-normal">C1 Very Low</td>
                 <td class="blueText font-normal">N/A</td>
-                <td class="blueText font-normal">Heated buildings with clean atmospheres. eg. Offices, schools, shops, hotels</td>
+                <td class="blueText font-normal">Heated buildings with clean atmospheres. eg. Offices, schools, shops,
+                    hotels
+                </td>
             </tr>
             <tr>
                 <td class="blueText font-normal">C2 Low</td>
                 <td class="blueText font-normal">Atmospheres with low level of pollution. Mostly rural areas.</td>
-                <td class="blueText font-normal">Unheated buildings where condensation may occur. eg. depots, warehouses, sports halls</td>
+                <td class="blueText font-normal">Unheated buildings where condensation may occur. eg. depots,
+                    warehouses, sports halls
+                </td>
             </tr>
             <tr>
                 <td class="blueText font-normal">C3 Medium</td>
@@ -237,29 +240,36 @@
             </tr>
             </tbody>
         </table>
-        <h5 class="blueText600 font-w-500" style = "margin-top: 20px;">
+        <h5 class="blueText600 font-w-500" style="margin-top: 20px;">
             Designation of degree of rusting - ISO 4628 - 3 - 1982
         </h5>
-        <p class="blueText font-normal" style = "margin-top: -2px;">Paints and varnishes Evaluation of degradation of paint
+        <p class="blueText font-normal" style="margin-top: -2px;">Paints and varnishes Evaluation of degradation of
+            paint
             coatings Designation of quantity and size of defects, and of intensity of uniform changes in appearance</p>
         <div class="d-flex gap-8 ">
-            <div style="margin-right:12px;">
-                <img th:src="@{classpath:static/assets/test.jpg}"/>
+            <div style="width: 130px; height: 130px; margin-right: 12px;">
+                <img th:src="@{classpath:static/assets/ri1.png}"
+                     style="width: 100%; height: 100%; object-fit: fill; display: block;"/>
             </div>
-            <div style="margin-right:12px;">
-                <img th:src="@{classpath:static/assets/test.jpg}"/>
+
+            <div style="width: 130px; height: 130px; margin-right: 12px;">
+                <img th:src="@{classpath:static/assets/ri2.png}"
+                     style="width: 100%; height: 100%; object-fit: fill; display: block;"/>
             </div>
-            <div style="margin-right:12px;">
-                <img th:src="@{classpath:static/assets/test.jpg}"/>
+
+            <div style="width: 130px; height: 130px; margin-right: 12px;">
+                <img th:src="@{classpath:static/assets/ri3.png}"
+                     style="width: 100%; height: 100%; object-fit: fill; display: block;"/>
             </div>
-            <div style="margin-right:12px;">
-                <img th:src="@{classpath:static/assets/test.jpg}"/>
+
+            <div style="width: 130px; height: 130px; margin-right: 12px;">
+                <img th:src="@{classpath:static/assets/ri4.png}"
+                     style="width: 100%; height: 100%; object-fit: fill; display: block;"/>
             </div>
-            <div style="margin-right:12px;">
-                <img th:src="@{classpath:static/assets/test.jpg}"/>
-            </div>
-            <div>
-                <img th:src="@{classpath:static/assets/test.jpg}"/>
+
+            <div style="width: 130px; height: 130px; margin-right: 12px;">
+                <img th:src="@{classpath:static/assets/ri5.png}"
+                     style="width: 100%; height: 100%; object-fit: fill; display: block;"/>
             </div>
         </div>
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
@@ -268,19 +278,20 @@
 </div>
 
 <div class="SurfacePreparationStandard">
-    <div class="pdf-style"  style="position: relative;">
+    <div class="pdf-style" style="position: relative;">
         <!-- Load logo from static assets and align it to the right -->
         <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
 
         <!-- Heading with dynamic content -->
-        <h1 class="orangeText pt-16" style = "margin-top: -20px;">Surface <span class="voiletText">Preparation Standard</span></h1>
+        <h1 class="orangeText pt-16" style="margin-top: -20px;">Surface <span
+                class="voiletText">Preparation Standard</span></h1>
 
         <p class="blueText font-normal">Procedures that are jointly issued by SSPC and NACE Internation. The
             Swedish Standards (used primarily internationally) correlate with several of these standards.</p>
         <p class="blueText font-normal pt-16 text-align-center">Table 6: Cross Reference Guide to Surface Preparation
             Specifications</p>
-        <table class="text-align-center" style = "margin-top: -2px;">
+        <table class="text-align-center" style="margin-top: -2px;">
             <thead>
             <th>SSPC Standard</th>
             <th>NACE Standard</th>
@@ -368,7 +379,7 @@
             of “Surface Preparation Specifications” contact SSPC: The Society for Protective Coatings, 40 24th Street
             6th Florr, Pittsburgh, pennsylvania 115222-4656 US. (www.sspc.org)</p>
 
-        <h5 class="blueText600 font-w-500" style = "margin-top: 20px;">Pressure categorization for water washing</h5>
+        <h5 class="blueText600 font-w-500" style="margin-top: 20px;">Pressure categorization for water washing</h5>
         <table>
             <thead>
             <th>Washing category</th>
@@ -405,11 +416,12 @@
 
 <div class="PreliminaryObservation">
     <div class="pdf-style">
-             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
 
         <!-- Heading with dynamic content -->
-        <h1 class="orangeText pt-16" style = "margin-top: -20px;">1. Preliminary <span class="voiletText">Observations</span></h1>
+        <h1 class="orangeText pt-16" style="margin-top: -20px;">1. Preliminary <span
+                class="voiletText">Observations</span></h1>
 
 
         <p class="blueText font-normal pt-8">As per ISO 12944-2 – Classification of environments, location of “
@@ -454,12 +466,11 @@
 
 <div class="ListOfAreas">
     <div class="pdf-style">
-             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
 
         <!-- Heading with dynamic content -->
-        <h1 class="orangeText pt-16" style = "margin-top: -20px;">Corrosion <span class="voiletText">Levels</span></h1>
-
+        <h1 class="orangeText pt-16" style="margin-top: -20px;">Corrosion <span class="voiletText">Levels</span></h1>
 
 
         <div class="mt-8">
@@ -529,7 +540,7 @@
         </div>
 
         <!-- Heading with dynamic content -->
-        <h1 class="orangeText pt-16" style = "margin-top: 20px;">1.2 Areas <span class="voiletText">Inspected</span></h1>
+        <h1 class="orangeText pt-16" style="margin-top: 20px;">1.2 Areas <span class="voiletText">Inspected</span></h1>
 
         <table>
             <thead>
@@ -560,33 +571,21 @@
 
 <div class="ListOfAreaDetails" th:each="areaDetail, iterStat : ${areaDetails}">
     <div class="pdf-style">
-             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
-        <p class="orangeText-margin pt-16 font-med font-w-600">
-            2. INSPECTION <span class="voiletText">DETAILS AND OBSERVATIONS OVERALL</span>
-        </p>
-        <p class="blueText font-normal pt-8">
-            <span class="font-w-600">AREA </span>-
+        <p class="orangeText pt-16"> 2. INSPECTION <span class="voiletText">DETAILS AND OBSERVATIONS</span></p>
+        <p class="blueText font-normal" style="top: 30px;">
+            <span class="font-w-600">Areas </span>-
             <span th:text="${areaDetail.siteAreaNamesCSV()}">ZLD, SRS, Production Block B,C,E,G,K,M,ETP,WTP, Cooling Tower (STRUCTURE & PIPES)</span>
         </p>
 
         <div class="image-container">
-            <img class="image-margin-left" th:each="areaImage : ${areaDetail.siteAreaImagesUrl()}"
-                 th:src="${areaImage}" alt="Asian Paint">
+            <img class="image-margin-left"
+                 th:each="areaImage : ${areaDetail.siteAreaImagesUrl()}" th:src="${areaImage}" alt="Asian Paint">
         </div>
 
-        <div class="d-flex pt-16 gap-8">
-            <div class="w-50p text-align-center">
-                <img src="./assets/Image 1.png" style="width: 100%"/>
-            </div>
-            <div class="w-50p text-align-center">
-                <img src="./assets/Image 2.png" style="width: 100%"/>
-            </div>
-        </div>
-        <h5 class="blueText pt-16 font-normal font-w-600 text-uppercase">
-            Extent of paint defect
-        </h5>
-        <table>
+        <h5 class="blueText600 font-w-500" style="margin-top: 55px;">Extent of paint defect</h5>
+        <table style="margin-top: -4px;">
             <thead>
             <tr>
                 <th>Category</th>
@@ -645,7 +644,7 @@
             <tr>
                 <td>X Cut Adhesion</td>
                 <td>Dft (µm)</td>
-                <td>XXXXXXXX</td>
+                <td th:text="${areaDetail.dftExistingSystem}"></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -669,11 +668,8 @@
         </table>
 
         <div class="MoreInformation">
-            <img src="./assets/logo.svg" alt="Asian Paint">
-            <h5 class="blueText pt-16 font-normal font-w-600">
-                More Information
-            </h5>
-            <table>
+            <h5 class="blueText600 font-w-500" style="margin-top: 30px;">More Information</h5>
+            <table style="margin-top: -4px;">
                 <thead>
                 <th>Sr No.</th>
                 <th>Observation</th>
@@ -688,30 +684,7 @@
                 <tr>
                     <td class="text-align-center">2</td>
                     <td>Area affected</td>
-                    <td>XXXXXXXXX</td>
-                </tr>
-                <tr>
-                    <td class="text-align-center" rowspan="5">3</td>
-                    <td>
-                        Expectation<br>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Recoating interval</td>
-                    <td th:text="${areaDetail.recoatingInterval}"></td>
-                </tr>
-                <tr>
-                    <td>Service life</td>
-                    <td th:text="${areaDetail.serviceLife}"></td>
-                </tr>
-                <tr>
-                    <td>Shade</td>
-                    <td th:text="${areaDetail.shade}"></td>
-                </tr>
-                <tr>
-                    <td>Aesthetic</td>
-                    <td th:text="${areaDetail.aesthetic}"></td>
+                    <td th:text="XXXXXXXX"></td>
                 </tr>
                 <tr>
                     <td class="text-align-center">4</td>
@@ -726,6 +699,24 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Heading and Value Representation -->
+        <h5 class="blueText600 font-w-500" style="margin-top: 20px;">Expectation of inspection: </h5>
+        <div class="information-section" style="margin-left: 10px;">
+            <p><span class="blueText font-normal font-w-600">Recoating Interval:</span> <span
+                    class="blueText font-normal" th:text="${areaDetail.recoatingInterval}"></span></p>
+            <p><span class="blueText font-normal font-w-600">Service Life:</span> <span class="blueText font-normal"
+                                                                                        th:text="${areaDetail.serviceLife}"></span>
+            </p>
+            <p><span class="blueText font-normal font-w-600">Shade:</span> <span class="blueText font-normal"
+                                                                                 th:text="${areaDetail.shade}"></span>
+            </p>
+            <p><span class="blueText font-normal font-w-600">Aesthetic:</span> <span class="blueText font-normal"
+                                                                                     th:text="${areaDetail.aesthetic}"></span>
+            </p>
+        </div>
+
+
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
              th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
     </div>
@@ -733,9 +724,12 @@
 
 <div class="GeneralPracticeCoatingSystem">
     <div class="pdf-style">
-        <img class="appg-logo" width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint">
-        <p class="blueText font-normal pt-8 font-w-600" style="margin-bottom: 4px;">General Practice for the Recommended
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+             style="position: absolute; top: 20px; right: 20px;">
+        <p class="blueText font-normal pt-8 font-w-600" style="margin-bottom: 4px; margin-top: 10px;">General Practice
+            for the Recommended
             coating system</p>
+
         <p class="blueText font-normal">After considering the conditions like degree of rusting, degree
             of blistering and other
             coating failures the following coating system proposal is recommended:</p>
@@ -796,7 +790,7 @@
 
 <div class="CoatingSystemRecommendation" th:each="system, iterStat: ${coatingSystems}">
     <div class="pdf-style">
-             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
         <p class="orangeText pt-16 font-med font-w-600">
             <th th:text="'3.' + ${iterStat.index+1}"></th>
@@ -860,7 +854,7 @@
 
 <div class="CorrectFieldPrecaution">
     <div class="pdf-style">
-             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
         <p class="orangeText font-med font-w-600 pt-8 pb-8 text-align-center">Paint with Safety and
             </span> <span class="voiletText">correct field precaution</span>
@@ -876,7 +870,7 @@
 
 <div class="Disclaimer">
     <div class="pdf-style">
-             <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
+        <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
         <h1 class="blueText pt-16 font-w-600 text-align-center">Disclaimer</h1>
         <p class="pt-16 blueText font-normal">This “APCOPLAN – Corrosion Audit report” provides direction only to
