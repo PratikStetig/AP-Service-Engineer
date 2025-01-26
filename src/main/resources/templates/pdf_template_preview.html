@@ -52,23 +52,23 @@
         <p class="blueText pt-16" th:utext="${processedAckContent}"></p>
 
         <!-- make this dynamic start-->
-<!--        <p class="blueText pt-16">-->
-<!--            In plant inspection was carried out at-->
-<!--            <span class="font-w-600" th:text="${conductedAt} + ' on ' + ${inspectionDate}"></span>-->
-<!--            for assessment of existing coating condition before recommendation of any system coat.-->
-<!--        </p>-->
+        <!--        <p class="blueText pt-16">-->
+        <!--            In plant inspection was carried out at-->
+        <!--            <span class="font-w-600" th:text="${conductedAt} + ' on ' + ${inspectionDate}"></span>-->
+        <!--            for assessment of existing coating condition before recommendation of any system coat.-->
+        <!--        </p>-->
 
-<!--        <p class="blueText pt-8">-->
-<!--            We give our sincere thanks to the persons present during the inspection who coordinated all the inspection-->
-<!--            plans.-->
-<!--            We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we discussed-->
-<!--            regarding-->
-<!--            <span class="font-w-600" th:text="${conductedAt}"></span>. All the concerned areas were discussed in the-->
-<!--            Kick-off meeting.-->
-<!--        </p>-->
+        <!--        <p class="blueText pt-8">-->
+        <!--            We give our sincere thanks to the persons present during the inspection who coordinated all the inspection-->
+        <!--            plans.-->
+        <!--            We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we discussed-->
+        <!--            regarding-->
+        <!--            <span class="font-w-600" th:text="${conductedAt}"></span>. All the concerned areas were discussed in the-->
+        <!--            Kick-off meeting.-->
+        <!--        </p>-->
         <!-- make this dynamic end-->
 
-<!--        Do not edit below part-->
+        <!--        Do not edit below part-->
         <p class="pt-16 blueText">Following persons were present during the inspection:</p>
 
         <!-- List of persons dynamically generated -->
@@ -850,7 +850,8 @@
                         <img th:src="@{classpath:static/assets/paint-brush.png}" style="width: 24px;" alt="Paint Brush">
                         <span>Paint</span>
                     </div>
-                    <div th:if="${product.spray}" style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                    <div th:if="${product.spray}"
+                         style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
                         <img th:src="@{classpath:static/assets/spray-gun.png}" style="width: 44px;" alt="Spray Gun">
                         <span>Spray</span>
                     </div>
@@ -866,6 +867,21 @@
     </div>
 </div>
 
+<div class="ProductSheetPage" th:each="productSheet : ${productSheets}">
+    <div class="pdf-style">
+        <div class="logo-container">
+            <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint" class="logo-img">
+        </div>
+        <div class="product-image-container text-align-center" style="text-align: center;">
+            <img th:src="${productSheet}" alt="Product Sheet" class="product-image"
+                 style="max-width: 90%; max-height: 90%; width: auto; height: auto; object-fit: contain; display: block; margin: 0 auto;">
+        </div>
+        <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|">
+        </div>
+    </div>
+</div>
+
 <div class="CorrectFieldPrecaution">
     <div class="pdf-style">
         <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
@@ -878,7 +894,8 @@
             Follow detail
             guideline at respective plant</p>
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
-             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
+             th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|">
+        </div>
     </div>
 </div>
 
