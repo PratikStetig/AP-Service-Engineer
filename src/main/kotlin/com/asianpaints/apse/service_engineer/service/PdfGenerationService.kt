@@ -331,27 +331,25 @@ class PdfGenerationService @Autowired constructor(
                 val productDataSheets = coatingSystem.flatMap { coating -> coating.productDetails.map { it.product.productSheetLink } }.distinct()
                 val pageCounterUtil = PageCounterUtil()
 
+                var totalPages = 0
                 val context = Context().apply {
 
-
                     /*----------------------MainPage----------------------*/
+                    totalPages+=1
                     setVariable("reportName", inspectionSite.get().reportName)
                     setVariable("conductedAt", inspectionSite.get().conductedAt)
-                    setVariable("certificateNo", "1231244")
                     setVariable("inspectionDate", formatter.format(inspectionSite.get().inspectionDate))
                     setVariable("siteImage", inspectionSite.get().imageUrl)
                     setVariable("conductedBy", inspectionSite.get().conductedBy.name)
                     setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
-                    pageCounterUtil.addToTotal(1)
-
 
                     /*----------------------AcknowledgementPage----------------------*/
+                    totalPages+=1
                     setVariable("processedAckContent", processedAckContent)
                     setVariable("ackPersons", acknowledgmentInfo)
-                    pageCounterUtil.addToTotal(1)
-
 
                     /*----------------------TableOfContent----------------------*/
+                    totalPages+=1
                     val inspectionDetailsStartingPageNo = 9
                     val coatingSystemStartPageNo = inspectionDetailsStartingPageNo + listOfAreaDetails.size
                     val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
@@ -359,10 +357,13 @@ class PdfGenerationService @Autowired constructor(
                     setVariable("coatingSystemStartPage", coatingSystemStartPageNo)
                     setVariable("productDataSheetStartPage", productDataSheetStartPage)
                     setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
-                    pageCounterUtil.addToTotal(1)
+
+                    totalPages+=1 // classification
+                    totalPages+=1 //surface preparation standard
 
 
                     /*----------------------PreliminaryObservation----------------------*/
+                    totalPages+=1
                     setVariable("ruralArea", getYesNo(preObservation.ruralArea))
                     setVariable("urbanArea", getYesNo(preObservation.urbanArea))
                     setVariable("coastalArea", getYesNo(preObservation.coastalArea))
@@ -370,23 +371,27 @@ class PdfGenerationService @Autowired constructor(
                     setVariable("chemicalExposed", preObservation.chemicalsExposed)
                     setVariable("avgHumidity", preObservation.averageHumidity)
                     setVariable("salineAtmosphere", preObservation.salineAtmosphere)
-                    pageCounterUtil.addToTotal(1)
+
+                    totalPages+=1 // corrosion levels & areas inspected
+
+                    /*----------------------List Of Areas Details----------------------*/
+                    totalPages+=listOfAreaDetails.size
+                    setVariable("siteAreas", areas)
+                    setVariable("areaDetails", listOfAreaDetails)
+
+                    totalPages+=1 // General Practice for the Recommended coating system
 
                     /*----------------------Coating System Recommendation----------------------*/
+                    totalPages+=coatingSystemResponse.size
                     setVariable("coatingSystems", coatingSystemResponse)
-                    pageCounterUtil.addToTotal(coatingSystemResponse.size)
 
                     /*----------------------Add Product sheets----------------------*/
+                    totalPages+=productDataSheets.size
                     setVariable("productSheets", productDataSheets)
-                    pageCounterUtil.addToTotal(productDataSheets.size)
 
-                    /*----------------------List Of Areas----------------------*/
-                    setVariable("siteAreas", areas)
-                    pageCounterUtil.addToTotal(areas.size)
-
-                    /*----------------------Corrosive Environment----------------------*/
-                    setVariable("areaDetails", listOfAreaDetails)
-                    pageCounterUtil.addToTotal(listOfAreaDetails.size)
+                    totalPages+=1 // General Safety Information given and kindly Follow detail guideline at respective plant
+                    totalPages+=1 // Disclaimer
+                    pageCounterUtil.addToTotal(totalPages)
 
                     setVariable("pageCounterUtil", pageCounterUtil)
                 }
@@ -436,26 +441,25 @@ class PdfGenerationService @Autowired constructor(
             val productDataSheets = coatingSystem.flatMap { coating -> coating.productDetails.map { it.product.productSheetLink } }.distinct()
             val pageCounterUtil = PageCounterUtil()
 
+            var totalPages = 0
             val context = Context().apply {
 
-
                 /*----------------------MainPage----------------------*/
+                totalPages+=1
                 setVariable("reportName", inspectionSite.get().reportName)
                 setVariable("conductedAt", inspectionSite.get().conductedAt)
                 setVariable("inspectionDate", formatter.format(inspectionSite.get().inspectionDate))
                 setVariable("siteImage", inspectionSite.get().imageUrl)
                 setVariable("conductedBy", inspectionSite.get().conductedBy.name)
                 setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
-                pageCounterUtil.addToTotal(1)
-
 
                 /*----------------------AcknowledgementPage----------------------*/
+                totalPages+=1
                 setVariable("processedAckContent", processedAckContent)
                 setVariable("ackPersons", acknowledgmentInfo)
-                pageCounterUtil.addToTotal(1)
-
 
                 /*----------------------TableOfContent----------------------*/
+                totalPages+=1
                 val inspectionDetailsStartingPageNo = 9
                 val coatingSystemStartPageNo = inspectionDetailsStartingPageNo + listOfAreaDetails.size
                 val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
@@ -463,10 +467,13 @@ class PdfGenerationService @Autowired constructor(
                 setVariable("coatingSystemStartPage", coatingSystemStartPageNo)
                 setVariable("productDataSheetStartPage", productDataSheetStartPage)
                 setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
-                pageCounterUtil.addToTotal(1)
+
+                totalPages+=1 // classification
+                totalPages+=1 //surface preparation standard
 
 
                 /*----------------------PreliminaryObservation----------------------*/
+                totalPages+=1
                 setVariable("ruralArea", getYesNo(preObservation.ruralArea))
                 setVariable("urbanArea", getYesNo(preObservation.urbanArea))
                 setVariable("coastalArea", getYesNo(preObservation.coastalArea))
@@ -474,23 +481,27 @@ class PdfGenerationService @Autowired constructor(
                 setVariable("chemicalExposed", preObservation.chemicalsExposed)
                 setVariable("avgHumidity", preObservation.averageHumidity)
                 setVariable("salineAtmosphere", preObservation.salineAtmosphere)
-                pageCounterUtil.addToTotal(1)
+
+                totalPages+=1 // corrosion levels & areas inspected
+
+                /*----------------------List Of Areas Details----------------------*/
+                totalPages+=listOfAreaDetails.size
+                setVariable("siteAreas", areas)
+                setVariable("areaDetails", listOfAreaDetails)
+
+                totalPages+=1 // General Practice for the Recommended coating system
 
                 /*----------------------Coating System Recommendation----------------------*/
+                totalPages+=coatingSystemResponse.size
                 setVariable("coatingSystems", coatingSystemResponse)
-                pageCounterUtil.addToTotal(coatingSystemResponse.size)
 
                 /*----------------------Add Product sheets----------------------*/
+                totalPages+=productDataSheets.size
                 setVariable("productSheets", productDataSheets)
-                pageCounterUtil.addToTotal(productDataSheets.size)
 
-                /*----------------------List Of Areas----------------------*/
-                setVariable("siteAreas", areas)
-                pageCounterUtil.addToTotal(areas.size)
-
-                /*----------------------Corrosive Environment----------------------*/
-                setVariable("areaDetails", listOfAreaDetails)
-                pageCounterUtil.addToTotal(listOfAreaDetails.size)
+                totalPages+=1 // General Safety Information given and kindly Follow detail guideline at respective plant
+                totalPages+=1 // Disclaimer
+                pageCounterUtil.addToTotal(totalPages)
 
                 setVariable("pageCounterUtil", pageCounterUtil)
 
