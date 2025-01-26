@@ -49,22 +49,26 @@
         <!-- Heading with dynamic content -->
         <h1 class="orangeText pt-16">Acknow<span class="voiletText">ledgement</span></h1>
 
-        <!-- Main content paragraph with dynamic variables -->
-        <p class="blueText pt-16">
-            In plant inspection was carried out at
-            <span class="font-w-600" th:text="${conductedAt} + ' on ' + ${inspectionDate}"></span>
-            for assessment of existing coating condition before recommendation of any system coat.
-        </p>
+        <p class="blueText pt-16" th:utext="${processedAckContent}"></p>
 
-        <p class="blueText pt-8">
-            We give our sincere thanks to the persons present during the inspection who coordinated all the inspection
-            plans.
-            We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we discussed
-            regarding
-            <span class="font-w-600" th:text="${conductedAt}"></span>. All the concerned areas were discussed in the
-            Kick-off meeting.
-        </p>
+        <!-- make this dynamic start-->
+<!--        <p class="blueText pt-16">-->
+<!--            In plant inspection was carried out at-->
+<!--            <span class="font-w-600" th:text="${conductedAt} + ' on ' + ${inspectionDate}"></span>-->
+<!--            for assessment of existing coating condition before recommendation of any system coat.-->
+<!--        </p>-->
 
+<!--        <p class="blueText pt-8">-->
+<!--            We give our sincere thanks to the persons present during the inspection who coordinated all the inspection-->
+<!--            plans.-->
+<!--            We had a detailed meeting before the commencement of the corrosion survey. In the meeting, we discussed-->
+<!--            regarding-->
+<!--            <span class="font-w-600" th:text="${conductedAt}"></span>. All the concerned areas were discussed in the-->
+<!--            Kick-off meeting.-->
+<!--        </p>-->
+        <!-- make this dynamic end-->
+
+<!--        Do not edit below part-->
         <p class="pt-16 blueText">Following persons were present during the inspection:</p>
 
         <!-- List of persons dynamically generated -->

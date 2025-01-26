@@ -65,7 +65,8 @@ class PdfGenerationService @Autowired constructor(
     private val pdfGenFailureLogRepository: PdfGenFailureLogRepository,
     private val fileUploadClient: FileUploadClient,
     private val taskExecutor: TaskExecutor,
-    private val inspectionSiteReportVersionsRepository: InspectionSiteReportVersionsRepository
+    private val inspectionSiteReportVersionsRepository: InspectionSiteReportVersionsRepository,
+    private val acknowledgmentTemplateService: AcknowledgmentTemplateService
 ) {
 
     private val logger = LoggerFactory.getLogger(PdfGenerationService::class.java)
@@ -169,6 +170,10 @@ class PdfGenerationService @Autowired constructor(
 
             val acknowledgmentInfoStart = System.currentTimeMillis()
             val acknowledgmentInfo = acknowledgmentRepository.findByInspectionSiteId(inspectionId)
+            val activeAcknowledgmentTemplate = acknowledgmentTemplateService.getActiveTemplate()
+            val processedAckContent = activeAcknowledgmentTemplate?.templateContent?.trimIndent()
+                ?.replace("#SITE_NAME#", "<strong>${inspectionSite.get().conductedAt}</strong>")
+                ?.replace("#INSPECTION_DATE#", "<strong>${formatter.format(inspectionSite.get().inspectionDate)}</strong>")
             logger.info("Step 2: Retrieved acknowledgment info. Time taken: ${calculateTimeTaken(acknowledgmentInfoStart)}")
 
             val preObservationStart = System.currentTimeMillis()
@@ -209,6 +214,7 @@ class PdfGenerationService @Autowired constructor(
 
 
                 /*----------------------AcknowledgementPage----------------------*/
+                setVariable("processedAckContent", processedAckContent)
                 setVariable("ackPersons", acknowledgmentInfo)
                 pageCounterUtil.addToTotal(1)
 
