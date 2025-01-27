@@ -29,8 +29,6 @@ import org.springframework.retry.annotation.Backoff
 import org.springframework.retry.annotation.Retryable
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
-import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.context.request.async.DeferredResult
 import org.thymeleaf.context.Context
 import org.thymeleaf.spring5.SpringTemplateEngine
@@ -350,8 +348,8 @@ class PdfGenerationService @Autowired constructor(
 
                     /*----------------------TableOfContent----------------------*/
                     totalPages+=1
-                    val inspectionDetailsStartingPageNo = 9
-                    val coatingSystemStartPageNo = inspectionDetailsStartingPageNo + listOfAreaDetails.size
+                    val inspectionAreaDetailListStartingPage = 7
+                    val coatingSystemStartPageNo = inspectionAreaDetailListStartingPage + listOfAreaDetails.size
                     val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
                     val generalPracticeForTheRecommendedCoatingSystem = productDataSheetStartPage + productDataSheets.size
                     setVariable("coatingSystemStartPage", coatingSystemStartPageNo)

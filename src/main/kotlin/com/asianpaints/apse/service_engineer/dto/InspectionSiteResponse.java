@@ -19,6 +19,7 @@ public class InspectionSiteResponse {
     private String reportName;
     private String conductedAt;
     private Long conductedBy;
+    private String conductedByName;
     private String siteId;
     private String state;
     private String city;

@@ -75,6 +75,7 @@ public class InspectionSiteMapperImpl implements InspectionSiteMapper {
                 .state(inspectionSite.getState())
                 .conductedAt(inspectionSite.getConductedAt())
                 .conductedBy(inspectionSite.getConductedBy().getId())
+                .conductedByName(inspectionSite.getConductedBy().getName())
                 .imageUrl(inspectionSite.getImageUrl())
                 .status(inspectionSite.getStatus())
                 .inspectionDate(inspectionSite.getInspectionDate())
