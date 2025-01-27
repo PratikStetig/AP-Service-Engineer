@@ -571,7 +571,7 @@
     <div class="pdf-style">
         <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
-        <p class="orangeText pt-16"> 2. INSPECTION <span class="voiletText">DETAILS AND OBSERVATIONS</span></p>
+        <p class="orangeText pt-16" th:text="'2.' + ${iterStat.index + 1} + ' INSPECTION DETAILS AND OBSERVATIONS'"></p>
         <p class="blueText font-normal" style="top: 30px;">
             <span class="font-w-600">Areas </span>-
             <span th:text="${areaDetail.siteAreaNamesCSV()}">ZLD, SRS, Production Block B,C,E,G,K,M,ETP,WTP, Cooling Tower (STRUCTURE & PIPES)</span>
@@ -684,7 +684,7 @@
                 <tr>
                     <td class="text-align-center">2</td>
                     <td>Area affected</td>
-                    <td th:text="XXXXXXXX"></td>
+                    <td th:text="${areaDetail.affectedAreas}"></td>
                 </tr>
                 <tr>
                     <td class="text-align-center">4</td>

@@ -44,6 +44,7 @@ public class SiteCorrosivityEnvironmentResponse {
     private String existingPaintingSystem;
     private String dftExistingSystem;
     private String remarks;
+    private String affectedAreas;
 
     public String siteAreaNamesCSV() {
         return siteAreas.stream()

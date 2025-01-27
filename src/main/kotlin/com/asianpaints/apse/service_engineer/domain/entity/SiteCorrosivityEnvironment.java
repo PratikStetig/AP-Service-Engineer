@@ -60,4 +60,6 @@ public class SiteCorrosivityEnvironment {
     @Column(name = "dft_existing_system")
     private String dftExistingSystem;
     private String remarks;
+    @Column(name = "affected_areas")
+    private String affectedAreas;
 }

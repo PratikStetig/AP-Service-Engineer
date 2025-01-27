@@ -45,6 +45,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .existingPaintingSystem(siteCorrosivityEnvironmentDto.getExistingPaintingSystem())
                 .dftExistingSystem(siteCorrosivityEnvironmentDto.getDftExistingSystem())
                 .remarks(siteCorrosivityEnvironmentDto.getRemarks())
+                .affectedAreas(siteCorrosivityEnvironmentDto.getAffectedAreas())
                 .build();
     }
 
@@ -79,6 +80,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .existingPaintingSystem(siteCorrosivityEnvironmentDto.getExistingPaintingSystem())
                 .dftExistingSystem(siteCorrosivityEnvironmentDto.getDftExistingSystem())
                 .remarks(siteCorrosivityEnvironmentDto.getRemarks())
+                .affectedAreas(siteCorrosivityEnvironment.getAffectedAreas())
                 .build();
 
     }
@@ -111,6 +113,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .existingPaintingSystem(siteCorrosivityEnvironment.getExistingPaintingSystem())
                 .dftExistingSystem(siteCorrosivityEnvironment.getDftExistingSystem())
                 .remarks(siteCorrosivityEnvironment.getRemarks())
+                .affectedAreas(siteCorrosivityEnvironment.getAffectedAreas())
 
                 .build();
     }

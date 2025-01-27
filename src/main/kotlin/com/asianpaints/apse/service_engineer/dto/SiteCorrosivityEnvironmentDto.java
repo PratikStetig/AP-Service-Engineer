@@ -41,4 +41,5 @@ public class SiteCorrosivityEnvironmentDto {
     private String existingPaintingSystem;
     private String dftExistingSystem;
     private String remarks;
+    private String affectedAreas;
 }
