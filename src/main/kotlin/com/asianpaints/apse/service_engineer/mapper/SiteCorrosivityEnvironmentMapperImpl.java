@@ -80,7 +80,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 .existingPaintingSystem(siteCorrosivityEnvironmentDto.getExistingPaintingSystem())
                 .dftExistingSystem(siteCorrosivityEnvironmentDto.getDftExistingSystem())
                 .remarks(siteCorrosivityEnvironmentDto.getRemarks())
-                .affectedAreas(siteCorrosivityEnvironment.getAffectedAreas())
+                .affectedAreas(siteCorrosivityEnvironmentDto.getAffectedAreas())
                 .build();
 
     }
