@@ -99,6 +99,7 @@ public class AuthenticationService {
                         .accessToken(jwtToken)
                         .userName(apUser.getName())
                         .designation(apUser.getUserDesignation().getDesignation())
+                        .userTypeId(apUser.getUserType().getUserType())
                         .userId(apUser.getId())
                         .build();
             }
