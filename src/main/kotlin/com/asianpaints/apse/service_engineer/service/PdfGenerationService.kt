@@ -304,8 +304,6 @@ class PdfGenerationService @Autowired constructor(
     }
 
 
-
-
     @Async
     @Retryable(value = [Exception::class], maxAttempts = 3, backoff = Backoff(delay = 2000))
     @Transactional
