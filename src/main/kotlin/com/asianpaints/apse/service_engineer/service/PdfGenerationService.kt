@@ -148,7 +148,7 @@ class PdfGenerationService @Autowired constructor(
                     val bufferedImage = ensureRGB(xObject.image)
 
                     // Downscale the image to reduce resolution
-                    val downscaledImage = downscaleImage(bufferedImage, 0.5) // Scale factor: 50%
+                    val downscaledImage = downscaleImage(bufferedImage, 0.7) // Scale factor: 50%
 
                     // Compress the image with a reduced quality
                     val imageOutputStream = ByteArrayOutputStream()
@@ -331,7 +331,7 @@ class PdfGenerationService @Autowired constructor(
                 val context = Context().apply {
 
                     /*----------------------MainPage----------------------*/
-                    totalPages+=1
+                    totalPages += 1
                     setVariable("reportName", inspectionSite.get().reportName)
                     setVariable("conductedAt", inspectionSite.get().conductedAt)
                     setVariable("inspectionDate", formatter.format(inspectionSite.get().inspectionDate))
@@ -340,12 +340,12 @@ class PdfGenerationService @Autowired constructor(
                     setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
 
                     /*----------------------AcknowledgementPage----------------------*/
-                    totalPages+=1
+                    totalPages += 1
                     setVariable("processedAckContent", processedAckContent)
                     setVariable("ackPersons", acknowledgmentInfo)
 
                     /*----------------------TableOfContent----------------------*/
-                    totalPages+=1
+                    totalPages += 1
                     val inspectionAreaDetailListStartingPage = 7
                     val coatingSystemStartPageNo = inspectionAreaDetailListStartingPage + listOfAreaDetails.size
                     val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
@@ -354,12 +354,12 @@ class PdfGenerationService @Autowired constructor(
                     setVariable("productDataSheetStartPage", productDataSheetStartPage)
                     setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
 
-                    totalPages+=1 // classification
-                    totalPages+=1 //surface preparation standard
+                    totalPages += 1 // classification
+                    totalPages += 1 //surface preparation standard
 
 
                     /*----------------------PreliminaryObservation----------------------*/
-                    totalPages+=1
+                    totalPages += 1
                     setVariable("ruralArea", getYesNo(preObservation.ruralArea))
                     setVariable("urbanArea", getYesNo(preObservation.urbanArea))
                     setVariable("coastalArea", getYesNo(preObservation.coastalArea))
@@ -368,25 +368,25 @@ class PdfGenerationService @Autowired constructor(
                     setVariable("avgHumidity", preObservation.averageHumidity)
                     setVariable("salineAtmosphere", preObservation.salineAtmosphere)
 
-                    totalPages+=1 // corrosion levels & areas inspected
+                    totalPages += 1 // corrosion levels & areas inspected
 
                     /*----------------------List Of Areas Details----------------------*/
-                    totalPages+=listOfAreaDetails.size
+                    totalPages += listOfAreaDetails.size
                     setVariable("siteAreas", areas)
                     setVariable("areaDetails", listOfAreaDetails)
 
-                    totalPages+=1 // General Practice for the Recommended coating system
+                    totalPages += 1 // General Practice for the Recommended coating system
 
                     /*----------------------Coating System Recommendation----------------------*/
-                    totalPages+=coatingSystemResponse.size
+                    totalPages += coatingSystemResponse.size
                     setVariable("coatingSystems", coatingSystemResponse)
 
                     /*----------------------Add Product sheets----------------------*/
-                    totalPages+=productDataSheets.size
+                    totalPages += productDataSheets.size
                     setVariable("productSheets", productDataSheets)
 
-                    totalPages+=1 // General Safety Information given and kindly Follow detail guideline at respective plant
-                    totalPages+=1 // Disclaimer
+                    totalPages += 1 // General Safety Information given and kindly Follow detail guideline at respective plant
+                    totalPages += 1 // Disclaimer
                     pageCounterUtil.addToTotal(totalPages)
 
                     setVariable("pageCounterUtil", pageCounterUtil)
@@ -441,7 +441,7 @@ class PdfGenerationService @Autowired constructor(
             val context = Context().apply {
 
                 /*----------------------MainPage----------------------*/
-                totalPages+=1
+                totalPages += 1
                 setVariable("reportName", inspectionSite.get().reportName)
                 setVariable("conductedAt", inspectionSite.get().conductedAt)
                 setVariable("inspectionDate", formatter.format(inspectionSite.get().inspectionDate))
@@ -450,12 +450,12 @@ class PdfGenerationService @Autowired constructor(
                 setVariable("designation", inspectionSite.get().conductedBy.userDesignation.designation)
 
                 /*----------------------AcknowledgementPage----------------------*/
-                totalPages+=1
+                totalPages += 1
                 setVariable("processedAckContent", processedAckContent)
                 setVariable("ackPersons", acknowledgmentInfo)
 
                 /*----------------------TableOfContent----------------------*/
-                totalPages+=1
+                totalPages += 1
                 val inspectionDetailsStartingPageNo = 9
                 val coatingSystemStartPageNo = inspectionDetailsStartingPageNo + listOfAreaDetails.size
                 val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
@@ -464,12 +464,12 @@ class PdfGenerationService @Autowired constructor(
                 setVariable("productDataSheetStartPage", productDataSheetStartPage)
                 setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
 
-                totalPages+=1 // classification
-                totalPages+=1 //surface preparation standard
+                totalPages += 1 // classification
+                totalPages += 1 //surface preparation standard
 
 
                 /*----------------------PreliminaryObservation----------------------*/
-                totalPages+=1
+                totalPages += 1
                 setVariable("ruralArea", getYesNo(preObservation.ruralArea))
                 setVariable("urbanArea", getYesNo(preObservation.urbanArea))
                 setVariable("coastalArea", getYesNo(preObservation.coastalArea))
@@ -478,25 +478,25 @@ class PdfGenerationService @Autowired constructor(
                 setVariable("avgHumidity", preObservation.averageHumidity)
                 setVariable("salineAtmosphere", preObservation.salineAtmosphere)
 
-                totalPages+=1 // corrosion levels & areas inspected
+                totalPages += 1 // corrosion levels & areas inspected
 
                 /*----------------------List Of Areas Details----------------------*/
-                totalPages+=listOfAreaDetails.size
+                totalPages += listOfAreaDetails.size
                 setVariable("siteAreas", areas)
                 setVariable("areaDetails", listOfAreaDetails)
 
-                totalPages+=1 // General Practice for the Recommended coating system
+                totalPages += 1 // General Practice for the Recommended coating system
 
                 /*----------------------Coating System Recommendation----------------------*/
-                totalPages+=coatingSystemResponse.size
+                totalPages += coatingSystemResponse.size
                 setVariable("coatingSystems", coatingSystemResponse)
 
                 /*----------------------Add Product sheets----------------------*/
-                totalPages+=productDataSheets.size
+                totalPages += productDataSheets.size
                 setVariable("productSheets", productDataSheets)
 
-                totalPages+=1 // General Safety Information given and kindly Follow detail guideline at respective plant
-                totalPages+=1 // Disclaimer
+                totalPages += 1 // General Safety Information given and kindly Follow detail guideline at respective plant
+                totalPages += 1 // Disclaimer
                 pageCounterUtil.addToTotal(totalPages)
 
                 setVariable("pageCounterUtil", pageCounterUtil)
@@ -504,14 +504,14 @@ class PdfGenerationService @Autowired constructor(
             }
 
             val htmlContent = templateEngine.process("pdf_template_preview.html", context)
-            val pdfBytes = convertHtmlToPdfBytes(htmlContent)
-            // val pdfBytes = generatePdf(htmlContent, context)
-            val compressedPdfBytes = compressPdf(pdfBytes)
+            var pdfBytes = convertHtmlToPdfBytes(htmlContent)
+//             val pdfBytes = generatePdf(htmlContent, context)
+            pdfBytes = compressPdf(pdfBytes)
 
             return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=generated.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(compressedPdfBytes)
+                .body(pdfBytes)
         } catch (ex: Exception) {
             logger.error("Failed to generate PDF for inspectionId $inspectionId", ex)
             saveFailureLog(inspectionId, ex.stackTraceToString() ?: "Unknown error")

@@ -38,7 +38,7 @@
         <!-- Heading with dynamic content -->
         <h1 class="orangeText pt-16">Acknow<span class="voiletText">ledgement</span></h1>
 
-        <p class="blueText pt-16" th:utext="${processedAckContent}"></p>
+        <p class="blueText pt-16 justifyText" th:utext="${processedAckContent}"></p>
 
         <!-- make this dynamic start-->
         <!--        <p class="blueText pt-16">-->
@@ -367,7 +367,7 @@
             </tr>
             </tbody>
         </table>
-        <p class="blueText font-normal pt-8">Note: The Swedish Standards are not an exact crossover to the SSPC / NACE
+        <p class="blueText font-normal pt-8 justifyText" >Note: The Swedish Standards are not an exact crossover to the SSPC / NACE
             standards. To
             obtain a complete set
             of “Surface Preparation Specifications” contact SSPC: The Society for Protective Coatings, 40 24th Street
@@ -425,31 +425,37 @@
         <h5 class="blueText font-normal pt-16 fojt--w-600">
             1.1 Corrosivity of Environment
         </h5>
-        <table>
-            <thead>
-            <th>Rural Area</th>
-            <th>Urban Area</th>
-            <th>Coastal Area</th>
-            <th>Industrial Polluted Area</th>
-            <th>Chemical exposed</th>
-            <th>Avg. humidity</th>
-            <th>Saline atmosphere</th>
-            </thead>
-            <tbody>
-            <tr>
-                <td th:text="${ruralArea}"></td>
-                <td th:text="${urbanArea}"></td>
-                <td th:text="${coastalArea}"></td>
-                <td th:text="${industrialPollutedArea}"></td>
-                <td th:text="${chemicalExposed}"></td>
-                <td th:text="${avgHumidity}"></td>
-                <td th:text="${salineAtmosphere}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="blueText font-normal pt-8">Corrosion intensity is observed in sharp edges, corners, weld areas, Bolt &
-            Nut
-            joints etc. In some of the areas under film corrosion also observed, which apparently indicates the severity
+
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+                <thead>
+                <tr>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Rural<br>Area</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Urban<br>Area</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Coastal<br>Area</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 12%;">Industrial<br>Polluted Area</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 16%;">Chemical<br>exposed</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Avg.<br>humidity</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 12%;">Saline<br>atmosphere</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${ruralArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${urbanArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${coastalArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${industrialPollutedArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${chemicalExposed}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${avgHumidity}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${salineAtmosphere}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <p class="blueText font-normal pt-8 justifyText">Corrosion intensity is observed in sharp edges, corners, weld areas, Bolt &
+            Nut joints etc. In some of the areas under film corrosion also observed, which apparently indicates the severity
             of the corrosion and premature failure of the existing coating system. The major causes for this premature
             coating failure and corrosion in this plant are due to the following conditions:</p>
 
@@ -549,7 +555,7 @@
             <tr th:each="siteArea, iterStat : ${siteAreas}">
                 <td class="text-align-center" th:text="${iterStat.count}">1</td>
                 <td th:text="${siteArea.area}">ZLD (Zero Liquid Discharge)</td>
-                <td th:text="'Structure - ' + ${siteArea.coatingCondition}">Structure - 0S, Pipe line - 0S</td>
+                <td th:text="${siteArea.coatingCondition}">Structure - 0S, Pipe line - 0S</td>
                 <td th:classappend="${siteArea.rating >= 7 && siteArea.rating <= 10} ? 'greenText' :
                      (${siteArea.rating >= 4 && siteArea.rating <= 6} ? 'yellowText' : 'redText')"
                     class="text-align-center font-w-600"
@@ -777,13 +783,13 @@
                 <td th:text="${product.mixingRatio}"></td>
                 <td style="display: flex; flex-direction: column; align-items: center; text-align: center;">
                     <div th:if="${product.paint}" style="display: flex; align-items: center; gap: 8px;">
-                        <img th:src="@{classpath:static/assets/paint-brush.png}" style="width: 24px;" alt="Paint Brush">
                         <span>Paint</span>
+                        <img th:src="@{classpath:static/assets/paint-brush.png}" style="width: 24px;" alt="Paint Brush">
                     </div>
                     <div th:if="${product.spray}"
                          style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
-                        <img th:src="@{classpath:static/assets/spray-gun.png}" style="width: 44px;" alt="Spray Gun">
                         <span>Spray</span>
+                        <img th:src="@{classpath:static/assets/spray-gun.png}" style="width: 44px;" alt="Spray Gun">
                     </div>
                 </td>
 
@@ -839,7 +845,7 @@
             for the Recommended
             coating system</p>
 
-        <p class="blueText font-normal  pt-8 ">After considering the conditions like degree of rusting, degree
+        <p class="blueText font-normal  pt-8 justifyText">After considering the conditions like degree of rusting, degree
             of blistering and other
             coating failures the following coating system proposal is recommended:</p>
         <p class="blueText font-normal pt-8 font-w-600">9.1 General Surface Preparation*</p>
@@ -864,15 +870,15 @@
         <p class="blueText font-normal">This is the general guidelines to prepare the surface before painting for
             specific and detailed surface preparation guidelines refer technical data sheet of the product specified.
         </p>
-        <p class="blueText font-normal pt-8 font-w-600">Refer Technical data sheet/Product data sheet(TDS/PDS) of the
+        <p class="blueText font-normal pt-8 font-w-600 justifyText">Refer Technical data sheet/Product data sheet(TDS/PDS) of the
             above products for all queries related to product characteristics, Surface preparation, direction for use,
             coating application, Overcoating interval data and safety informations. It is strongly recommended to read
             through the entire TDS/PDS before maintenance work.</p>
-        <p class="blueText font-normal pt-8 font-w-600">Refer Safety Data Sheet (SDS) of the above products for all
+        <p class="blueText font-normal pt-8 font-w-600 justifyText">Refer Safety Data Sheet (SDS) of the above products for all
             queries related to GHS labling, Product hazard,
             First aid measures, Fire – fighting measures, accidential release measures, handling and storage, PPE,
             Exposure control and ecological informations.</p>
-        <p class="blueText font-normal pt-8"><span class="font-w-600">Stripe Coats:</span> Stripe coat (A thin coat
+        <p class="blueText font-normal pt-8 justifyText"><span class="font-w-600">Stripe Coats:</span> Stripe coat (A thin coat
             before full coat
             application) should be given to all potentially weak
             areas like: - Profiles, Inside Edges, Nuts, Bolts, Welding joints ,Holes, Notches, Corners, Angles etc. As
@@ -883,7 +889,7 @@
             <img src="./assets/image 3.png"/>
         </div>
         <div class="d-flex gap-8">
-            <p class="blueText font-normal pt-8"><span class="font-w-600">Brush (Quality): </span>Use of round
+            <p class="blueText font-normal pt-8 justifyText"><span class="font-w-600">Brush (Quality): </span>Use of round
                 long handle & normal brush recommended high quality natural bristle brush and/or solvent resistance.
                 Ensure
                 brush is well loaded to avoid air entrapment. CRISS CROSS application necessary to achieve adequate film
@@ -902,7 +908,7 @@
         <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
         <h1 class="blueText pt-16 font-w-600 text-align-center" style="margin-top: 50px;" >Disclaimer</h1>
-        <p class="pt-16 blueText font-normal">This “APCOPLAN – Corrosion Audit report” provides direction only to
+        <p class="pt-16 blueText font-normal justifyText">This “APCOPLAN – Corrosion Audit report” provides direction only to
             refer Safety Data Sheet (SDS) of Asian Paints PPG Pvt. Ltd., paint
             products which is recommended in this document for safe handling of
             paint, but does not provide any directions to users on occupational

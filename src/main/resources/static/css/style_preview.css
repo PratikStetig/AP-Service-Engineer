@@ -68,10 +68,10 @@
         .pdf-style {
             padding: 2.5rem 2.5rem;
             margin-bottom: 0px;
-            background-image: url('classpath:static/assets/Img/Group35614.png');
+            background-image: url('classpath:static/assets/draft.png');
             background-size: none;
             background-repeat: no-repeat;
-            background-position: right bottom; /* Positions the image in the bottom-right corner */
+            background-position: center; /* Positions the image in the bottom-right corner */
             padding: 20px; /* Optional padding to avoid overlap with content */
             box-sizing: border-box;
             max-width: 100%; /* Ensure it doesn’t exceed the page width */
@@ -79,6 +79,10 @@
             width: 100%;
             height: 297mm;
             page-break-after: always;
+        }
+
+        .justifyText {
+            text-align: justify;
         }
 
         .site-image {
@@ -835,3 +839,7 @@
             margin-top: 20px; /* Adjust spacing */
         }
 
+
+        .table-container2 {
+            overflow-x: auto;
+        }

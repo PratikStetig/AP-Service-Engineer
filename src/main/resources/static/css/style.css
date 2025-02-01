@@ -81,6 +81,10 @@
             page-break-after: always;
         }
 
+        .justifyText {
+            text-align: justify;
+        }
+
         .site-image {
             width: 85%;
             display: block;
@@ -835,3 +839,7 @@
             margin-top: 20px; /* Adjust spacing */
         }
 
+
+        .table-container2 {
+            overflow-x: auto;
+        }

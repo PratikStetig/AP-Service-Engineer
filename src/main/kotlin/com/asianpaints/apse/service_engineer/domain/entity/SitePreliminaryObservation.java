@@ -28,6 +28,7 @@ public class SitePreliminaryObservation {
     public String chemicalsExposed;
     public boolean salineAtmosphere;
     public double averageHumidity;
+    @Column(name = "description", length = 1000)
     public String description;
     public String environmentClassification;
 }

@@ -13,6 +13,6 @@ public class AuthenticationResponse {
     private String accessToken;
     private String userName;
     private String designation;
-    private String userTypeId;
+    private Long userTypeId;
     private Long userId;
 }
