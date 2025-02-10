@@ -42,4 +42,8 @@ public class SiteArea {
     @JsonManagedReference
     public List<SiteAreaImages> images = new ArrayList<>();
 
+    public String getStructureTypeWithRating() {
+        return structureType + " - " + rating + (corrosionType == CorrosionType.Scattered ? "S" : "L");
+    }
+
 }

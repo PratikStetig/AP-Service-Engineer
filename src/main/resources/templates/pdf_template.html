@@ -555,7 +555,7 @@
             <tr th:each="siteArea, iterStat : ${siteAreas}">
                 <td class="text-align-center" th:text="${iterStat.count}">1</td>
                 <td th:text="${siteArea.area}">ZLD (Zero Liquid Discharge)</td>
-                <td th:text="${siteArea.coatingCondition}">Structure - 0S, Pipe line - 0S</td>
+                <td th:text="${siteArea.getStructureTypeWithRating()}">Structure - 0S, Pipe line - 0S</td>
                 <td th:classappend="${siteArea.rating >= 7 && siteArea.rating <= 10} ? 'greenText' :
                      (${siteArea.rating >= 4 && siteArea.rating <= 6} ? 'yellowText' : 'redText')"
                     class="text-align-center font-w-600"
@@ -604,47 +604,34 @@
             <tbody>
             <!-- Rusting Row -->
             <tr>
-                <td>ISO 4628</td>
+                <td rowspan="5">ISO 4628</td> <!-- Merged cell -->
                 <td>Rusting</td>
                 <td th:text="${areaDetail.rustingDegree}">Degree: > Ri5 (S)</td>
                 <td>Corrosion > 50%</td>
-                <td></td>
+                <td rowspan="5" th:text="${areaDetail.remarks}">Last Painted 6 Months Before</td>
             </tr>
             <!-- Cracking Row -->
             <tr>
-                <td></td>
                 <td>Cracking</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size &
-                    Qty: 5 & 5
-                </td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size & Qty: 5 & 5</td>
                 <td>Cracks penetrating the whole coating system</td>
-                <td></td>
             </tr>
             <!-- Pattern Row -->
             <tr>
-                <td></td>
                 <td>Pattern</td>
                 <td th:text="${areaDetail.pattern}">Pattern: Mosaic</td>
-                <td></td>
                 <td></td>
             </tr>
             <!-- Blistering Row -->
             <tr>
-                <td></td>
                 <td>Blistering</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size &
-                    Qty: 5 & 5
-                </td>
-                <td></td>
-                <td></td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size & Qty: 5 & 5</td>
             </tr>
             <!-- Flaking Row -->
             <tr>
-                <td></td>
                 <td>Flaking</td>
                 <td th:text="'Area: ' + ${areaDetail.flakingSize} + ' & ' + ${areaDetail.flakingQty}">Area: 5 & 5</td>
                 <td>More than 15% flaking (exposed up to 30mm)</td>
-                <td th:text="${areaDetail.remarks}">Last Painted 6 Months Before</td>
             </tr>
             <!-- X Cut Adhesion -->
             <tr>
@@ -672,6 +659,7 @@
             </tr>
             </tbody>
         </table>
+
 
         <div class="MoreInformation">
             <h5 class="blueText600 font-w-500" style="margin-top: 30px;">More Information</h5>
