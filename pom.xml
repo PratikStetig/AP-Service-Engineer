@@ -169,6 +169,13 @@
 			<artifactId>spring-retry</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.sap.cloud.db.jdbc</groupId>
+			<artifactId>ngdbc</artifactId>
+			<version>2.21.11</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

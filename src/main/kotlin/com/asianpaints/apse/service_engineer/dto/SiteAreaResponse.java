@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -24,5 +25,5 @@ public class SiteAreaResponse {
     private String structureType;
     private String corrosionType;
     private Integer rating;
-    private List<SiteAreaImages> images;
+    private Set<SiteAreaImages> images;
 }

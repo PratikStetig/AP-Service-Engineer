@@ -133,7 +133,7 @@ public class SiteCorrosivityEnvironmentMapperImpl implements SiteCorrosivityEnvi
                 ).collect(Collectors.toSet());
     }
 
-    private List<SiteAreaImageDto> getAreaImageDto(List<SiteAreaImages> siteAreaImages) {
+    private List<SiteAreaImageDto> getAreaImageDto(Set<SiteAreaImages> siteAreaImages) {
         return siteAreaImages.stream()
                 .map(image -> SiteAreaImageDto.builder()
                         .id(image.getId())

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -30,8 +31,8 @@ public class ApUser {
     public UserDesignation userDesignation;
     @Column(name = "is_active")
     private boolean isActive;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     @JsonManagedReference
-    private List<Token> tokens;
+    private Set<Token> tokens;
 }

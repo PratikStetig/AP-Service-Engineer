@@ -14,19 +14,19 @@ data class CoatingSystem(
     @Column(name = "coating_system_id")
     val id: Long = 0,
 
-    @Column(name = "coating_system_name", columnDefinition = "TEXT")
+    @Column(name = "coating_system_name")
     var coatingSystemName: String,
 
     @Column(name = "corrosivity_level")
     var corrosivityLevel: String,
 
-    @Column(name = "type_of_structures", columnDefinition = "TEXT")
+    @Column(name = "type_of_structures")
     var typeOfStructures: String,
 
-    @Column(name = "surface_preparation", columnDefinition = "TEXT")
+    @Column(name = "surface_preparation", length = 1000)
     var surfacePreparation: String,
 
-    @Column(name = "srfa_bare_metal", columnDefinition = "TEXT")
+    @Column(name = "srfa_bare_metal", length = 1000)
     var srfaBareMetal: String,
 
     @ManyToOne(fetch = FetchType.LAZY)

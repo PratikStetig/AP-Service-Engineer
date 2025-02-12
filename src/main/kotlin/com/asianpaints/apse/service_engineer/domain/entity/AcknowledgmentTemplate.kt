@@ -9,6 +9,7 @@ data class AcknowledgmentTemplate(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    @Lob
     @Column(nullable = false)
     val templateContent: String,
 

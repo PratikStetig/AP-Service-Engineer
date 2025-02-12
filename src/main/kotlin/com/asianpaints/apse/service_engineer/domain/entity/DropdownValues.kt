@@ -22,7 +22,7 @@ data class DropdownValues(
     @JoinColumn(name = "category_id")
     val category: DropdownCategory,
 
-    @Column(name = "display_order", columnDefinition = "TEXT")
+    @Column(name = "display_order")
     var displayOrder: Int = 0,
 
     @Column(name = "is_active")

@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder(toBuilder = true)
@@ -40,7 +42,7 @@ public class SiteArea {
 
     @OneToMany(mappedBy = "siteArea", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JsonManagedReference
-    public List<SiteAreaImages> images = new ArrayList<>();
+    public Set<SiteAreaImages> images = Collections.emptySet();
 
     public String getStructureTypeWithRating() {
         return structureType + " - " + rating + (corrosionType == CorrosionType.Scattered ? "S" : "L");
