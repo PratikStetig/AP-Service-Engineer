@@ -1,9 +1,7 @@
 package com.asianpaints.apse.service_engineer.domain.entity
 
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-import org.hibernate.annotations.OnDelete
-import org.hibernate.annotations.OnDeleteAction
+
 import javax.persistence.*
 
 @Entity

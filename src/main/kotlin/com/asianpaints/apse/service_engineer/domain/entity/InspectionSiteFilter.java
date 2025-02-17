@@ -1,6 +1,6 @@
 package com.asianpaints.apse.service_engineer.domain.entity;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
