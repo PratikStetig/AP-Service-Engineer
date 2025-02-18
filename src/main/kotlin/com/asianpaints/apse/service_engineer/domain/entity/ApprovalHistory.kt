@@ -9,7 +9,7 @@ import javax.persistence.*
 @Table(name = "APPROVAL_HISTORY")
 data class ApprovalHistory(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inspection_site_id")

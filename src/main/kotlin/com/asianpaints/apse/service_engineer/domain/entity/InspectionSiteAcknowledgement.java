@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "INSPECTION_SITE_ACKNOWLEDGEMENT")
 public class InspectionSiteAcknowledgement {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Long id;

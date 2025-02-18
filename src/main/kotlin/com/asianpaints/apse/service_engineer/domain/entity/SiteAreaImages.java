@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Data
 @Builder()
@@ -32,4 +33,10 @@ public class SiteAreaImages {
     public String imageUrl;
     @Column(name = "uploaded_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime uploadedAt = LocalDateTime.now();
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, imageUrl); // Avoid using lazy fields
+    }
+
 }

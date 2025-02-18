@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ZONE")
 public class Zone {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private Long id;

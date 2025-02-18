@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "SITE_CORROSIVITY_ENVIRONMENT")
 public class SiteCorrosivityEnvironment {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Long id;

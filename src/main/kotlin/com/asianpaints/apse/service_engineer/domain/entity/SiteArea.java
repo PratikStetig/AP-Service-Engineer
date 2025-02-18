@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Builder(toBuilder = true)
@@ -19,7 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "SITE_AREA")
 public class SiteArea {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     public Long id;
@@ -47,5 +44,4 @@ public class SiteArea {
     public String getStructureTypeWithRating() {
         return structureType + " - " + rating + (corrosionType == CorrosionType.Scattered ? "S" : "L");
     }
-
 }

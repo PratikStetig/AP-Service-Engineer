@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "AP_USER")
 public class ApUser {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Long id;
@@ -31,8 +31,8 @@ public class ApUser {
     public UserDesignation userDesignation;
     @Column(name = "is_active")
     private boolean isActive;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JsonManagedReference
-    private Set<Token> tokens;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    @JsonManagedReference
+//    private Set<Token> tokens;
 }

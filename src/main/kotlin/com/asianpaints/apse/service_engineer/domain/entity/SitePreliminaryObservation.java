@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "SITE_PRELIMINARY_OBSERVATION")
 public class SitePreliminaryObservation {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private Long id;
