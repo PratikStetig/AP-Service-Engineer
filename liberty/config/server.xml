@@ -37,7 +37,7 @@
 
     <!-- Application configuration: WAR file for your Spring Boot REST API -->
     <webApplication id="service-engineer"
-                    location="service-engineer-1.0.0.war"
+                    location="dropins/service-engineer-1.0.0.war"
                     contextRoot="/" />
 
 
