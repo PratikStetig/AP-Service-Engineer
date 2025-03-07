@@ -269,12 +269,6 @@
 					<filter>src/main/resources/application-uat.properties</filter>
 				</filters>
 			</build>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<spring.profiles.active>uat</spring.profiles.active>
-			</properties>
 		</profile>
 		<profile>
 			<id>live</id>
