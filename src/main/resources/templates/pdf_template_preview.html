@@ -26,7 +26,7 @@
         <div style="display: flex; flex-direction: column; align-items: flex-end; margin-top: 120px; margin-right: 50px; gap: 12px;">
             <h5 class="blueText600 font-w-500" th:text="${conductedBy}"></h5>
             <h5 class="blueText600 font-w-500" th:text="${designation}"></h5>
-            <p class="blueText" th:text="'Visited On: ' + ${inspectionDate}"></p>
+            <p class="blueText" th:text="'Assessment Date: ' + ${inspectionDate}"></p>
         </div>
     </div>
 </div>
@@ -104,11 +104,11 @@
                 <td class="blueText">Surface Preparation Standard</td>
                 <td class="blueText text-center">5</td>
             </tr>
-<!--            <tr class="pt-16">-->
-<!--                <td class="blueText text-center">04</td>-->
-<!--                <td class="blueText">Pressure Categorization for water washing</td>-->
-<!--                <td class="blueText text-center">6</td>-->
-<!--            </tr>-->
+            <!--            <tr class="pt-16">-->
+            <!--                <td class="blueText text-center">04</td>-->
+            <!--                <td class="blueText">Pressure Categorization for water washing</td>-->
+            <!--                <td class="blueText text-center">6</td>-->
+            <!--            </tr>-->
             <tr class="pt-16">
                 <td class="blueText text-center">04</td>
                 <td class="blueText">Preliminary Observations</td>
@@ -367,7 +367,8 @@
             </tr>
             </tbody>
         </table>
-        <p class="blueText font-normal pt-8 justifyText" >Note: The Swedish Standards are not an exact crossover to the SSPC / NACE
+        <p class="blueText font-normal pt-8 justifyText">Note: The Swedish Standards are not an exact crossover to the
+            SSPC / NACE
             standards. To
             obtain a complete set
             of “Surface Preparation Specifications” contact SSPC: The Society for Protective Coatings, 40 24th Street
@@ -430,34 +431,62 @@
             <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
                 <thead>
                 <tr>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Rural<br>Area</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Urban<br>Area</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Coastal<br>Area</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 12%;">Industrial<br>Polluted Area</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 16%;">Chemical<br>exposed</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">Avg.<br>humidity</th>
-                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 12%;">Saline<br>atmosphere</th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">
+                        Rural<br>Area
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">
+                        Urban<br>Area
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">
+                        Coastal<br>Area
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 12%;">
+                        Industrial<br>Polluted Area
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 16%;">
+                        Chemical<br>exposed
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 8%;">
+                        Avg.<br>humidity
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word; width: 12%;">
+                        Saline<br>atmosphere
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${ruralArea}"></td>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${urbanArea}"></td>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${coastalArea}"></td>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${industrialPollutedArea}"></td>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${chemicalExposed}"></td>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${avgHumidity}"></td>
-                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;" th:text="${salineAtmosphere}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;"
+                        th:text="${ruralArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;"
+                        th:text="${urbanArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;"
+                        th:text="${coastalArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;"
+                        th:text="${industrialPollutedArea}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;"
+                        th:text="${chemicalExposed}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;"
+                        th:text="${avgHumidity}"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; text-align: left; word-break: break-word;"
+                        th:text="${salineAtmosphere}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
 
-        <p class="blueText font-normal pt-8 justifyText">Corrosion intensity is observed in sharp edges, corners, weld areas, Bolt &
-            Nut joints etc. In some of the areas under film corrosion also observed, which apparently indicates the severity
+        <p class="blueText font-normal pt-8 justifyText">Corrosion intensity is observed in sharp edges, corners, weld
+            areas, Bolt &
+            Nut joints etc. In some of the areas under film corrosion also observed, which apparently indicates the
+            severity
             of the corrosion and premature failure of the existing coating system. The major causes for this premature
             coating failure and corrosion in this plant are due to the following conditions:</p>
+
+        <pre class="blueText font-normal pt-8 justifyText custom-pre"
+             th:text="${preliminaryObservationDescription}">
+        </pre>
+
 
         <div style="position: absolute; float: right; left: 640px; bottom: 30px; font-size: 18px; color: #000;"
              th:text="|Page ${pageCounterUtil.increment()} of ${pageCounterUtil.totalPages()}|"></div>
@@ -613,7 +642,9 @@
             <!-- Cracking Row -->
             <tr>
                 <td>Cracking</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size & Qty: 5 & 5</td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.crackingSize} + ' & ' + ${areaDetail.crackingQty}">Size &
+                    Qty: 5 & 5
+                </td>
                 <td>Cracks penetrating the whole coating system</td>
             </tr>
             <!-- Pattern Row -->
@@ -625,7 +656,9 @@
             <!-- Blistering Row -->
             <tr>
                 <td>Blistering</td>
-                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size & Qty: 5 & 5</td>
+                <td th:text="'Size & Qty: ' + ${areaDetail.blisteringSize} + ' & ' + ${areaDetail.blisteringQty}">Size &
+                    Qty: 5 & 5
+                </td>
             </tr>
             <!-- Flaking Row -->
             <tr>
@@ -832,7 +865,8 @@
             for the Recommended
             coating system</p>
 
-        <p class="blueText font-normal  pt-8 justifyText">After considering the conditions like degree of rusting, degree
+        <p class="blueText font-normal  pt-8 justifyText">After considering the conditions like degree of rusting,
+            degree
             of blistering and other
             coating failures the following coating system proposal is recommended:</p>
         <p class="blueText font-normal pt-8 font-w-600">9.1 General Surface Preparation*</p>
@@ -857,15 +891,18 @@
         <p class="blueText font-normal">This is the general guidelines to prepare the surface before painting for
             specific and detailed surface preparation guidelines refer technical data sheet of the product specified.
         </p>
-        <p class="blueText font-normal pt-8 font-w-600 justifyText">Refer Technical data sheet/Product data sheet(TDS/PDS) of the
+        <p class="blueText font-normal pt-8 font-w-600 justifyText">Refer Technical data sheet/Product data
+            sheet(TDS/PDS) of the
             above products for all queries related to product characteristics, Surface preparation, direction for use,
             coating application, Overcoating interval data and safety informations. It is strongly recommended to read
             through the entire TDS/PDS before maintenance work.</p>
-        <p class="blueText font-normal pt-8 font-w-600 justifyText">Refer Safety Data Sheet (SDS) of the above products for all
+        <p class="blueText font-normal pt-8 font-w-600 justifyText">Refer Safety Data Sheet (SDS) of the above products
+            for all
             queries related to GHS labling, Product hazard,
             First aid measures, Fire – fighting measures, accidential release measures, handling and storage, PPE,
             Exposure control and ecological informations.</p>
-        <p class="blueText font-normal pt-8 justifyText"><span class="font-w-600">Stripe Coats:</span> Stripe coat (A thin coat
+        <p class="blueText font-normal pt-8 justifyText"><span class="font-w-600">Stripe Coats:</span> Stripe coat (A
+            thin coat
             before full coat
             application) should be given to all potentially weak
             areas like: - Profiles, Inside Edges, Nuts, Bolts, Welding joints ,Holes, Notches, Corners, Angles etc. As
@@ -876,7 +913,8 @@
             <img src="./assets/image 3.png"/>
         </div>
         <div class="d-flex gap-8">
-            <p class="blueText font-normal pt-8 justifyText"><span class="font-w-600">Brush (Quality): </span>Use of round
+            <p class="blueText font-normal pt-8 justifyText"><span class="font-w-600">Brush (Quality): </span>Use of
+                round
                 long handle & normal brush recommended high quality natural bristle brush and/or solvent resistance.
                 Ensure
                 brush is well loaded to avoid air entrapment. CRISS CROSS application necessary to achieve adequate film
@@ -894,8 +932,9 @@
     <div class="pdf-style">
         <img width="120" th:src="@{classpath:static/assets/apppg_logo.png}" alt="Asian Paint"
              style="position: absolute; top: 20px; right: 20px;">
-        <h1 class="blueText pt-16 font-w-600 text-align-center" style="margin-top: 50px;" >Disclaimer</h1>
-        <p class="pt-16 blueText font-normal justifyText">This “APCOPLAN – Corrosion Audit report” provides direction only to
+        <h1 class="blueText pt-16 font-w-600 text-align-center" style="margin-top: 50px;">Disclaimer</h1>
+        <p class="pt-16 blueText font-normal justifyText">This “APCOPLAN – Corrosion Audit report” provides direction
+            only to
             refer Safety Data Sheet (SDS) of Asian Paints PPG Pvt. Ltd., paint
             products which is recommended in this document for safe handling of
             paint, but does not provide any directions to users on occupational

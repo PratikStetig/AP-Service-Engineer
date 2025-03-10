@@ -346,10 +346,10 @@ class PdfGenerationService @Autowired constructor(
 
                     /*----------------------TableOfContent----------------------*/
                     totalPages += 1
-                    val inspectionAreaDetailListStartingPage = 7
+                    val inspectionAreaDetailListStartingPage = 8
                     val coatingSystemStartPageNo = inspectionAreaDetailListStartingPage + listOfAreaDetails.size
                     val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
-                    val generalPracticeForTheRecommendedCoatingSystem = productDataSheetStartPage + productDataSheets.size
+                    val generalPracticeForTheRecommendedCoatingSystem = productDataSheetStartPage + productDataSheets.size + 1 // +1 (Paint with Safety and correct field precaution)
                     setVariable("coatingSystemStartPage", coatingSystemStartPageNo)
                     setVariable("productDataSheetStartPage", productDataSheetStartPage)
                     setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
@@ -366,7 +366,8 @@ class PdfGenerationService @Autowired constructor(
                     setVariable("industrialPollutedArea", getYesNo(preObservation.industrialPollutedArea))
                     setVariable("chemicalExposed", preObservation.chemicalsExposed)
                     setVariable("avgHumidity", preObservation.averageHumidity)
-                    setVariable("salineAtmosphere", preObservation.salineAtmosphere)
+                    setVariable("salineAtmosphere", if (preObservation.salineAtmosphere) "Yes" else "No")
+                    setVariable("preliminaryObservationDescription",  preObservation.description)
 
                     totalPages += 1 // corrosion levels & areas inspected
 
@@ -456,10 +457,10 @@ class PdfGenerationService @Autowired constructor(
 
                 /*----------------------TableOfContent----------------------*/
                 totalPages += 1
-                val inspectionDetailsStartingPageNo = 9
+                val inspectionDetailsStartingPageNo = 8
                 val coatingSystemStartPageNo = inspectionDetailsStartingPageNo + listOfAreaDetails.size
                 val productDataSheetStartPage = coatingSystemStartPageNo + coatingSystem.size
-                val generalPracticeForTheRecommendedCoatingSystem = productDataSheetStartPage + productDataSheets.size
+                val generalPracticeForTheRecommendedCoatingSystem = productDataSheetStartPage + productDataSheets.size + 1 // +1 (Paint with Safety and correct field precaution)
                 setVariable("coatingSystemStartPage", coatingSystemStartPageNo)
                 setVariable("productDataSheetStartPage", productDataSheetStartPage)
                 setVariable("generalPracticeForTheRecommendedCoatingSystem", generalPracticeForTheRecommendedCoatingSystem)
@@ -476,7 +477,8 @@ class PdfGenerationService @Autowired constructor(
                 setVariable("industrialPollutedArea", getYesNo(preObservation.industrialPollutedArea))
                 setVariable("chemicalExposed", preObservation.chemicalsExposed)
                 setVariable("avgHumidity", preObservation.averageHumidity)
-                setVariable("salineAtmosphere", preObservation.salineAtmosphere)
+                setVariable("salineAtmosphere", if (preObservation.salineAtmosphere) "Yes" else "No")
+                setVariable("preliminaryObservationDescription",  preObservation.description)
 
                 totalPages += 1 // corrosion levels & areas inspected
 

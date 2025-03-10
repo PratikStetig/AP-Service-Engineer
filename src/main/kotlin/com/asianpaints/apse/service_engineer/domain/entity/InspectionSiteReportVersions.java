@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "INSPECTION_SITE_VERSIONS")
+@Table(name = "INSPECTION_SITE_DOWNLOAD_REPORT")
 public class InspectionSiteReportVersions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

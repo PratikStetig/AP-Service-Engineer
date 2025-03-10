@@ -269,6 +269,7 @@
 					<filter>src/main/resources/application-uat.properties</filter>
 				</filters>
 			</build>
+
 		</profile>
 		<profile>
 			<id>live</id>
