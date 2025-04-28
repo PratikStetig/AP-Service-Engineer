@@ -22,7 +22,6 @@ data class ApprovalHistory(
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private val action: InspectionSiteStatus,
-    @Lob
-    @Column(name = "remarks", nullable = false)
+    @Column(name = "remarks", nullable = false, columnDefinition = "TEXT")
     val remarks: String,
 )

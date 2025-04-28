@@ -843,3 +843,20 @@
         .table-container2 {
             overflow-x: auto;
         }
+
+        pre {
+          white-space: pre-wrap; /* Ensures text wraps */
+          word-wrap: break-word; /* Helps break long words */
+          overflow-wrap: break-word;
+          max-width: 100%; /* Prevents it from going out of bounds */
+        }
+
+        .custom-pre {
+          font-family: FiraSans;
+          border-radius: 5px;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          max-width: 100%;
+        }
+
