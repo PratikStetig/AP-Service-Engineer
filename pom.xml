@@ -176,7 +176,11 @@
 			<version>2.21.11</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.4</version> <!-- Or latest version -->
+		</dependency>
 	</dependencies>
 
 	<build>
